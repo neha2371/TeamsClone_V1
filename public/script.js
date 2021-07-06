@@ -8,6 +8,7 @@ const myPeer = new Peer(undefined, {
 })
 let temp;
 let myVideoStream;
+let myScreenStream;
 var activeSreen = "";
 const myVideo = document.createElement('video')
 myVideo.muted = true;
@@ -45,8 +46,9 @@ navigator.mediaDevices.getUserMedia({
 
     });
     document.getElementById("shareScreen").addEventListener('click', (e) => {
-        let enabled = document.getElementById("shareScreen").classList.contains("active-btn");
+        
         if (enabled) {
+            shareUnshare();
             document.getElementById("shareScreen").classList.remove("active-btn");
             stopScreenShare();
         }
@@ -60,11 +62,12 @@ navigator.mediaDevices.getUserMedia({
                     noiseSupprission: true
                 }
               }).then(stream => {
-                document.getElementById("shareScreen").classList.add("active-btn");
+                  myScreenStream = stream;
+                  shareUnshare();
           
                 let videoTrack = stream.getVideoTracks()[0];
                 videoTrack.onended = function () {
-                     document.getElementById("shareScreen").classList.remove("active-btn");
+                    shareUnshare();
                      stopScreenShare();
                 }
                 Object.keys(peerscall).forEach(function (x) {
@@ -168,7 +171,18 @@ const scrollToBottom = () => {
     d.scrollTop(d.prop("scrollHeight"));
 }
 
-
+const shareUnshare = () => {
+    let enabled = myScreenStream.getVideoTracks()[0].enabled;
+    if (enabled) {
+        myScreenStream.getVideoTracks()[0].enabled = false;
+        document.querySelector('.main__screen_button').innerHTML = `<i class="fas fa-arrow-alt-circle-up"></i><span>Present Screen</span>`
+        document.getElementById("shareScreen").classList.remove("active-btn");
+    } else {
+        document.querySelector('.main__screen_button').innerHTML = `<i class="fas fa-arrow-circle-down"></i><span>Stop Presenting</span>`
+        document.getElementById("shareScreen").classList.add("active-btn");
+        myScreenStream.getVideoTracks()[0].enabled = true;
+    }
+}
 const muteUnmute = () => {
     let enabled = myVideoStream.getAudioTracks()[0].enabled;
     if (enabled) {
