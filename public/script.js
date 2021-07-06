@@ -103,7 +103,7 @@ navigator.mediaDevices.getUserMedia({
     })
 })
 socket.on('user-disconnected', userId => {
-    var video = document.getElementById("myElement");
+    var video = document.getElementById(userId);
     if(video){
         handlePeerDisconnect(video);
     }
