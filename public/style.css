@@ -88,10 +88,13 @@
 .messages{
     color: black;
     list-style: none;
+    display:block;
 }
 
 .user_message{
     float:right;
+    display: block;
+    padding: 14px 24px;
 }
 
 .main__message_container {
