@@ -46,10 +46,9 @@ navigator.mediaDevices.getUserMedia({
 
     });
     document.getElementById("shareScreen").addEventListener('click', (e) => {
-        
+        let enabled = document.getElementById("shareScreen").classList.contains("active-btn");
         if (enabled) {
             shareUnshare();
-            document.getElementById("shareScreen").classList.remove("active-btn");
             stopScreenShare();
         }
         else {
@@ -63,12 +62,13 @@ navigator.mediaDevices.getUserMedia({
                 }
               }).then(stream => {
                   myScreenStream = stream;
-                  shareUnshare();
-          
+                shareUnshare();
                 let videoTrack = stream.getVideoTracks()[0];
                 videoTrack.onended = function () {
+                     document.getElementById("shareScreen").classList.remove("active-btn");
                     shareUnshare();
-                     stopScreenShare();
+                    stopScreenShare();
+                    
                 }
                 Object.keys(peerscall).forEach(function (x) {
                     let sender = peerscall[x].peerConnection.getSenders().find(function (s) {
