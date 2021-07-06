@@ -91,8 +91,8 @@ navigator.mediaDevices.getUserMedia({
     $('html').keydown(function(e) {
         if (e.which == 13 && text.val().length !== 0) {
             socket.emit('message', text.val());
-             $(".messages").append(`<li class="message user_message"><b>Me</b><br/>${message}</li>`);
-            scrollToBottom()
+            // $(".messages").append(`<li class="message user_message"><b>Me</b><br/>${message}</li>`);
+            //scrollToBottom()
             text.val('')
         }
     });
