@@ -40,34 +40,28 @@
          </div>
          <div class="main__controls">
             <div class="main__controls__block">
-               <div onclick="muteUnmute()" class="main__controls__button main__mute_button">
+               <div data-bs-toggle="tooltip" data-bs-placement="top" title="Mute" onclick="muteUnmute()" class="main__controls__button main__mute_button">
                   <i class="fas fa-microphone"></i>
-                  <span>Mute</span>
                </div>
-               <div onclick="playStop()" class="main__controls__button main__video_button" >
+               <div data-bs-placement="top" title="Stop Video" onclick="playStop()" class="main__controls__button main__video_button" >
                   <i class="fas fa-video"></i>
-                  <span>Stop Video</span>
                </div>
             </div>
             <div class="main__controls__block">
-               <div id = 'shareScreen'  class="main__controls__button main__screen_button">
+               <div id = 'shareScreen'  class="main__controls__button main__screen_button" data-bs-toggle="tooltip" data-bs-placement="top" title="Present Screen">
                 <i class="fas fa-arrow-alt-circle-up"></i>
-                <span>Present Screen</span>
                </div>
-               <div class="main__controls__button users-btn" onclick="handleScreen(this)">
+               <div class="main__controls__button users-btn"  data-bs-toggle="tooltip" data-bs-placement="top" title="Participants List" onclick="handleScreen(this)">
                   <i class="fas fa-user-friends"></i>
-                  <span>Participants</span>
                </div>
-               <div class="main__controls__button chat-btn" id="chats" onclick="handleScreen(this)" >
+               <div class="main__controls__button chat-btn" id="chats"data-bs-toggle="tooltip" data-bs-placement="top" title="Chat"  onclick="handleScreen(this)" >
                   <i class="fas fa-comment-alt"></i>
-                  <span>Chat</span>
                </div>
             </div>
             <div class="main__controls__block">
-               <div  onclick="leaveMeeting()" class="main__controls__button leave_meeting">
+               <div  data-bs-toggle="tooltip" data-bs-placement="top" title="Leave Meeting" onclick="leaveMeeting()" class="main__controls__button leave_meeting">
                   <i class="fas fa-phone" style="transform: rotate(225deg);"></i>
-                  <span>Leave Meeting</span>
-                  
+
                </div>
             </div>
          </div>
