@@ -187,7 +187,7 @@ const playStop = () => {
         myVideoStream.getVideoTracks()[0].enabled = false;
         setPlayVideo()
     } else {
-        setStopVideo()
+        document.querySelector('.main__video_button').innerHTML=`<i class="fas fa-video"></i><span>Stop Video</span>`
         myVideoStream.getVideoTracks()[0].enabled = true;
     }
 }
@@ -210,13 +210,10 @@ const setUnmuteButton = () => {
     document.querySelector('.main__mute_button').innerHTML = html;
 }
 
-const setStopVideo = () => {
-    const html = `
-    <i class="fas fa-video"></i>
-    <span>Stop Video</span>
-  `
-    document.querySelector('.main__video_button').innerHTML = html;
-}
+// const setStopVideo = () => {
+//     const html = 
+//      = html;
+// }
 
 const setPlayVideo = () => {
     const html = `
