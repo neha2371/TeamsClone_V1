@@ -18,8 +18,7 @@ navigator.mediaDevices.getUserMedia({
     audio: false
 }).then(stream => {
     myVideoStream = stream;
-    addVideoStream(myVideo, stream, temp)
-
+    addVideoStream(myVideo, stream, "self")
     myPeer.on('connection', function(conn) {
         var uniId = conn.peer
         peers[uniId] = conn;

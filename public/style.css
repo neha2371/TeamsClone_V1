@@ -129,3 +129,7 @@
 .active-btn {
     color:#0096FF;
 }
+#self{
+  -webkit-transform: scaleX(-1);
+  transform: scaleX(-1);
+}
