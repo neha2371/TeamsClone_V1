@@ -92,8 +92,8 @@ navigator.mediaDevices.getUserMedia({
     $('html').keydown(function(e) {
         if (e.which == 13 && text.val().length !== 0) {
             socket.emit('message', text.val());
-            // $(".messages").append(`<li class="message user_message"><b>Me</b><br/>${message}</li>`);
-            //scrollToBottom()
+             $(".messages").append(`<li class="message user_message"><b>Me</b><br/>${message}</li>`);
+            scrollToBottom()
             text.val('')
         }
     });
@@ -103,7 +103,6 @@ navigator.mediaDevices.getUserMedia({
     })
 })
 socket.on('user-disconnected', userId => {
-    //if(peers[userId])peers[userId].close()
     var video = document.getElementById(userId);
     if(video){
         handlePeerDisconnect(video);
