@@ -34,18 +34,17 @@
     background-color: #1C1E20;
     position: -webkit-sticky;
     position: sticky;
+    bottom: 0px;
+    padding: 5px;
+    color: #D2D2D2;
+    display: flex;
+    justify-content: space-between;
+    
 }
 
 .main__right {
     background-color: white;
     border-left: 1px solid #3D3D42;
-}
-
-.main__controls {
-    color: #D2D2D2;
-    display: flex;
-    justify-content: space-between;
-    padding: 5px;
 }
 
 .main__controls__block {
@@ -107,16 +106,19 @@
     padding: 22px 12px;
     display: flex;
     position: -webkit-sticky;
-     position: sticky;
+    position: sticky;
+    bottom: 0px;
+    padding: 5px;
     
 }
 
-.main__message_container input {
+input {
     flex-grow: 1;
     background-color: transparent;
     border: none;
     color: black;
     margin-bottom: 0px;
+
 }
 
 
