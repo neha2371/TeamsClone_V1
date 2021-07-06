@@ -105,15 +105,14 @@
 .main__message_container {
     padding: 22px 12px;
     display: flex;
-    position: -webkit-sticky;
-    position: sticky;
+    position: fixed;
     bottom: 0px;
     
 }
 
 input {
     flex-grow: 1;
-    background-color: transparent;
+    background-color: white;
     border: none;
     color: black;
     margin-bottom: 0px;
