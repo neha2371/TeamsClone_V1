@@ -8,7 +8,7 @@ const myPeer = new Peer(undefined, {
 })
 let temp;
 let myVideoStream;
-let myScreenStream;
+//let myScreenStream;
 var activeSreen = "";
 const myVideo = document.createElement('video')
 myVideo.muted = true;
@@ -61,7 +61,7 @@ navigator.mediaDevices.getUserMedia({
                     noiseSupprission: true
                 }
               }).then(stream => {
-                  myScreenStream = stream;
+                 // myScreenStream = stream;
                 shareUnshare();
                 let videoTrack = stream.getVideoTracks()[0];
                 videoTrack.onended = function () {
@@ -172,15 +172,15 @@ const scrollToBottom = () => {
 }
 
 const shareUnshare = () => {
-    let enabled = myScreenStream.getVideoTracks()[0].enabled;
+    let enabled = document.getElementById("shareScreen").classList.contains("active-btn");
     if (enabled) {
-        myScreenStream.getVideoTracks()[0].enabled = false;
+        //myScreenStream.getVideoTracks()[0].enabled = false;
         document.querySelector('.main__screen_button').innerHTML = `<i class="fas fa-arrow-alt-circle-up"></i><span>Present Screen</span>`
         document.getElementById("shareScreen").classList.remove("active-btn");
     } else {
         document.querySelector('.main__screen_button').innerHTML = `<i class="fas fa-arrow-circle-down"></i><span>Stop Presenting</span>`
         document.getElementById("shareScreen").classList.add("active-btn");
-        myScreenStream.getVideoTracks()[0].enabled = true;
+        //myScreenStream.getVideoTracks()[0].enabled = true;
     }
 }
 const muteUnmute = () => {
