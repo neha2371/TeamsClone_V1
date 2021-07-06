@@ -32,6 +32,7 @@
 
 .main__controls {
     background-color: #1C1E20;
+    position:fixed;
 }
 
 .main__right {
@@ -104,6 +105,7 @@
 .main__message_container {
     padding: 22px 12px;
     display: flex;
+    position:fixed
 }
 
 .main__message_container input {
