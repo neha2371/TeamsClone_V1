@@ -85,6 +85,7 @@ navigator.mediaDevices.getUserMedia({
     socket.on('user-connected', userId => {
         connectToNewUser(userId, stream)
     })
+    
 
     let text = $("input");
 
@@ -101,7 +102,12 @@ navigator.mediaDevices.getUserMedia({
         scrollToBottom()
     })
 })
-
+socket.on('user-disconnected', userId => {
+    var video = document.getElementById("myElement");
+    if(video){
+        handlePeerDisconnect(video);
+    }
+})
 function stopScreenShare() {
         let videoTrack = myVideoStream.getVideoTracks()[0];
         Object.keys(peerscall).forEach(function(x) {
