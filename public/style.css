@@ -96,6 +96,8 @@
 }
 .user_message{
     float:right;
+    display:block;
+   
 }
 
 .main__message_container {
