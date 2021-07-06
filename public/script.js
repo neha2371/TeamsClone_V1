@@ -103,7 +103,12 @@ navigator.mediaDevices.getUserMedia({
     })
 })
 socket.on('user-disconnected', userId => {
-    if (peers[userId]) peers[userId].close();
+    if(peers[userId])peers[userId].close()
+    var video = document.getElementById(userId);
+    if(video){
+        handlePeerDisconnect(video);
+    }
+    
 })
 function stopScreenShare() {
         let videoTrack = myVideoStream.getVideoTracks()[0];
