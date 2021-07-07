@@ -139,8 +139,20 @@ input {
   transform: scaleX(-1);
 }
 #screenShareReminder{
-    background-color: #A9A9A9;
-    display: flex;
-    top: 25px;
-    text-align: center;
+    background-color: #3c4043;
+    border-radius: 8px;
+    color: #fff;
+    height: 40px;
+    margin: 16px 16px 0;
+    padding-left: 16px;
+    justify-content: space-between;
+   
+    font-size: 18px;
+    height: 100%;
+    padding-left: 16px;
+
+}
+
+
+
 }
