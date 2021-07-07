@@ -44,10 +44,12 @@ navigator.mediaDevices.getUserMedia({
 
 
     });
+    let screenStream;
     document.getElementById("shareScreen").addEventListener('click', (e) => {
         let enabled = document.getElementById("shareScreen").classList.contains("active-btn");
         if (enabled) {
-            videoTrack.stop();
+            var tracks = screenStream.getTracks();
+    for( var i = 0 ; i < tracks.length ; i++ ) tracks[i].stop();
             shareUnshare();
             stopScreenShare();
         }
@@ -61,11 +63,12 @@ navigator.mediaDevices.getUserMedia({
                     noiseSupprission: true
                 }
               }).then(stream => {
-                 // myScreenStream = stream;
+                  screenStream = stream;
                 shareUnshare();
                 let videoTrack = stream.getVideoTracks()[0];
                   videoTrack.onended = function () {
-                    videoTrack.stop();
+                   var tracks = stream.getTracks();
+    for( var i = 0 ; i < tracks.length ; i++ ) tracks[i].stop();
                     shareUnshare();
                     stopScreenShare();
                     
