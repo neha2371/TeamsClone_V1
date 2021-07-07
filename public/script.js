@@ -310,4 +310,4 @@ function handlePeerDisconnect(video) {
     video.remove();
 
 }
-document.getElementById("time").innerHTML = d.toLocaleTimeString();
+document.getElementById("time").innerHTML = new Date().toLocaleTimeString();
