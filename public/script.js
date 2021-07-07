@@ -48,8 +48,12 @@ navigator.mediaDevices.getUserMedia({
     document.getElementById("shareScreen").addEventListener('click', (e) => {
         let enabled = document.getElementById("shareScreen").classList.contains("active-btn");
         if (enabled) {
-            var tracks = screenStream.getTracks();
-    for( var i = 0 ; i < tracks.length ; i++ ) tracks[i].stop();
+    //         var tracks = screenStream.getTracks();
+    // for( var i = 0 ; i < tracks.length ; i++ ) tracks[i].stop();
+            //    
+            if (screenStream.readyState != ended)
+            screenStream.readyState = ended;
+                     
             shareUnshare();
             stopScreenShare();
         }
@@ -67,9 +71,11 @@ navigator.mediaDevices.getUserMedia({
                 shareUnshare();
                 let videoTrack = stream.getVideoTracks()[0];
                   videoTrack.onended = function () {
-                   var tracks = stream.getTracks();
-    for( var i = 0 ; i < tracks.length ; i++ ) tracks[i].stop();
-                    shareUnshare();
+                //    var tracks = stream.getTracks();
+                //     for( var i = 0 ; i < tracks.length ; i++ ) tracks[i].stop();
+                      if (stream.readyState != ended)
+                          stream.readyState = ended;
+                      shareUnshare();
                     stopScreenShare();
                     
                 }
