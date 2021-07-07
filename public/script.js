@@ -16,7 +16,7 @@ const peers = {}
 const peerscall = {}
 navigator.mediaDevices.getUserMedia({
     video: true,
-    audio: true
+    audio:false
 }).then(stream => {
     myVideoStream = stream;
     addVideoStream(myVideo, stream, "self")
@@ -40,6 +40,7 @@ navigator.mediaDevices.getUserMedia({
         var video = document.createElement('video')
         call.on('stream', userVideoStream => {
             addVideoStream(video, userVideoStream, call.peer)
+ 
         });
 
 
@@ -309,3 +310,4 @@ function handlePeerDisconnect(video) {
     video.remove();
 
 }
+document.getElementById("time").innerHTML = d.toLocaleTimeString();
