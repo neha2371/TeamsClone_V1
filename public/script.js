@@ -51,8 +51,8 @@ navigator.mediaDevices.getUserMedia({
     //         var tracks = screenStream.getTracks();
     // for( var i = 0 ; i < tracks.length ; i++ ) tracks[i].stop();
             //    
-            if (screenStream.readyState != ended)
-            screenStream.readyState = ended;
+            if (screenStream.readyState != "ended")
+            screenStream.readyState = "ended";
                      
             shareUnshare();
             stopScreenShare();
@@ -73,8 +73,8 @@ navigator.mediaDevices.getUserMedia({
                   videoTrack.onended = function () {
                 //    var tracks = stream.getTracks();
                 //     for( var i = 0 ; i < tracks.length ; i++ ) tracks[i].stop();
-                      if (stream.readyState != ended)
-                          stream.readyState = ended;
+                      if (stream.readyState != "ended")
+                          stream.readyState = "ended";
                       shareUnshare();
                     stopScreenShare();
                     
