@@ -150,4 +150,7 @@ input {
     font-size: 18px;
     display: inline-flex;
 }
-
+#altStop:hover {
+    background-color: #343434;
+    border-radius: 5px;
+}
