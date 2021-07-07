@@ -190,9 +190,11 @@ const muteUnmute = () => {
     if (enabled) {
         myVideoStream.getAudioTracks()[0].enabled = false;
         document.querySelector('.main__mute_button').innerHTML = `<i class="unmute fas fa-microphone-slash"></i>`
+        document.querySelector('.main__mute_button').setAttribute("title", "Mute");
         
     } else {
         document.querySelector('.main__mute_button').innerHTML =  `<i class="fas fa-microphone"></i>`
+        document.querySelector('.main__mute_button').setAttribute("title", "Unute");
         myVideoStream.getAudioTracks()[0].enabled = true;
     }
 }
@@ -203,9 +205,11 @@ const playStop = () => {
     if (enabled) {
         myVideoStream.getVideoTracks()[0].enabled = false;
         document.querySelector('.main__video_button').innerHTML = `<i class="stop fas fa-video-slash"></i>`
+        document.querySelector('.main__video_button').setAttribute("title", "Stop Video");
     } else {
         document.querySelector('.main__video_button').innerHTML=`<i class="fas fa-video"></i>`
         myVideoStream.getVideoTracks()[0].enabled = true;
+        document.querySelector('.main__video_button').setAttribute("title", "Play Video");
     }
 }
 
