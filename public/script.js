@@ -44,7 +44,7 @@ navigator.mediaDevices.getUserMedia({
 
 
     });
-    let screenStream; let x;
+    let screenStream; 
     document.getElementById("shareScreen").addEventListener('click', (e) => {
         let enabled = document.getElementById("shareScreen").classList.contains("active-btn");
         if (enabled) {
@@ -53,8 +53,9 @@ navigator.mediaDevices.getUserMedia({
             //    
             if (screenStream.readyState != "ended")
             screenStream.readyState = "ended";
-            stopStreamedVideo(x)      
+             
             shareUnshare();
+            stopStreamedVideo()     
             stopScreenShare();
         }
         else {
@@ -70,15 +71,15 @@ navigator.mediaDevices.getUserMedia({
                   screenStream = stream;
                 shareUnshare();
                 let videoTrack = stream.getVideoTracks()[0];
-                  x = videoTrack;
                   videoTrack.onended = function () {
                 //    var tracks = stream.getTracks();
                 //     for( var i = 0 ; i < tracks.length ; i++ ) tracks[i].stop();
                       if (stream.readyState != "ended")
                           stream.readyState = "ended";
-                      stopStreamedVideo(videoTrack)   
+                      
                       shareUnshare();
-                    stopScreenShare();
+                      stopStreamedVideo();
+                        stopScreenShare();
                     
                 }
                 Object.keys(peerscall).forEach(function (x) {
@@ -125,9 +126,9 @@ socket.on('user-disconnected', userId => {
     }
     
 })
-function stopStreamedVideo(videoElem) {
-  const stream = videoElem.srcObject;
-  const tracks = stream.getTracks();
+function stopStreamedVideo() {
+
+  const tracks = screenStream.getTracks();
 
   tracks.forEach(function(track) {
     track.stop();
