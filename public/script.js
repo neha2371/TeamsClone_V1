@@ -39,7 +39,6 @@ navigator.mediaDevices.getUserMedia({
         call.answer(stream)
         var video = document.createElement('video')
         call.on('stream', userVideoStream => {
-
             addVideoStream(video, userVideoStream, call.peer)
         });
 
@@ -48,6 +47,7 @@ navigator.mediaDevices.getUserMedia({
     document.getElementById("shareScreen").addEventListener('click', (e) => {
         let enabled = document.getElementById("shareScreen").classList.contains("active-btn");
         if (enabled) {
+            videoTrack.stop();
             shareUnshare();
             stopScreenShare();
         }
@@ -64,7 +64,8 @@ navigator.mediaDevices.getUserMedia({
                  // myScreenStream = stream;
                 shareUnshare();
                 let videoTrack = stream.getVideoTracks()[0];
-                videoTrack.onended = function () {
+                  videoTrack.onended = function () {
+                    videoTrack.stop();
                     shareUnshare();
                     stopScreenShare();
                     
