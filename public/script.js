@@ -175,10 +175,10 @@ const shareUnshare = () => {
     let enabled = document.getElementById("shareScreen").classList.contains("active-btn");
     if (enabled) {
         //myScreenStream.getVideoTracks()[0].enabled = false;
-        document.querySelector('.main__screen_button').innerHTML = `<i class="fas fa-arrow-alt-circle-up"></i><span>Present Screen</span>`
+        document.querySelector('.main__screen_button').innerHTML = `<i class="fas fa-arrow-alt-circle-up"></i>`
         document.getElementById("shareScreen").classList.remove("active-btn");
     } else {
-        document.querySelector('.main__screen_button').innerHTML = `<i class="fas fa-arrow-circle-down"></i><span>Stop Presenting</span>`
+        document.querySelector('.main__screen_button').innerHTML = `<i class="fas fa-arrow-circle-down"></i>`
         document.getElementById("shareScreen").classList.add("active-btn");
         //myScreenStream.getVideoTracks()[0].enabled = true;
     }
@@ -187,9 +187,10 @@ const muteUnmute = () => {
     let enabled = myVideoStream.getAudioTracks()[0].enabled;
     if (enabled) {
         myVideoStream.getAudioTracks()[0].enabled = false;
-        document.querySelector('.main__mute_button').innerHTML =`<i class="unmute fas fa-microphone-slash"></i><span>Unmute</span>`
+        document.querySelector('.main__mute_button').innerHTML = `<i class="unmute fas fa-microphone-slash"></i>`
+        
     } else {
-        document.querySelector('.main__mute_button').innerHTML =  `<i class="fas fa-microphone"></i><span>Mute</span>`
+        document.querySelector('.main__mute_button').innerHTML =  `<i class="fas fa-microphone"></i>`
         myVideoStream.getAudioTracks()[0].enabled = true;
     }
 }
@@ -199,9 +200,9 @@ const playStop = () => {
     let enabled = myVideoStream.getVideoTracks()[0].enabled;
     if (enabled) {
         myVideoStream.getVideoTracks()[0].enabled = false;
-        document.querySelector('.main__video_button').innerHTML = `<i class="stop fas fa-video-slash"></i><span>Play Video</span>`
+        document.querySelector('.main__video_button').innerHTML = `<i class="stop fas fa-video-slash"></i>`
     } else {
-        document.querySelector('.main__video_button').innerHTML=`<i class="fas fa-video"></i><span>Stop Video</span>`
+        document.querySelector('.main__video_button').innerHTML=`<i class="fas fa-video"></i>`
         myVideoStream.getVideoTracks()[0].enabled = true;
     }
 }

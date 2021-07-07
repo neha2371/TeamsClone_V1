@@ -139,7 +139,8 @@ input {
   transform: scaleX(-1);
 }
 #screenShareReminder{
-    color: #A9A9A9;
+    background-color: #A9A9A9;
     display: flex;
     top: 25px;
+    text-align: center;
 }
