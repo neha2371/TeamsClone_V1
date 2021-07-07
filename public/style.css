@@ -138,3 +138,8 @@ input {
   -webkit-transform: scaleX(-1);
   transform: scaleX(-1);
 }
+#screenShareReminder{
+    color: #A9A9A9;
+    display: flex;
+    top: 25px;
+}
