@@ -145,12 +145,10 @@ input {
     color: #fff;
     height: 40px;
     margin: 16px 16px 0;
-    padding-left: 16px;
+    padding: 16px;
     justify-content: space-between;
     font-size: 18px;
-    height: 10%;
-    
-
+    display: inline-flex;
 }
 
 
