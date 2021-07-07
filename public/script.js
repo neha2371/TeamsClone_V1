@@ -313,13 +313,7 @@ function handlePeerDisconnect(video) {
 }
 function timer()
 {
-    var d = new Date();
-    var h = d.getHours();
-    var m = d.getMinutes();
-    var date = d.getDate();
-    var month = d.getMonth();
-    var year = d.getYear();
-    document.getElementById("time").innerHTML = h + " : " + m + " | " + month + " " + date + ", " + year;
+    document.getElementById("time").innerHTML = new Date().toLocaleTimeString()+" | "+ new Date().toLocaleDateString()
     setTimeout("timer()",1000)
     
 }
