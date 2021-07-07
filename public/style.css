@@ -1,6 +1,7 @@
 .main {
     height: 100vh;
     display: flex;
+    background-color: black;
 }
 
 .main__left {
@@ -146,10 +147,9 @@ input {
     margin: 16px 16px 0;
     padding-left: 16px;
     justify-content: space-between;
-   
     font-size: 18px;
-    height: 100%;
-    padding-left: 16px;
+    height: 10%;
+    
 
 }
 
