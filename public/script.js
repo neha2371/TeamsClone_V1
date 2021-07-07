@@ -180,7 +180,10 @@ const shareUnshare = () => {
         document.querySelector('.main__screen_button').innerHTML = `<i class="fas fa-arrow-alt-circle-up"></i>`
         document.querySelector('.main__screen_button').setAttribute("title", "Present Screen")
         document.getElementById("shareScreen").classList.remove("active-btn");
+        document.getElementById("altStop").classList.add("screen-hide");
+
     } else {
+        document.getElementById("altStop").classList.remove("screen-hide");
         document.querySelector('.main__screen_button').innerHTML = `<i class="fas fa-arrow-circle-down"></i>`
         document.querySelector('.main__screen_button').setAttribute("title", "Stop Presenting");
         document.getElementById("shareScreen").classList.add("active-btn");
