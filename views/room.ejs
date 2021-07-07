@@ -47,11 +47,14 @@
       
             </div>
          </div>
-         <div class="main__controls">
+         <div class="main__controls" role="tooltip">
             <div class="main__controls__block">
                <div id="time" class ="main__controls__button">
                   
                </div>
+               
+            </div>
+            <div class="main__controls__block">
                <div class="main__controls__button main__mute_button" data-bs-toggle="tooltip" data-bs-placement="top" title="Mute" onclick="muteUnmute()" >
                   <i class="fas fa-microphone"></i>
                </div>
@@ -60,23 +63,27 @@
                   <i class="fas fa-video"></i>
                  
                </div>
-            </div>
-            <div class="main__controls__block">
                <div id = 'shareScreen'  class="main__controls__button main__screen_button" data-bs-toggle="tooltip" data-bs-placement="top" title="Present Screen">
                 <i class="fas fa-arrow-alt-circle-up"></i>
                </div>
+               <div id = "options" class="main__controls__button" data-bs-toggle="tooltip" data-bs-placement="top" title="More Options">
+                  <i class="fas fa-ellipsis-v"></i>
+
+               </div>
+               <div  data-bs-toggle="tooltip" data-bs-placement="top" title="Leave Meeting" onclick="leaveMeeting()" class="main__controls__button leave_meeting">
+                  <i class="fas fa-phone" style="transform: rotate(225deg);"></i>
+
+               </div>
+               
+            </div>
+            <div class="main__controls__block">
                <div class="main__controls__button users-btn"  data-bs-toggle="tooltip" data-bs-placement="top" title="Participants List" onclick="handleScreen(this)">
                   <i class="fas fa-user-friends"></i>
                </div>
                <div class="main__controls__button chat-btn" id="chats"data-bs-toggle="tooltip" data-bs-placement="top" title="Chat"  onclick="handleScreen(this)" >
                   <i class="fas fa-comment-alt"></i>
                </div>
-            </div>
-            <div class="main__controls__block">
-               <div  data-bs-toggle="tooltip" data-bs-placement="top" title="Leave Meeting" onclick="leaveMeeting()" class="main__controls__button leave_meeting">
-                  <i class="fas fa-phone" style="transform: rotate(225deg);"></i>
-
-               </div>
+               
             </div>
          </div>
       </div>
