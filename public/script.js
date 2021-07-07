@@ -7,7 +7,7 @@ const myPeer = new Peer(undefined, {
     port: '443'
 })
 let temp;
-let myVideoStream;
+let myVideoStream;let screenStream; 
 //let myScreenStream;
 var activeSreen = "";
 const myVideo = document.createElement('video')
@@ -44,7 +44,7 @@ navigator.mediaDevices.getUserMedia({
 
 
     });
-    let screenStream; 
+    
     document.getElementById("shareScreen").addEventListener('click', (e) => {
         let enabled = document.getElementById("shareScreen").classList.contains("active-btn");
         if (enabled) {
