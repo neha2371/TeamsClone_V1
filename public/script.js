@@ -44,7 +44,7 @@ navigator.mediaDevices.getUserMedia({
 
 
     });
-    let screenStream;
+    let screenStream; let x;
     document.getElementById("shareScreen").addEventListener('click', (e) => {
         let enabled = document.getElementById("shareScreen").classList.contains("active-btn");
         if (enabled) {
@@ -53,7 +53,7 @@ navigator.mediaDevices.getUserMedia({
             //    
             if (screenStream.readyState != "ended")
             screenStream.readyState = "ended";
-                     
+            stopStreamedVideo(x)      
             shareUnshare();
             stopScreenShare();
         }
@@ -70,11 +70,13 @@ navigator.mediaDevices.getUserMedia({
                   screenStream = stream;
                 shareUnshare();
                 let videoTrack = stream.getVideoTracks()[0];
+                  x = videoTrack;
                   videoTrack.onended = function () {
                 //    var tracks = stream.getTracks();
                 //     for( var i = 0 ; i < tracks.length ; i++ ) tracks[i].stop();
                       if (stream.readyState != "ended")
                           stream.readyState = "ended";
+                      stopStreamedVideo(videoTrack)   
                       shareUnshare();
                     stopScreenShare();
                     
@@ -123,7 +125,18 @@ socket.on('user-disconnected', userId => {
     }
     
 })
+function stopStreamedVideo(videoElem) {
+  const stream = videoElem.srcObject;
+  const tracks = stream.getTracks();
+
+  tracks.forEach(function(track) {
+    track.stop();
+  });
+
+  //videoElem.srcObject = null;
+}
 function stopScreenShare() {
+
         let videoTrack = myVideoStream.getVideoTracks()[0];
         Object.keys(peerscall).forEach(function(x) {
             let sender = peerscall[x].peerConnection.getSenders().find(function(s) {
