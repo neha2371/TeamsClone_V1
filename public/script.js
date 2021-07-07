@@ -65,7 +65,6 @@ navigator.mediaDevices.getUserMedia({
                 shareUnshare();
                 let videoTrack = stream.getVideoTracks()[0];
                 videoTrack.onended = function () {
-                     document.getElementById("shareScreen").classList.remove("active-btn");
                     shareUnshare();
                     stopScreenShare();
                     
@@ -83,7 +82,10 @@ navigator.mediaDevices.getUserMedia({
         }
 
     });
-
+    document.getElementById("altStop").addEventListener('click', (e)=> {
+    shareUnshare();
+    stopScreenShare();
+    })
     socket.on('user-connected', userId => {
         connectToNewUser(userId, stream)
     })

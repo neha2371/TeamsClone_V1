@@ -145,12 +145,9 @@ input {
     color: #fff;
     height: 40px;
     margin: 16px 16px 0;
-    padding: 16px;
+    padding: 0px 16px;
     justify-content: space-between;
     font-size: 18px;
     display: inline-flex;
 }
 
-
-
-}
