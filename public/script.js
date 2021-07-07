@@ -6,6 +6,7 @@ const myPeer = new Peer(undefined, {
     host: '/',
     port: '443'
 })
+timer();
 let temp;
 let myVideoStream;let screenStream; 
 //let myScreenStream;
@@ -310,4 +311,10 @@ function handlePeerDisconnect(video) {
     video.remove();
 
 }
-document.getElementById("time").innerHTML = new Date().toLocaleTimeString();
+function timer()
+{
+    document.getElementById("time").innerHTML = new Date().toLocaleTimeString();
+    setTimeout("timer()",1000)
+    
+}
+
