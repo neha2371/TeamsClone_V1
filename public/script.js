@@ -36,18 +36,20 @@ navigator.mediaDevices.getUserMedia({
     });
 
     myPeer.on('call', call => {
-        peerscall[call.peer] = call;
-        call.answer(stream)
-        var video = document.createElement('video')
-        call.on('stream', userVideoStream => {
-            addVideoStream(video, userVideoStream, call.peer)
-            /*document.getElementById("incVideo").addEventListener("click", () => {
-                videoOnOff(video, userVideoStream);
-            })*/
-        });
-
-        if(call.stream.getVideoTracks()[0].enabled == true) console.log("yay");
-        else console.log(":(");
+        let ansCall = confirm("Someone wants to join. Do you confirm?")
+        if(ansCall){
+            peerscall[call.peer] = call;
+            call.answer(stream)
+            var video = document.createElement('video')
+            call.on('stream', userVideoStream => {
+                addVideoStream(video, userVideoStream, call.peer)
+                /*document.getElementById("incVideo").addEventListener("click", () => {
+                    videoOnOff(video, userVideoStream);
+                })*/
+            });
+            }
+        /*if(call.stream.getVideoTracks()[0].enabled == true) console.log("yay");
+        else console.log(":(");*/
     });
     
     document.getElementById("shareScreen").addEventListener('click', (e) => {
