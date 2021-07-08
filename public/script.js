@@ -36,18 +36,15 @@ navigator.mediaDevices.getUserMedia({
     });
 
     myPeer.on('call', call => {
-        let ansCall = confirm("Someone wants to join. Do you confirm?")
-        if(ansCall){
-            peerscall[call.peer] = call;
-            call.answer(stream)
-            var video = document.createElement('video')
-            call.on('stream', userVideoStream => {
-                addVideoStream(video, userVideoStream, call.peer)
+        peerscall[call.peer] = call;
+        call.answer(stream)
+        var video = document.createElement('video')
+        call.on('stream', userVideoStream => {
+        addVideoStream(video, userVideoStream, call.peer)
                 /*document.getElementById("incVideo").addEventListener("click", () => {
                     videoOnOff(video, userVideoStream);
                 })*/
-            });
-            }
+        });
         /*if(call.stream.getVideoTracks()[0].enabled == true) console.log("yay");
         else console.log(":(");*/
     });
@@ -107,7 +104,10 @@ navigator.mediaDevices.getUserMedia({
     stopScreenShare();
     })
     socket.on('user-connected', userId => {
-        connectToNewUser(userId, stream)
+        let ansCall = confirm("Someone wants to join. Do you confirm?")
+        if(ansCall){
+            connectToNewUser(userId, stream)
+        }
     })
     
 
