@@ -222,17 +222,17 @@ function unmutePage() {
     [].forEach.call(elems, function(elem) { unmuteMe(elem); });
 }
 document.getElementById("incAudio").addEventListener('click', (e) => {
-    let enabled = document.getElementsById("incAudio").classList.contains("active-btn")
+    let enabled = document.getElementById("incAudio").classList.contains("active-btn")
     if(enabled)
     {
-        document.getElementsById("incAudio").classList.remove("active-btn")
-        document.getElementsById("incAudio").innerHTML = `<i class="fas fa-volume-mute"></i> "Stop Incoming Audio"`
+        document.getElementById("incAudio").classList.remove("active-btn")
+        document.getElementById("incAudio").innerHTML = `<i class="fas fa-volume-mute"></i> "Stop Incoming Audio"`
         unmutePage();
     }
     else
     {
-        document.getElementsById("incAudio").classList.add("active-btn")
-        document.getElementsById("incAudio").innerHTML = `<i class="fas fa-volume"></i>"Play Incoming audio"`
+        document.getElementById("incAudio").classList.add("active-btn")
+        document.getElementById("incAudio").innerHTML = `<i class="fas fa-volume"></i>"Play Incoming audio"`
         mutePage();
     }
 })
