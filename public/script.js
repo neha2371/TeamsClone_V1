@@ -234,7 +234,7 @@ document.getElementById("incVideo").addEventListener('click', (e) => {
                     document.getElementById("incVideo").innerHTML=`<i class="fas fa-video-slash"></i>Stop Incoming Video`
                    for(let x in peerscall) {
                        console.log(x);
-                       console.log(peerscall[x]);
+                    //    console.log(peerscall[x]);
                        peerscall[x].stream.getVideoTracks()[0].enabled = true;
                     }
                     // var elems = document.querySelectorAll("video");
