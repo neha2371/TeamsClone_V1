@@ -193,39 +193,55 @@ function addVideoStream(video, stream, userId) {
 
 }
 
+
+
+
 const scrollToBottom = () => {
     var d = $('.main__chat_window');
     d.scrollTop(d.prop("scrollHeight"));
 }
+function muteMe(elem) {
+    elem.muted = true;
+    //elem.pause();
+}
 
+// Try to mute all video and audio elements on the page
+function mutePage() {
+    var elems = document.querySelectorAll("video, audio");
+
+    [].forEach.call(elems, function(elem) { muteMe(elem); });
+}
+function unmuteMe(elem) {
+    if(elem.id !="self")
+    elem.muted = false;
+  //  elem.pause();
+}
+
+// Try to mute all video and audio elements on the page
+function unmutePage() {
+    var elems = document.querySelectorAll("video, audio");
+
+    [].forEach.call(elems, function(elem) { unmuteMe(elem); });
+}
 document.getElementById("incAudio").addEventListener('click', (e) => {
     let enabled = document.getElementById("incAudio").classList.contains("active-btn")
     if(enabled)
     {
         document.getElementById("incAudio").classList.remove("active-btn")
         document.getElementById("incAudio").innerHTML = `<i class="fas fa-volume-mute"></i> Stop Incoming Audio`
-        var elems = document.querySelectorAll("video, audio");
-        [].forEach.call(elems, function (elem) {
-           if(elem.id !="self")
-            elem.muted = false;
-        });
-
+        unmutePage();
     }
     else
     {
         document.getElementById("incAudio").classList.add("active-btn")
         document.getElementById("incAudio").innerHTML = `<i class="fas fa-volume-up"></i> Play Incoming audio`
-        var elems = document.querySelectorAll("video, audio");
-        [].forEach.call(elems, function (elem) {
-            elem.muted = true;
-        });
+        mutePage();
     }
 })
 const videoOnOff = (video,userVideoStream) => {
     let enabled = video.srcObject;
                 if(!enabled)
                 {
-                    console.log("I was triggered2")
                     document.getElementById("incVideo").classList.remove("active-btn");
                     document.getElementById("incVideo").innerHTML=`<i class="fas fa-video-slash"></i>Stop Incoming Video`
                     video.srcObject = userVideoStream;
@@ -241,6 +257,7 @@ const videoOnOff = (video,userVideoStream) => {
 const shareUnshare = () => {
     let enabled = document.getElementById("shareScreen").classList.contains("active-btn");
     if (enabled) {
+        //myScreenStream.getVideoTracks()[0].enabled = false;
         document.querySelector('.main__screen_button').innerHTML = `<i class="fas fa-arrow-alt-circle-up"></i>`
         document.querySelector('.main__screen_button').setAttribute("title", "Present Screen")
         document.getElementById("shareScreen").classList.remove("active-btn");
