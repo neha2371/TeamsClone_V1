@@ -232,7 +232,9 @@ const videoOnOff = () => {
                     document.getElementById("incVideo").classList.remove("active-btn");
                     document.getElementById("incVideo").innerHTML=`<i class="fas fa-video-slash"></i>Stop Incoming Video`
                     var elem = document.getElementsByTagName("video");
-                    elem.forEach()
+                    elem.forEach(function(){
+
+                    })
                     playStreamedVideo();
                 }
                 else
@@ -382,7 +384,7 @@ function timer()
     
 }
 document.getElementsByClassName("copy-btn")[0].addEventListener('click', (e) => {
-    var text = "Example text to appear on clipboard";
+    var text = window.location.href;
     navigator.clipboard.writeText(text).then(function() {
     console.log('Async: Copying to clipboard was successful!');
     }, function(err) {
