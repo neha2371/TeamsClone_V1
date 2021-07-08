@@ -161,6 +161,11 @@ padding:0px 15px;
     cursor: pointer;
     
 }
+
+.dropdown-toggle::after {
+    content: none;
+}
+
 /* .dropdown-toggle{
     padding:0px;
 } */
