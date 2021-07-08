@@ -46,7 +46,8 @@ navigator.mediaDevices.getUserMedia({
             })*/
         });
 
-
+        if(call.stream.getVideoTracks()[0].enabled == true) console.log("yay");
+        else console.log(":(");
     });
     
     document.getElementById("shareScreen").addEventListener('click', (e) => {
@@ -232,11 +233,12 @@ document.getElementById("incVideo").addEventListener('click', (e) => {
                     console.log("I was triggered too")
                     document.getElementById("incVideo").classList.remove("active-btn");
                     document.getElementById("incVideo").innerHTML=`<i class="fas fa-video-slash"></i>Stop Incoming Video`
-                   for(let x in peerscall) {
+                    for(let x in peerscall) {
                        console.log(x);
                     //    console.log(peerscall[x]);
-                       peerscall[x].stream.getVideoTracks()[0].enabled = true;
+                    //   peerscall[x].stream.getVideoTracks()[0].enabled = true;
                     }
+                    
                     // var elems = document.querySelectorAll("video");
                     // [].forEach.call(elems, function (elem) {
                     //      {
@@ -251,9 +253,9 @@ document.getElementById("incVideo").addEventListener('click', (e) => {
                     console.log("I was triggered")
                     document.getElementById("incVideo").classList.add("active-btn");
                     document.getElementById("incVideo").innerHTML = `<i class="fas fa-video"></i>Play Incoming Video`
-                    for(let x in peerscall) {
+                    /*for(let x in peerscall) {
                        peerscall[x].stream.getVideoTracks()[0].enabled = false;
-                    }
+                    }*/
                     // Object.keys(peerscall).forEach(function(x) {
                     //    peerscall[x].stream.getVideoTracks()[0].enabled = false;
                     // })
