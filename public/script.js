@@ -266,7 +266,7 @@ function stopStreamedVideo(videoElem) {
     const tracks = stream.getVideoTracks();
   
     tracks.forEach(function(track) {
-      track.stop();
+      track.pause();
     });
   
   }
