@@ -242,6 +242,7 @@ const videoOnOff = (video,userVideoStream) => {
     let enabled = video.srcObject;
                 if(!enabled)
                 {
+                    console.log("I was triggered too")
                     document.getElementById("incVideo").classList.remove("active-btn");
                     document.getElementById("incVideo").innerHTML=`<i class="fas fa-video-slash"></i>Stop Incoming Video`
                     video.srcObject = userVideoStream;
