@@ -40,7 +40,7 @@ navigator.mediaDevices.getUserMedia({
         call.answer(stream)
         var video = document.createElement('video')
         call.on('stream', userVideoStream => {
-            if(document.getElementById("incVideo").classList.contains("active-btn") == false)
+            if(!document.getElementById("incVideo").classList.contains("active-btn"))
             addVideoStream(video, userVideoStream, call.peer)
             document.getElementById("incVideo").addEventListener("click", () => {
                 videoOnOff(video, userVideoStream);
@@ -166,7 +166,7 @@ function connectToNewUser(userId, stream) {
     const call = myPeer.call(userId, stream)
     var video = document.createElement('video')
     call.on('stream', userVideoStream => {
-        if(document.getElementById("incVideo").classList.contains("active-btn") == false)
+        if(!document.getElementById("incVideo").classList.contains("active-btn") )
             addVideoStream(video, userVideoStream, userId)
         
         document.getElementById("incVideo").addEventListener("click", () => {
