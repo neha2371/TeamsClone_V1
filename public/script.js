@@ -235,8 +235,9 @@ document.getElementById("incVideo").addEventListener('click', (e) => {
                     var elems = document.querySelectorAll("video");
                     [].forEach.call(elems, function (elem) {
                          {
-                             if (elem.id != "self")
-                            playStreamedVideo(elem);
+                            if (elem.id != "self")
+                                 elem.play();
+                            //playStreamedVideo(elem);
                         }
                     });
                 }
@@ -248,8 +249,9 @@ document.getElementById("incVideo").addEventListener('click', (e) => {
                     var elems = document.querySelectorAll("video");
                     [].forEach.call(elems, function (elem) {
                          {
-                             if (elem.id != "self")
-                            stopStreamedVideo(elem);
+                            if (elem.id != "self")
+                                elem.pause();
+                            //stopStreamedVideo(elem);
                         }
                     });
                     // elem.forEach(function (vidEl) {
@@ -266,7 +268,7 @@ function stopStreamedVideo(videoElem) {
     const tracks = stream.getVideoTracks();
   
     tracks.forEach(function(track) {
-      track.pause();
+      track.stop();
     });
   
   }
