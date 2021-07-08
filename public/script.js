@@ -103,18 +103,19 @@ navigator.mediaDevices.getUserMedia({
     shareUnshare();
     stopScreenShare();
     })
-    let ansCall;
     socket.on('user-connected', userId => {
         let ansCall = false;
         $('#myModal').modal({
             show: true
         });
-        $('#acceptCall').click(ansCall = true)
-        if(ansCall){
+        $('#acceptCall').click(function() {
             connectToNewUser(userId, stream)
+        })
+        /*if(ansCall){
+            
         }else{
             console.log("call-denied")
-        }
+        }*/
     })
     
 
