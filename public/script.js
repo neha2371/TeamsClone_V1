@@ -232,9 +232,9 @@ document.getElementById("incVideo").addEventListener('click', (e) => {
                     console.log("I was triggered too")
                     document.getElementById("incVideo").classList.remove("active-btn");
                     document.getElementById("incVideo").innerHTML=`<i class="fas fa-video-slash"></i>Stop Incoming Video`
-                    Object.keys(peerscall).forEach(function(x) {
+                   for(const x in peerscall) {
                        peerscall[x].stream.getVideoTracks()[0].enabled = true;
-                    })
+                    }
                     // var elems = document.querySelectorAll("video");
                     // [].forEach.call(elems, function (elem) {
                     //      {
@@ -249,9 +249,12 @@ document.getElementById("incVideo").addEventListener('click', (e) => {
                     console.log("I was triggered")
                     document.getElementById("incVideo").classList.add("active-btn");
                     document.getElementById("incVideo").innerHTML = `<i class="fas fa-video"></i>Play Incoming Video`
-                    Object.keys(peerscall).forEach(function(x) {
+                    for(const x in peerscall) {
                        peerscall[x].stream.getVideoTracks()[0].enabled = false;
-                    })
+                    }
+                    // Object.keys(peerscall).forEach(function(x) {
+                    //    peerscall[x].stream.getVideoTracks()[0].enabled = false;
+                    // })
                     // var elems = document.querySelectorAll("video");
                     // [].forEach.call(elems, function (elem) {
                     //      {
