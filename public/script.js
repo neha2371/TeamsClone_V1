@@ -104,12 +104,7 @@ navigator.mediaDevices.getUserMedia({
     stopScreenShare();
     })
     socket.on('user-connected', userId => {
-        let ansCall = confirm("Someone wants to join. Do you confirm?")
-        if(ansCall){
             connectToNewUser(userId, stream)
-        }else{
-            console.log("call-denied")
-        }
     })
     
 
