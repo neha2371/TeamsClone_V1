@@ -244,7 +244,7 @@ const videoOnOff = () => {
                     document.getElementById("incVideo").innerHTML=`<i class="fas fa-video"></i>Play Incoming Video`
                     var elem = document.getElementsByTagName("video");
                     elem.forEach(function (vidEl) {
-                        console.log(vidE1.id)
+                        console.log(vidEl.id)
                         if(vidEl.id != "self")
                         stopStreamedVideo(vidEl);
                     })
