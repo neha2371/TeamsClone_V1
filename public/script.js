@@ -227,7 +227,7 @@ document.getElementById("incAudio").addEventListener('click', (e) => {
 })
 document.getElementById("incVideo").addEventListener('click', (e) => {
     let enabled = document.getElementById("incVideo").classList.contains("active-btn");
-                if(!enabled)
+                if(enabled)
                 {
                     console.log("I was triggered too")
                     document.getElementById("incVideo").classList.remove("active-btn");
