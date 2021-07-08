@@ -221,18 +221,18 @@ function unmutePage() {
 
     [].forEach.call(elems, function(elem) { unmuteMe(elem); });
 }
-document.getElementsByClassName("incAudio").addEventListener('click', (e) => {
-    let enabled = document.getElementsByClassName("incAudio").classList.contains("active-btn")
+document.getElementsById("incAudio").addEventListener('click', (e) => {
+    let enabled = document.getElementsById("incAudio").classList.contains("active-btn")
     if(enabled)
     {
-        document.getElementsByClassName("incAudio").classList.remove("active-btn")
-        document.getElementsByClassName("incAudio").innerHTML = `<i class="fas fa-volume-mute"></i> "Stop Incoming Audio"`
+        document.getElementsById("incAudio").classList.remove("active-btn")
+        document.getElementsById("incAudio").innerHTML = `<i class="fas fa-volume-mute"></i> "Stop Incoming Audio"`
         unmutePage();
     }
     else
     {
-        document.getElementsByClassName("incAudio").classList.add("active-btn")
-        document.getElementsByClassName("incAudio").innerHTML = `<i class="fas fa-volume"></i>"Play Incoming audio"`
+        document.getElementsById("incAudio").classList.add("active-btn")
+        document.getElementsById("incAudio").innerHTML = `<i class="fas fa-volume"></i>"Play Incoming audio"`
         mutePage();
     }
 })
