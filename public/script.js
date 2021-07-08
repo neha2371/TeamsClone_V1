@@ -158,10 +158,6 @@ myPeer.on('open', id => {
 })
 
 function connectToNewUser(userId, stream) {
-    console.log("I am ");
-    console.log(temp);
-    console.log("calling ");
-    console.log(userId);
     const conn = myPeer.connect(userId, {
         metadata: {
             uniId: temp
@@ -171,8 +167,9 @@ function connectToNewUser(userId, stream) {
     var video = document.createElement('video')
     call.on('stream', userVideoStream => {
         if(document.getElementById("incVideo").classList.contains("active-btn") == false)
-        addVideoStream(video, userVideoStream, userId)
-         document.getElementById("incVideo").addEventListener("click", () => {
+            addVideoStream(video, userVideoStream, userId)
+        
+        document.getElementById("incVideo").addEventListener("click", () => {
                 videoOnOff(video, userVideoStream);
             })
     })
@@ -188,7 +185,7 @@ function connectToNewUser(userId, stream) {
 }
 
 function addVideoStream(video, stream, userId) {
-
+    console.log("I am ad video Stream");
     video.srcObject = stream
     video.addEventListener('loadedmetadata', () => {
         video.play()
