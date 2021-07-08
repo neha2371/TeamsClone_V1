@@ -104,19 +104,12 @@ navigator.mediaDevices.getUserMedia({
     stopScreenShare();
     })
     socket.on('user-connected', userId => {
-        document.getElementById("myModal").classList.remove("screen-hide");
-        $('#acceptCall').click(function() {
+        let ansCall = confirm("Someone wants to join. Do you confirm?")
+        if(ansCall){
             connectToNewUser(userId, stream)
-            document.getElementById("myModal").classList.add("screen-hide");
-        });
-        $('#declineCall').click(function() {
-            document.getElementById("myModal").classList.add("screen-hide")
-        })
-        /*if(ansCall){
-            
         }else{
             console.log("call-denied")
-        }*/
+        }
     })
     
 
