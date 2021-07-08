@@ -41,9 +41,9 @@ navigator.mediaDevices.getUserMedia({
         var video = document.createElement('video')
         call.on('stream', userVideoStream => {
             addVideoStream(video, userVideoStream, call.peer)
-            document.getElementById("incVideo").addEventListener("click", () => {
+            /*document.getElementById("incVideo").addEventListener("click", () => {
                 videoOnOff(video, userVideoStream);
-            })
+            })*/
         });
 
 
@@ -167,9 +167,9 @@ function connectToNewUser(userId, stream) {
     call.on('stream', userVideoStream => {
             addVideoStream(video, userVideoStream, userId)
         
-        document.getElementById("incVideo").addEventListener("click", () => {
+        /*document.getElementById("incVideo").addEventListener("click", () => {
                 videoOnOff(video, userVideoStream);
-            })
+            })*/
     })
 
     conn.on('close', () => {
@@ -224,14 +224,16 @@ document.getElementById("incAudio").addEventListener('click', (e) => {
         });
     }
 })
-const videoOnOff = (video,userVideoStream) => {
+const videoOnOff = () => {
     let enabled = video.srcObject;
                 if(!enabled)
                 {
                     console.log("I was triggered too")
                     document.getElementById("incVideo").classList.remove("active-btn");
                     document.getElementById("incVideo").innerHTML=`<i class="fas fa-video-slash"></i>Stop Incoming Video`
-                    video.srcObject = userVideoStream;
+                    var elem = document.getElementsByTagName("video");
+                    elem.forEach()
+                    playStreamedVideo();
                 }
                 else
                 {
@@ -241,6 +243,26 @@ const videoOnOff = (video,userVideoStream) => {
                     video.srcObject = null;
                 }
 }
+function stopStreamedVideo(videoElem) {
+    const stream = videoElem.srcObject;
+    const tracks = stream.getVideoTracks();
+  
+    tracks.forEach(function(track) {
+      track.stop();
+    });
+  
+  }
+  function playStreamedVideo(videoElem) {
+    const stream = videoElem.srcObject;
+    const tracks = stream.getVideoTracks();
+  
+    tracks.forEach(function(track) {
+      track.play();
+    });
+  
+  }
+
+
 const shareUnshare = () => {
     let enabled = document.getElementById("shareScreen").classList.contains("active-btn");
     if (enabled) {
@@ -359,4 +381,12 @@ function timer()
     setTimeout("timer()",1000)
     
 }
+document.getElementsByClassName("copy-btn")[0].addEventListener('click', (e) => {
+    var text = "Example text to appear on clipboard";
+    navigator.clipboard.writeText(text).then(function() {
+    console.log('Async: Copying to clipboard was successful!');
+    }, function(err) {
+    console.error('Async: Could not copy text: ', err);
+});
+})
 
