@@ -232,17 +232,21 @@ const videoOnOff = () => {
                     document.getElementById("incVideo").classList.remove("active-btn");
                     document.getElementById("incVideo").innerHTML=`<i class="fas fa-video-slash"></i>Stop Incoming Video`
                     var elem = document.getElementsByTagName("video");
-                    elem.forEach(function(){
-
+                    elem.forEach(function(vidEl){
+                        if(vidEl.id != "self")
+                        playStreamedVideo(vidEl);
                     })
-                    playStreamedVideo();
                 }
                 else
                 {
                     console.log("I was triggered")
                     document.getElementById("incVideo").classList.add("active-btn");
                     document.getElementById("incVideo").innerHTML=`<i class="fas fa-video"></i>Play Incoming Video`
-                    video.srcObject = null;
+                    var elem = document.getElementsByTagName("video");
+                    elem.forEach(function(vidEl){
+                        if(vidEl.id != "self")
+                        stopStreamedVideo(vidEl);
+                    })
                 }
 }
 function stopStreamedVideo(videoElem) {
