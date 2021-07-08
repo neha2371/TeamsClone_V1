@@ -226,13 +226,13 @@ document.getElementById("incAudio").addEventListener('click', (e) => {
     if(enabled)
     {
         document.getElementById("incAudio").classList.remove("active-btn")
-        document.getElementById("incAudio").innerHTML = `<i class="fas fa-volume-mute"></i> "Stop Incoming Audio"`
+        document.getElementById("incAudio").innerHTML = `<i class="fas fa-volume-mute"></i> Stop Incoming Audio`
         unmutePage();
     }
     else
     {
         document.getElementById("incAudio").classList.add("active-btn")
-        document.getElementById("incAudio").innerHTML = `<i class="fas fa-volume"></i>"Play Incoming audio"`
+        document.getElementById("incAudio").innerHTML = `<i class="fas fa-volume-up"></i> Play Incoming audio`
         mutePage();
     }
 })
