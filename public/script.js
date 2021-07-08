@@ -232,8 +232,8 @@ document.getElementById("incVideo").addEventListener('click', (e) => {
                     console.log("I was triggered too")
                     document.getElementById("incVideo").classList.remove("active-btn");
                     document.getElementById("incVideo").innerHTML=`<i class="fas fa-video-slash"></i>Stop Incoming Video`
-                   for(const x in peerscall) {
-                       x.stream.getVideoTracks()[0].enabled = true;
+                   for(let x in peerscall) {
+                       peerscall[x].stream.getVideoTracks()[0].enabled = true;
                     }
                     // var elems = document.querySelectorAll("video");
                     // [].forEach.call(elems, function (elem) {
@@ -249,8 +249,8 @@ document.getElementById("incVideo").addEventListener('click', (e) => {
                     console.log("I was triggered")
                     document.getElementById("incVideo").classList.add("active-btn");
                     document.getElementById("incVideo").innerHTML = `<i class="fas fa-video"></i>Play Incoming Video`
-                    for(const x in peerscall) {
-                       x.stream.getVideoTracks()[0].enabled = false;
+                    for(let x in peerscall) {
+                       peerscall[x].stream.getVideoTracks()[0].enabled = false;
                     }
                     // Object.keys(peerscall).forEach(function(x) {
                     //    peerscall[x].stream.getVideoTracks()[0].enabled = false;
@@ -272,7 +272,7 @@ document.getElementById("incVideo").addEventListener('click', (e) => {
                 }
 })
 
-function stopStreamedVideo(videoElem) {
+/*function stopStreamedVideo(videoElem) {
     const stream = videoElem.srcObject;
     const tracks = stream.getVideoTracks();
   
@@ -289,7 +289,7 @@ function playStreamedVideo(videoElem) {
       track.play();
     });
   
-  }
+  }*/
 
 
 const shareUnshare = () => {
