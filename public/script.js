@@ -243,7 +243,8 @@ const videoOnOff = () => {
                     document.getElementById("incVideo").classList.add("active-btn");
                     document.getElementById("incVideo").innerHTML=`<i class="fas fa-video"></i>Play Incoming Video`
                     var elem = document.getElementsByTagName("video");
-                    elem.forEach(function(vidEl){
+                    elem.forEach(function (vidEl) {
+                        console.log(vide1.id)
                         if(vidEl.id != "self")
                         stopStreamedVideo(vidEl);
                     })
