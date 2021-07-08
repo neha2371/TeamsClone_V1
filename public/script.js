@@ -189,6 +189,7 @@ function addVideoStream(video, stream, userId) {
         video.play()
     })
     video.id = userId
+    video.addClass ="otherVideos"
     videoGrid.append(video)
 
 }
@@ -224,32 +225,42 @@ document.getElementById("incAudio").addEventListener('click', (e) => {
         });
     }
 })
-const videoOnOff = () => {
-    let enabled = video.srcObject;
+document.getElementById("incVideo").addEventListener('click', (e) => {
+    let enabled = document.getElementById("incVideo").classList.contains("active-btn");
                 if(!enabled)
                 {
                     console.log("I was triggered too")
                     document.getElementById("incVideo").classList.remove("active-btn");
                     document.getElementById("incVideo").innerHTML=`<i class="fas fa-video-slash"></i>Stop Incoming Video`
-                    var elem = document.getElementsByTagName("video");
-                    elem.forEach(function(vidEl){
-                        if(vidEl.id != "self")
-                        playStreamedVideo(vidEl);
-                    })
+                    var elems = document.querySelectorAll("video");
+                    [].forEach.call(elems, function (elem) {
+                         {
+                             if (elem.id != "self")
+                            playStreamedVideo(elem);
+                        }
+                    });
                 }
                 else
                 {
                     console.log("I was triggered")
                     document.getElementById("incVideo").classList.add("active-btn");
                     document.getElementById("incVideo").innerHTML=`<i class="fas fa-video"></i>Play Incoming Video`
-                    var elem = document.getElementsByTagName("video");
-                    elem.forEach(function (vidEl) {
-                        console.log(vidEl.id)
-                        if(vidEl.id != "self")
-                        stopStreamedVideo(vidEl);
-                    })
+                    var elems = document.querySelectorAll("video");
+                    [].forEach.call(elems, function (elem) {
+                         {
+                             if (elem.id != "self")
+                            stopStreamedVideo(elem);
+                        }
+                    });
+                    // elem.forEach(function (vidEl) {
+                    //     console.log(vidEl.id)
+                        
+                    //     if(vidEl.id != "self")
+                    //     stopStreamedVideo(vidEl);
+                    // })
                 }
-}
+})
+
 function stopStreamedVideo(videoElem) {
     const stream = videoElem.srcObject;
     const tracks = stream.getVideoTracks();
@@ -259,7 +270,7 @@ function stopStreamedVideo(videoElem) {
     });
   
   }
-  function playStreamedVideo(videoElem) {
+function playStreamedVideo(videoElem) {
     const stream = videoElem.srcObject;
     const tracks = stream.getVideoTracks();
   
