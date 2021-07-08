@@ -221,7 +221,7 @@ function unmutePage() {
 
     [].forEach.call(elems, function(elem) { unmuteMe(elem); });
 }
-document.getElementsById("incAudio").addEventListener('click', (e) => {
+document.getElementById("incAudio").addEventListener('click', (e) => {
     let enabled = document.getElementsById("incAudio").classList.contains("active-btn")
     if(enabled)
     {
