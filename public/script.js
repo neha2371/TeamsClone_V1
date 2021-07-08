@@ -41,7 +41,9 @@ navigator.mediaDevices.getUserMedia({
         var video = document.createElement('video')
         call.on('stream', userVideoStream => {
             addVideoStream(video, userVideoStream, call.peer)
- 
+            document.getElementById("incVideo").addEventListener("click", () => {
+                videoOnOff(video, userVideoStream);
+            })
         });
 
 
@@ -168,6 +170,9 @@ function connectToNewUser(userId, stream) {
     var video = document.createElement('video')
     call.on('stream', userVideoStream => {
         addVideoStream(video, userVideoStream, userId)
+         document.getElementById("incVideo").addEventListener("click", () => {
+                videoOnOff(video, userVideoStream);
+            })
     })
 
     conn.on('close', () => {
@@ -236,7 +241,21 @@ document.getElementById("incAudio").addEventListener('click', (e) => {
         mutePage();
     }
 })
-
+const videoOnOff = (video,userVideoStream) => {
+    let enabled = document.getElementById("incVideo").classList.contains("active-btn")
+                if(enabled)
+                {
+                    document.getElementById("incVideo").classList.remove("active-btn");
+                    document.getElementById("incVideo").innerHTML=`<i class="fas fa-video-slash"></i>Stop Incoming Video`
+                    video.srcObject = userVideoStream;
+                }
+                else
+                {
+                    document.getElementById("incVideo").classList.add("active-btn");
+                    document.getElementById("incVideo").innerHTML=`<i class="fas fa-video"></i>Play Incoming Video`
+                    video.srcObject = null;
+                }
+}
 const shareUnshare = () => {
     let enabled = document.getElementById("shareScreen").classList.contains("active-btn");
     if (enabled) {
