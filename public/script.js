@@ -240,7 +240,7 @@ document.getElementById("incAudio").addEventListener('click', (e) => {
 })
 const videoOnOff = (video,userVideoStream) => {
     let enabled = video.srcObject;
-                if(enabled)
+                if(!enabled)
                 {
                     document.getElementById("incVideo").classList.remove("active-btn");
                     document.getElementById("incVideo").innerHTML=`<i class="fas fa-video-slash"></i>Stop Incoming Video`
