@@ -198,6 +198,44 @@ const scrollToBottom = () => {
     var d = $('.main__chat_window');
     d.scrollTop(d.prop("scrollHeight"));
 }
+function muteMe(elem) {
+    elem.muted = true;
+    //elem.pause();
+}
+
+// Try to mute all video and audio elements on the page
+function mutePage() {
+    var elems = document.querySelectorAll("video, audio");
+
+    [].forEach.call(elems, function(elem) { muteMe(elem); });
+}
+function unmuteMe(elem) {
+    if(elem.id !="self")
+    elem.muted = false;
+  //  elem.pause();
+}
+
+// Try to mute all video and audio elements on the page
+function unmutePage() {
+    var elems = document.querySelectorAll("video, audio");
+
+    [].forEach.call(elems, function(elem) { unmuteMe(elem); });
+}
+document.getElementsByClassName("incAudio").addEventListener('click', (e) => {
+    let enabled = document.getElementsByClassName("incAudio").classList.contains("active-btn")
+    if(enabled)
+    {
+        document.getElementsByClassName("incAudio").classList.remove("active-btn")
+        document.getElementsByClassName("incAudio").innerHTML = `<i class="fas fa-volume-mute"></i> "Stop Incoming Audio"`
+        unmutePage();
+    }
+    else
+    {
+        document.getElementsByClassName("incAudio").classList.add("active-btn")
+        document.getElementsByClassName("incAudio").innerHTML = `<i class="fas fa-volume"></i>"Play Incoming audio"`
+        mutePage();
+    }
+})
 
 const shareUnshare = () => {
     let enabled = document.getElementById("shareScreen").classList.contains("active-btn");
