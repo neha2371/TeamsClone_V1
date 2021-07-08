@@ -167,9 +167,9 @@ function connectToNewUser(userId, stream) {
     call.on('stream', userVideoStream => {
             addVideoStream(video, userVideoStream, userId)
         
-        document.getElementById("incVideo").addEventListener("click", () => {
-                videoOnOff(video, userVideoStream);
-            })
+        // document.getElementById("incVideo").addEventListener("click", () => {
+        //         videoOnOff(video, userVideoStream);
+        //     })
     })
 
     conn.on('close', () => {
