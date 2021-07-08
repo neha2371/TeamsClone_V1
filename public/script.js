@@ -253,6 +253,7 @@ const videoOnOff = (video,userVideoStream) => {
                 }
                 else
                 {
+                    console.log("I was triggered")
                     document.getElementById("incVideo").classList.add("active-btn");
                     document.getElementById("incVideo").innerHTML=`<i class="fas fa-video"></i>Play Incoming Video`
                     video.srcObject = null;
