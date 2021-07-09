@@ -429,7 +429,7 @@ document.getElementsByClassName("copy-btn")[0].addEventListener('click', (e) => 
 
 
 /////////////////////////////////////////////////////////////////////////////
-
+/*
 function signIn() {
     // Sign into Firebase using popup auth & Google as the identity provider.
     var provider = new firebase.auth.GoogleAuthProvider();
@@ -803,4 +803,4 @@ function signIn() {
   
   // We load currently existing chat messages and listen to new ones.
   loadMessages();
-  
+  */
