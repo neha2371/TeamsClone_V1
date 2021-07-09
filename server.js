@@ -1,9 +1,9 @@
-const functions = require('firebase-functions');
-var admin = require('firebase-admin');
-admin.initializeApp({
-    credential: admin.credential.applicationDefault(),
-    databaseURL: 'https://teamsclone-d6c8b.firebaseio.com'
-});
+
+// var admin = require('firebase-admin');
+// admin.initializeApp({
+//     credential: admin.credential.applicationDefault(),
+//     databaseURL: 'https://teamsclone-d6c8b.firebaseio.com'
+// });
 // const defaultApp = admin.initializeApp(defaultAppConfig);
 
 // console.log(defaultApp.name);
@@ -32,8 +32,8 @@ app.get('/', (req, res) => {
 
 })
 
-app.get('/:room', (req, res) => {
-    var roomId = req.params.room;
+app.get('/:homepage', (req, res) => {
+    var roomId = req.params.homepage;
     res.render('homepage', {
         roomId
     })
