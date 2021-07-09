@@ -225,7 +225,7 @@ document.getElementById("incAudio").addEventListener('click', (e) => {
         });
     }
 })
-document.getElementById("incVideo").addEventListener('click', (e) => {
+document.getElementById("incVideo").addEventListener('click', function() {
     let enabled = document.getElementById("incVideo").classList.contains("active-btn");
                 if(enabled)
                 {
@@ -240,19 +240,19 @@ document.getElementById("incVideo").addEventListener('click', (e) => {
                     
                     var elems = document.querySelectorAll("video");
                     [].forEach.call(elems, function (elem) {
-                         {
+                         
                             if (elem.id != "self") {
                                 elem.play();
                                 elem.classList.remove("invisible");
                             }
-                        }
+                        
                             //playStreamedVideo(elem);
                         }
+                    )   
                    
                 }
                 else
                 {
-                    console.log("I was triggered")
                     document.getElementById("incVideo").classList.add("active-btn");
                     document.getElementById("incVideo").innerHTML = `<i class="fas fa-video"></i>Play Incoming Video`
                     /*for(let x in peerscall) {
@@ -263,12 +263,12 @@ document.getElementById("incVideo").addEventListener('click', (e) => {
                     // })
                     var elems = document.querySelectorAll("video");
                     [].forEach.call(elems, function (elem) {
-                         {
+                         
                             if (elem.id != "self") {
                                 elem.pause();
                                 elem.classList.add("invisible")}
                             //stopStreamedVideo(elem);
-                        }
+                        
                     });
                     // elem.forEach(function (vidEl) {
                     //     console.log(vidEl.id)
