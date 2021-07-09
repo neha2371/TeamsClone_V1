@@ -17,6 +17,27 @@
    <script src="/socket.io/socket.io.js" defer></script>
    <link rel="stylesheet" href="style.css">
    <script src="https://kit.fontawesome.com/c939d0e917.js"></script>
+     <script src="/__/firebase/8.6.7/firebase-app.js"></script>
+<script src="/__/firebase/8.6.7/firebase-auth.js"></script>
+<script src="/__/firebase/8.6.7/firebase-storage.js"></script>
+<script src="/__/firebase/8.6.7/firebase-messaging.js"></script>
+<script src="/__/firebase/8.6.7/firebase-firestore.js"></script>
+<script src="/__/firebase/8.6.7/firebase-performance.js"></script>
+<script src="/__/firebase/init.js"></script>
+<script>
+    // Your web app's Firebase configuration
+    var firebaseConfig = {
+        apiKey: "AIzaSyCW6a_IG5mVKM2nG1Df3vucO6FyaDGBuuE",
+        authDomain: "teamsclone-d6c8b.firebaseapp.com",
+        projectId: "teamsclone-d6c8b",
+        storageBucket: "teamsclone-d6c8b.appspot.com",
+        messagingSenderId: "454765526305",
+        appId: "1:454765526305:web:946e5c4a8aa5c763175260"
+    };
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+    const auth = firebase.auth();
+    </script>
    <script src="script.js" defer></script>
    <style>
       #video-grid{

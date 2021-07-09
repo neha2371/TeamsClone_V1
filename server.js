@@ -34,7 +34,7 @@ app.get('/', (req, res) => {
 
 app.get('/:room', (req, res) => {
     var roomId = req.params.room;
-    res.render('room', {
+    res.render('homepage', {
         roomId
     })
 })
