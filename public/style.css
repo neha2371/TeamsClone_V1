@@ -166,6 +166,6 @@ padding:0px 15px;
     content: none;
 }
 
-/* .dropdown-toggle{
-    padding:0px;
-} */
+.invisible{
+    visibility: hidden;
+}

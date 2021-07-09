@@ -232,20 +232,23 @@ document.getElementById("incVideo").addEventListener('click', (e) => {
                     console.log("I was triggered too")
                     document.getElementById("incVideo").classList.remove("active-btn");
                     document.getElementById("incVideo").innerHTML=`<i class="fas fa-video-slash"></i>Stop Incoming Video`
-                    for(let x in peerscall) {
-                       console.log(x);
-                    //    console.log(peerscall[x]);
-                    //   peerscall[x].stream.getVideoTracks()[0].enabled = true;
-                    }
+                    // for(let x in peerscall) {
+                    //    console.log(x);
+                    // //    console.log(peerscall[x]);
+                    // //   peerscall[x].stream.getVideoTracks()[0].enabled = true;
+                    // }
                     
-                    // var elems = document.querySelectorAll("video");
-                    // [].forEach.call(elems, function (elem) {
-                    //      {
-                    //         if (elem.id != "self")
-                    //              elem.play();
-                    //         //playStreamedVideo(elem);
-                    //     }
-                    // });
+                    var elems = document.querySelectorAll("video");
+                    [].forEach.call(elems, function (elem) {
+                         {
+                            if (elem.id != "self") {
+                                elem.play();
+                                elem.classList.remove("invisible");
+                            }
+                        }
+                            //playStreamedVideo(elem);
+                        }
+                   
                 }
                 else
                 {
@@ -258,14 +261,15 @@ document.getElementById("incVideo").addEventListener('click', (e) => {
                     // Object.keys(peerscall).forEach(function(x) {
                     //    peerscall[x].stream.getVideoTracks()[0].enabled = false;
                     // })
-                    // var elems = document.querySelectorAll("video");
-                    // [].forEach.call(elems, function (elem) {
-                    //      {
-                    //         if (elem.id != "self")
-                    //             elem.pause();
-                    //         //stopStreamedVideo(elem);
-                    //     }
-                    // });
+                    var elems = document.querySelectorAll("video");
+                    [].forEach.call(elems, function (elem) {
+                         {
+                            if (elem.id != "self") {
+                                elem.pause();
+                                elem.classList.add("invisible")}
+                            //stopStreamedVideo(elem);
+                        }
+                    });
                     // elem.forEach(function (vidEl) {
                     //     console.log(vidEl.id)
                         
