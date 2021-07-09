@@ -241,12 +241,10 @@ document.getElementById("incVideo").addEventListener('click', function() {
                     var elems = document.querySelectorAll("video");
                     [].forEach.call(elems, function (elem) {
                          
-                            if (elem.id != "self") {
-                                elem.play();
-                                elem.classList.remove("invisible");
-                            }
-                        
-                            //playStreamedVideo(elem);
+                        if (elem.id != "self") {
+                            playStreamedVideo(elem);
+                        }
+                            //
                         }
                     )   
                    
@@ -265,9 +263,9 @@ document.getElementById("incVideo").addEventListener('click', function() {
                     [].forEach.call(elems, function (elem) {
                          
                             if (elem.id != "self") {
-                                elem.pause();
-                                elem.classList.add("invisible")}
-                            //stopStreamedVideo(elem);
+                                stopStreamedVideo(elem);
+                                }
+                            //
                         
                     });
                     // elem.forEach(function (vidEl) {
@@ -279,13 +277,14 @@ document.getElementById("incVideo").addEventListener('click', function() {
                 }
 })
 
-/*function stopStreamedVideo(videoElem) {
+function stopStreamedVideo(videoElem) {
     const stream = videoElem.srcObject;
     const tracks = stream.getVideoTracks();
   
     tracks.forEach(function(track) {
-      track.stop();
+      track.pause();
     });
+    videoElem.classList.add("invisible")
   
   }
 function playStreamedVideo(videoElem) {
@@ -295,8 +294,9 @@ function playStreamedVideo(videoElem) {
     tracks.forEach(function(track) {
       track.play();
     });
+    videoElem.classList.remove("invisible")
   
-  }*/
+  }
 
 
 const shareUnshare = () => {
