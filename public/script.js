@@ -8,7 +8,8 @@ const myPeer = new Peer(undefined, {
 })
 timer();
 let temp;
-let myVideoStream;let screenStream; 
+let myVideoStream;
+let screenStream;
 //let myScreenStream;
 var activeSreen = "";
 const myVideo = document.createElement('video')
@@ -40,30 +41,29 @@ navigator.mediaDevices.getUserMedia({
         call.answer(stream)
         var video = document.createElement('video')
         call.on('stream', userVideoStream => {
-        addVideoStream(video, userVideoStream, call.peer)
-                /*document.getElementById("incVideo").addEventListener("click", () => {
-                    videoOnOff(video, userVideoStream);
-                })*/
+            addVideoStream(video, userVideoStream, call.peer)
+            /*document.getElementById("incVideo").addEventListener("click", () => {
+                videoOnOff(video, userVideoStream);
+            })*/
         });
         /*if(call.stream.getVideoTracks()[0].enabled == true) console.log("yay");
         else console.log(":(");*/
     });
-    
+
     document.getElementById("shareScreen").addEventListener('click', (e) => {
         let enabled = document.getElementById("shareScreen").classList.contains("active-btn");
         if (enabled) {
-    //         var tracks = screenStream.getTracks();
-    // for( var i = 0 ; i < tracks.length ; i++ ) tracks[i].stop();
+            //         var tracks = screenStream.getTracks();
+            // for( var i = 0 ; i < tracks.length ; i++ ) tracks[i].stop();
             //    
             if (screenStream.readyState != "ended")
-            screenStream.readyState = "ended";
-             
+                screenStream.readyState = "ended";
+
             shareUnshare();
-            stopStreamedVideo()     
+            stopStreamedVideo()
             stopScreenShare();
-        }
-        else {
-              navigator.mediaDevices.getDisplayMedia({
+        } else {
+            navigator.mediaDevices.getDisplayMedia({
                 video: {
                     cursor: 'always'
                 },
@@ -71,23 +71,23 @@ navigator.mediaDevices.getUserMedia({
                     echoCancellation: true,
                     noiseSupprission: true
                 }
-              }).then(stream => {
-                  screenStream = stream;
+            }).then(stream => {
+                screenStream = stream;
                 shareUnshare();
                 let videoTrack = stream.getVideoTracks()[0];
-                  videoTrack.onended = function () {
-                //    var tracks = stream.getTracks();
-                //     for( var i = 0 ; i < tracks.length ; i++ ) tracks[i].stop();
-                      if (stream.readyState != "ended")
-                          stream.readyState = "ended";
-                      
-                      shareUnshare();
-                      stopStreamedVideo();
-                        stopScreenShare();
-                    
+                videoTrack.onended = function() {
+                    //    var tracks = stream.getTracks();
+                    //     for( var i = 0 ; i < tracks.length ; i++ ) tracks[i].stop();
+                    if (stream.readyState != "ended")
+                        stream.readyState = "ended";
+
+                    shareUnshare();
+                    stopStreamedVideo();
+                    stopScreenShare();
+
                 }
-                Object.keys(peerscall).forEach(function (x) {
-                    let sender = peerscall[x].peerConnection.getSenders().find(function (s) {
+                Object.keys(peerscall).forEach(function(x) {
+                    let sender = peerscall[x].peerConnection.getSenders().find(function(s) {
                         return s.track.kind == videoTrack.kind;
                     })
                     sender.replaceTrack(videoTrack);
@@ -99,14 +99,14 @@ navigator.mediaDevices.getUserMedia({
         }
 
     });
-    document.getElementById("altStop").addEventListener('click', (e)=> {
-    shareUnshare();
-    stopScreenShare();
+    document.getElementById("altStop").addEventListener('click', (e) => {
+        shareUnshare();
+        stopScreenShare();
     })
     socket.on('user-connected', userId => {
-            connectToNewUser(userId, stream)
+        connectToNewUser(userId, stream)
     })
-    
+
 
     let text = $("input");
 
@@ -114,7 +114,7 @@ navigator.mediaDevices.getUserMedia({
         if (e.which == 13 && text.val().length !== 0) {
             $(".messages").append(`<li class="message user_message"><b>Me</b><br/>${text.val()}</li>`);
             scrollToBottom()
-            socket.emit('message', text.val()); 
+            socket.emit('message', text.val());
             text.val('')
         }
     });
@@ -125,31 +125,33 @@ navigator.mediaDevices.getUserMedia({
 })
 socket.on('user-disconnected', userId => {
     var video = document.getElementById(userId);
-    if(video){
+    if (video) {
         handlePeerDisconnect(video);
     }
-    
+
 })
+
 function stopStreamedVideo() {
 
-  const tracks = screenStream.getTracks();
+    const tracks = screenStream.getTracks();
 
-  tracks.forEach(function(track) {
-    track.stop();
-  });
+    tracks.forEach(function(track) {
+        track.stop();
+    });
 
-  //videoElem.srcObject = null;
+    //videoElem.srcObject = null;
 }
+
 function stopScreenShare() {
 
-        let videoTrack = myVideoStream.getVideoTracks()[0];
-        Object.keys(peerscall).forEach(function(x) {
-            let sender = peerscall[x].peerConnection.getSenders().find(function(s) {
-                return s.track.kind == videoTrack.kind;
-            })
-            sender.replaceTrack(videoTrack);
+    let videoTrack = myVideoStream.getVideoTracks()[0];
+    Object.keys(peerscall).forEach(function(x) {
+        let sender = peerscall[x].peerConnection.getSenders().find(function(s) {
+            return s.track.kind == videoTrack.kind;
         })
-    }
+        sender.replaceTrack(videoTrack);
+    })
+}
 
 myPeer.on('open', id => {
     temp = id;
@@ -165,8 +167,8 @@ function connectToNewUser(userId, stream) {
     const call = myPeer.call(userId, stream)
     var video = document.createElement('video')
     call.on('stream', userVideoStream => {
-            addVideoStream(video, userVideoStream, userId)
-        
+        addVideoStream(video, userVideoStream, userId)
+
         /*document.getElementById("incVideo").addEventListener("click", () => {
                 videoOnOff(video, userVideoStream);
             })*/
@@ -189,9 +191,8 @@ function addVideoStream(video, stream, userId) {
         video.play()
     })
     video.id = userId
-    video.addClass ="otherVideos"
+    video.addClass = "otherVideos"
     videoGrid.append(video)
-
 }
 
 
@@ -201,103 +202,97 @@ const scrollToBottom = () => {
     var d = $('.main__chat_window');
     d.scrollTop(d.prop("scrollHeight"));
 }
-document.getElementById("incAudio").addEventListener('click', (e) => {
+document.getElementById("incAudio").addEventListener('click', () => {
     let enabled = document.getElementById("incAudio").classList.contains("active-btn")
-    if(enabled)
-    {
+    if (enabled) {
         document.getElementById("incAudio").classList.remove("active-btn")
         document.getElementById("incAudio").innerHTML = `<i class="fas fa-volume-mute"></i> Stop Incoming Audio`
-         var elems = document.querySelectorAll("video, audio");
+        var elems = document.querySelectorAll("video, audio");
 
-        [].forEach.call(elems, function (elem) {
-           if(elem.id !="self")
-    elem.muted = false;
+        [].forEach.call(elems, function(elem) {
+            if (elem.id != "self")
+                elem.muted = false;
         });
-    }
-    else
-    {
+    } else {
         document.getElementById("incAudio").classList.add("active-btn")
         document.getElementById("incAudio").innerHTML = `<i class="fas fa-volume-up"></i> Play Incoming audio`
         var elems = document.querySelectorAll("video, audio");
 
-        [].forEach.call(elems, function (elem) {
+        [].forEach.call(elems, function(elem) {
             elem.muted = true;
         });
     }
 })
 document.getElementById("incVideo").addEventListener('click', function() {
     let enabled = document.getElementById("incVideo").classList.contains("active-btn");
-                if(enabled)
-                {
-                    console.log("I was triggered too")
-                    document.getElementById("incVideo").classList.remove("active-btn");
-                    document.getElementById("incVideo").innerHTML=`<i class="fas fa-video-slash"></i>Stop Incoming Video`
-                    // for(let x in peerscall) {
-                    //    console.log(x);
-                    // //    console.log(peerscall[x]);
-                    // //   peerscall[x].stream.getVideoTracks()[0].enabled = true;
-                    // }
-                    
-                    var elems = document.querySelectorAll("video");
-                    [].forEach.call(elems, function (elem) {
-                         
-                        if (elem.id != "self") {
-                            playStreamedVideo(elem);
-                        }
-                            //
-                        }
-                    )   
-                   
-                }
-                else
-                {
-                    document.getElementById("incVideo").classList.add("active-btn");
-                    document.getElementById("incVideo").innerHTML = `<i class="fas fa-video"></i>Play Incoming Video`
-                    /*for(let x in peerscall) {
-                       peerscall[x].stream.getVideoTracks()[0].enabled = false;
-                    }*/
-                    // Object.keys(peerscall).forEach(function(x) {
-                    //    peerscall[x].stream.getVideoTracks()[0].enabled = false;
-                    // })
-                    var elems = document.querySelectorAll("video");
-                    [].forEach.call(elems, function (elem) {
-                         
-                            if (elem.id != "self") {
-                                stopStreamedVideo(elem);
-                                }
-                            //
-                        
-                    });
-                    // elem.forEach(function (vidEl) {
-                    //     console.log(vidEl.id)
-                        
-                    //     if(vidEl.id != "self")
-                    //     stopStreamedVideo(vidEl);
-                    // })
-                }
+    if (enabled) {
+        console.log("I was triggered too")
+        document.getElementById("incVideo").classList.remove("active-btn");
+        document.getElementById("incVideo").innerHTML = `<i class="fas fa-video-slash"></i>Stop Incoming Video`
+        // for(let x in peerscall) {
+        //    console.log(x);
+        // //    console.log(peerscall[x]);
+        // //   peerscall[x].stream.getVideoTracks()[0].enabled = true;
+        // }
+
+        var elems = document.querySelectorAll("video");
+        [].forEach.call(elems, function(elem) {
+
+            if (elem.id != "self") {
+                playStreamedVideo(elem);
+            }
+            //
+        })
+
+    } else {
+        document.getElementById("incVideo").classList.add("active-btn");
+        document.getElementById("incVideo").innerHTML = `<i class="fas fa-video"></i>Play Incoming Video`
+        /*for(let x in peerscall) {
+           peerscall[x].stream.getVideoTracks()[0].enabled = false;
+        }*/
+        // Object.keys(peerscall).forEach(function(x) {
+        //    peerscall[x].stream.getVideoTracks()[0].enabled = false;
+        // })
+        var elems = document.querySelectorAll("video");
+        [].forEach.call(elems, function(elem) {
+
+            if (elem.id != "self") {
+                stopStreamedVideo(elem);
+            }
+            //
+
+        });
+        // elem.forEach(function (vidEl) {
+        //     console.log(vidEl.id)
+
+        //     if(vidEl.id != "self")
+        //     stopStreamedVideo(vidEl);
+        // })
+    }
 })
 
 function stopStreamedVideo(videoElem) {
     const stream = videoElem.srcObject;
     const tracks = stream.getVideoTracks();
-  
+
     tracks.forEach(function(track) {
-      track.enabled=false;
+        track.enabled = false;
     });
     videoElem.classList.add("invisible")
-  
-  }
+
+}
+
 function playStreamedVideo(videoElem) {
     const stream = videoElem.srcObject;
     const tracks = stream.getVideoTracks();
-  
+
     tracks.forEach(function(track) {
-        track.enabled=true;
-        
+        track.enabled = true;
+
     });
     videoElem.classList.remove("invisible")
-  
-  }
+
+}
 
 
 const shareUnshare = () => {
@@ -323,9 +318,9 @@ const muteUnmute = () => {
         myVideoStream.getAudioTracks()[0].enabled = false;
         document.querySelector('.main__mute_button').innerHTML = `<i class="unmute fas fa-microphone-slash"></i>`
         document.querySelector('.main__mute_button').setAttribute("title", "Unmute");
-        
+
     } else {
-        document.querySelector('.main__mute_button').innerHTML =  `<i class="fas fa-microphone"></i>`
+        document.querySelector('.main__mute_button').innerHTML = `<i class="fas fa-microphone"></i>`
         document.querySelector('.main__mute_button').setAttribute("title", "Mute");
         myVideoStream.getAudioTracks()[0].enabled = true;
     }
@@ -339,7 +334,7 @@ const playStop = () => {
         document.querySelector('.main__video_button').innerHTML = `<i class="stop fas fa-video-slash"></i>`
         document.querySelector('.main__video_button').setAttribute("title", "Play Video");
     } else {
-        document.querySelector('.main__video_button').innerHTML=`<i class="fas fa-video"></i>`
+        document.querySelector('.main__video_button').innerHTML = `<i class="fas fa-video"></i>`
         myVideoStream.getVideoTracks()[0].enabled = true;
         document.querySelector('.main__video_button').setAttribute("title", "Stop Video");
     }
@@ -412,19 +407,19 @@ function handlePeerDisconnect(video) {
     video.remove();
 
 }
-function timer()
-{
-    document.getElementById("time").innerHTML = new Date().toLocaleTimeString()+" | "+ new Date().toLocaleDateString()
-    setTimeout("timer()",1000)
-    
+
+function timer() {
+    document.getElementById("time").innerHTML = new Date().toLocaleTimeString() + " | " + new Date().toLocaleDateString()
+    setTimeout("timer()", 1000)
+
 }
 document.getElementsByClassName("copy-btn")[0].addEventListener('click', (e) => {
     var text = window.location.href;
     navigator.clipboard.writeText(text).then(function() {
-    console.log('Async: Copying to clipboard was successful!');
+        console.log('Async: Copying to clipboard was successful!');
     }, function(err) {
-    console.error('Async: Could not copy text: ', err);
-});
+        console.error('Async: Could not copy text: ', err);
+    });
 })
 
 

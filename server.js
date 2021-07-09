@@ -1,3 +1,13 @@
+const functions = require('firebase-functions');
+var admin = require('firebase-admin');
+admin.initializeApp({
+    credential: admin.credential.applicationDefault(),
+    databaseURL: 'https://teamsclone-d6c8b.firebaseio.com'
+});
+// const defaultApp = admin.initializeApp(defaultAppConfig);
+
+// console.log(defaultApp.name);
+
 const express = require('express')
 const app = express()
 
