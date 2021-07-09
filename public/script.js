@@ -282,7 +282,7 @@ function stopStreamedVideo(videoElem) {
     const tracks = stream.getVideoTracks();
   
     tracks.forEach(function(track) {
-      track.pause();
+      track.enabled=false;
     });
     videoElem.classList.add("invisible")
   
@@ -292,7 +292,8 @@ function playStreamedVideo(videoElem) {
     const tracks = stream.getVideoTracks();
   
     tracks.forEach(function(track) {
-      track.play();
+        track.enabled=true;
+        
     });
     videoElem.classList.remove("invisible")
   
