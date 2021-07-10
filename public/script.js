@@ -171,6 +171,7 @@ loadMessages(ROOM_ID);
 
 socket.on('add-participant-list', (participants) => {
   console.log("2 thing done"+ participants.length)
+  $("#users").innerHTML = ``
   Object.keys(participants).forEach(function(x) {
    // console.log(parName + "is in the meeting")
     $("#users").append(`<li c><b>`+participants[x]+`</b><br/></li>`);
