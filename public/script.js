@@ -9,10 +9,10 @@ firebase.auth().onAuthStateChanged(function(user) {
     socket.emit('participant', myName)
   }
 })
-void changeGridSize(len)
-{
-    document.document.getElementById
-}
+// void changeGridSize(len)
+// {
+//     document.document.getElementById
+// }
 
 const myPeer = new Peer(undefined, {
 
