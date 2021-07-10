@@ -172,6 +172,7 @@ mediaCaptureElement.addEventListener('change', onMediaFileSelected);
 loadMessages(ROOM_ID);
 
 socket.on('add-participant-list', participants => {
+  console.log(participants.length())
   for(parName in participants)
   {
     console.log(parName + "is in the meeting")
