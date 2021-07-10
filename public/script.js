@@ -1,10 +1,12 @@
-const socket = io('/')
-const videoGrid = document.getElementById('video-grid')
-let myName
+
+
 firebase.auth().onAuthStateChanged(function(user) {
   if (user) {
-      console.log(getUserName() + " logged in")
-      myName = getUserName();  
+    console.log(getUserName() + " logged in")
+    let myName
+    myName = getUserName();
+    const socket = io('/')
+const videoGrid = document.getElementById('video-grid')
 //  if(!isUserSignedIn())
 //  {
 //    signIn();
