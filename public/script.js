@@ -13,11 +13,13 @@ firebase.auth().onAuthStateChanged(function(user) {
     leaveMeeting();
   }
 })
+
 function changeGridSize(peers)
 {
-    var peer=peers;
+    let peer=peers;
     peer.push("self");
     let width=document.getElementsByClassName("main__videos")[0].style.width;
+    console.log("width of grid i")
     let len=peer.size();
     let padd=8;
 
@@ -70,17 +72,12 @@ navigator.mediaDevices.getUserMedia({
 }).then(stream => {
     myVideoStream = stream;
   addVideoStream(myVideo, stream, "self")
-  // if (isUserSignedIn())
-  // {
-  //   myName = getUserName();
-  //   console.log(myName);
-  //   }
     myPeer.on('connection', function(conn) {
         var uniId = conn.peer
         peers[uniId] = conn;
         conn.on('close', () => {
 
-            console.log("conn close event 1");
+            console.log("ersc;onn close event 1");
             handlePeerDisconnect(document.getElementById(uniId));
           conn.peerConnection.close();
           delete peers[uniId];
@@ -101,13 +98,15 @@ navigator.mediaDevices.getUserMedia({
         
     });
 
-    document.getElementById("shareScreen").addEventListener('click', (e) => {
+    document.getElementById("shareScreen").addEventListener('click', () => {
         let enabled = document.getElementById("shareScreen").classList.contains("active-btn");
       if (enabled) {
-          
+            
             shareUnshare();
-            stopStreamedVideo()
-            stopScreenShare();
+        stopScreenShare();
+        if (screenStream.readyState != "ended")
+            screenStream.readyState = "ended";
+        stopStreamedVideo();
         } else {
             navigator.mediaDevices.getDisplayMedia({
                 video: {
@@ -122,12 +121,12 @@ navigator.mediaDevices.getUserMedia({
                 shareUnshare();
                 let videoTrack = stream.getVideoTracks()[0];
                 videoTrack.onended = function() {
-                       if (stream.readyState != "ended")
-                        stream.readyState = "ended";
-
+                  
                     shareUnshare();
-                    stopStreamedVideo();
-                    stopScreenShare();
+                  stopScreenShare();
+                   if (stream.readyState != "ended")
+                        stream.readyState = "ended";
+                  stopStreamedVideo();
 
                 }
                 Object.keys(peerscall).forEach(function(x) {
@@ -144,8 +143,9 @@ navigator.mediaDevices.getUserMedia({
 
     });
     document.getElementById("altStop").addEventListener('click', (e) => {
-        shareUnshare();
-        stopScreenShare();
+             shareUnshare();
+            stopScreenShare();
+            stopStreamedVideo()
     })
     socket.on('user-connected', userId => {
         connectToNewUser(userId, stream)
@@ -241,7 +241,8 @@ function connectToNewUser(userId, stream) {
     peerscall[userId] = call;
     peers[userId] = conn;
 
-}
+
+    changeGridSize(peers);}
 
 function addVideoStream(video, stream, userId) {
     
