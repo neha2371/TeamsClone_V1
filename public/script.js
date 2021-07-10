@@ -7,8 +7,9 @@ firebase.auth().onAuthStateChanged(function(user) {
     myName = getUserName();
     console.log(myName)
     $("#users").append(`<li c><b>`+myName+`</b><br/></li>`);
-    socket.emit('participant', myName);
-    
+    document.getElementsByClassName("users-btn")[0].addEventListener('click', () => {
+      socket.emit('participant', myName);
+    })
   }
 })   
 //  if(!isUserSignedIn())
