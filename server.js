@@ -53,6 +53,7 @@ io.on('connection', socket => {
         socket.join(roomId)
         socket.broadcast.to(roomId).emit('user-connected', userId);
         socket.on('participant', userName => {
+            console.log("1 thing done")
             socket.broadcast.to(roomId).emit('add-participant', userId);
             socket.emit('add-participant-list', participants);
             participants.push(userName);
