@@ -170,7 +170,11 @@ mediaCaptureElement.addEventListener('change', onMediaFileSelected);
 loadMessages(ROOM_ID);
 
 socket.on('add-participants-list', participants => {
-  $("#users").append(`<li c><b>`+participants+`</b><br/></li>`);
+  for(parName in participants)
+  {
+    console.log(parName + "is in the meeting")
+    $("#users").append(`<li c><b>`+parName+`</b><br/></li>`);
+  }
 })
 socket.on('add-participant', userName => {
   $("#users").append(`<li c><b>`+userName+`</b><br/></li>`);
