@@ -112,7 +112,13 @@
     bottom: 0px;
     
 }
-
+#messages-card-container {
+    height: 90%;
+    padding-bottom: 0;
+    display: inline;
+    width: 90%;
+    margin-left:30px;
+  }
 input {
     flex-grow: 1;
     background-color: white;

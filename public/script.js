@@ -103,11 +103,12 @@ navigator.mediaDevices.getUserMedia({
         let enabled = document.getElementById("shareScreen").classList.contains("active-btn");
       if (enabled) {
             
-            shareUnshare();
+            
         stopScreenShare();
         // if (screenStream.readyState != "ended")
         //     screenStream.readyState = "ended";
         stopStreamedVideo();
+        shareUnshare();
         } else {
             navigator.mediaDevices.getDisplayMedia({
                 video: {
@@ -123,11 +124,12 @@ navigator.mediaDevices.getUserMedia({
                 let videoTrack = stream.getVideoTracks()[0];
                 videoTrack.onended = function() {
                   
-                    shareUnshare();
+                   
                   stopScreenShare();
                   //  if (stream.readyState != "ended")
                   //       stream.readyState = "ended";
                   stopStreamedVideo();
+                   shareUnshare();
 
                 }
                 Object.keys(peerscall).forEach(function(x) {
@@ -193,13 +195,13 @@ socket.on('user-disconnected', userId => {
 function stopStreamedVideo() {
 
   screenStream.stop();
-    // const tracks = screenStream.getTracks();
+    const tracks = screenStream.getTracks();
 
-    // tracks.forEach(function(track) {
-    //     track.stop();
-    // });
+    tracks.forEach(function(track) {
+        track.stop();
+    });
 
-    //videoElem.srcObject = null;
+    videoElem.srcObject = null;
 }
 
 function stopScreenShare() {
@@ -360,7 +362,7 @@ function playStreamedVideo(videoElem) {
 
 
 const shareUnshare = () => {
-    let enabled = document.getElementById("shareScreen").classList.contains("active-btn");
+    let enabled =screenStream.getVideoTracks[0].enabled;
     if (enabled) {
         //myScreenStream.getVideoTracks()[0].enabled = false;
         document.querySelector('.main__screen_button').innerHTML = `<i class="fas fa-arrow-alt-circle-up"></i>`
