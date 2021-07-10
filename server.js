@@ -55,7 +55,7 @@ io.on('connection', socket => {
         socket.on('participant', (userName) => {
             console.log("1 thing done")
             participants[userId] = userName;
-            socket.emit('add-participant-list', participants);
+            io.emit('add-participant-list', participants);
         })
         // socket.on('message', (message) => {
             
@@ -63,6 +63,8 @@ io.on('connection', socket => {
         // });
 
         socket.on('disconnect', () => {
+            delete participants[userId];
+            io.emit('add-participant-list', participants);
             socket.to(roomId).emit('user-disconnected', userId)
         })
     })
