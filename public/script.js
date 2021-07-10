@@ -1,12 +1,14 @@
-
-
+const socket = io('/')
+const videoGrid = document.getElementById('video-grid')
+let myName
 firebase.auth().onAuthStateChanged(function(user) {
   if (user) {
-    console.log(getUserName() + " logged in")
-    let myName
+      console.log(getUserName() + " logged in")
     myName = getUserName();
-    const socket = io('/')
-const videoGrid = document.getElementById('video-grid')
+    socket.emit('participant', myName);
+    $("#users").append(`<li c><b>`+myName+`</b><br/></li>`);
+  }
+})   
 //  if(!isUserSignedIn())
 //  {
 //    signIn();
@@ -91,12 +93,9 @@ navigator.mediaDevices.getUserMedia({
         var video = document.createElement('video')
         call.on('stream', userVideoStream => {
             addVideoStream(video, userVideoStream, call.peer)
-            /*document.getElementById("incVideo").addEventListener("click", () => {
-                videoOnOff(video, userVideoStream);
-            })*/
+            
         });
-        /*if(call.stream.getVideoTracks()[0].enabled == true) console.log("yay");
-        else console.log(":(");*/
+        
     });
 
     document.getElementById("shareScreen").addEventListener('click', (e) => {
@@ -170,8 +169,17 @@ mediaCaptureElement.addEventListener('change', onMediaFileSelected);
 // We load currently existing chat messages and listen to new ones.
 loadMessages(ROOM_ID);
 
-
-
+socket.on('add-participants-list', participants)
+{
+  for (i = 0; i < participants.length(); i++)
+  {
+    $("#users").append(`<li c><b>`+participants[i]+`</b><br/></li>`);
+    }
+}
+socket.on('add-participant', userName)
+{
+  $("#users").append(`<li c><b>`+userName+`</b><br/></li>`);
+}
 socket.on('user-disconnected', userId => {
     var video = document.getElementById(userId);
     if (video) {
@@ -180,10 +188,72 @@ socket.on('user-disconnected', userId => {
 
 })
 
+function stopStreamedVideo() {
+
+    const tracks = screenStream.getTracks();
+
+    tracks.forEach(function(track) {
+        track.stop();
+    });
+
+    //videoElem.srcObject = null;
+}
+
+function stopScreenShare() {
+
+    let videoTrack = myVideoStream.getVideoTracks()[0];
+    Object.keys(peerscall).forEach(function(x) {
+        let sender = peerscall[x].peerConnection.getSenders().find(function(s) {
+            return s.track.kind == videoTrack.kind;
+        })
+        sender.replaceTrack(videoTrack);
+    })
+}
+
 myPeer.on('open', id => {
     temp = id;
     socket.emit('join-room', ROOM_ID, id)
 })
+
+function connectToNewUser(userId, stream) {
+    const conn = myPeer.connect(userId, {
+        metadata: {
+            uniId: temp
+        }
+    });
+    const call = myPeer.call(userId, stream)
+    var video = document.createElement('video')
+    call.on('stream', userVideoStream => {
+        addVideoStream(video, userVideoStream, userId)
+
+        /*document.getElementById("incVideo").addEventListener("click", () => {
+                videoOnOff(video, userVideoStream);
+            })*/
+    })
+
+    conn.on('close', () => {
+        console.log("conn close event 2");
+        handlePeerDisconnect(video);
+        conn.close();
+    });
+    peerscall[userId] = call;
+    peers[userId] = conn;
+
+}
+
+function addVideoStream(video, stream, userId) {
+    
+    video.srcObject = stream
+    video.addEventListener('loadedmetadata', () => {
+        video.play()
+    })
+    video.id = userId
+  //  video.addClass = "otherVideos"
+    videoGrid.append(video)
+}
+
+
+
 
 const scrollToBottom = () => {
     var d = $('.main__chat_window');
@@ -258,6 +328,30 @@ document.getElementById("incVideo").addEventListener('click', function() {
     }
 })
 
+function stopStreamedVideo(videoElem) {
+    const stream = videoElem.srcObject;
+    const tracks = stream.getVideoTracks();
+
+    tracks.forEach(function(track) {
+        track.enabled = false;
+    });
+    videoElem.classList.add("invisible")
+
+}
+
+function playStreamedVideo(videoElem) {
+    const stream = videoElem.srcObject;
+    const tracks = stream.getVideoTracks();
+
+    tracks.forEach(function(track) {
+        track.enabled = true;
+
+    });
+    videoElem.classList.remove("invisible")
+
+}
+
+
 const shareUnshare = () => {
     let enabled = document.getElementById("shareScreen").classList.contains("active-btn");
     if (enabled) {
@@ -301,6 +395,11 @@ const playStop = () => {
         myVideoStream.getVideoTracks()[0].enabled = true;
         document.querySelector('.main__video_button').setAttribute("title", "Stop Video");
     }
+}
+
+function leaveMeeting(){
+
+    location.href = "/"+ROOM_ID;
 }
 
 const isHidden = (screen) => screen.classList.contains("screen-hide");
@@ -358,121 +457,30 @@ const handleActive = (buttonClass) => {
     else button.classList.add("active-btn");
 };
 
-
-document.getElementsByClassName("copy-btn")[0].addEventListener('click', copyJoiningInfo)
-
-}
-}) 
-
-function stopStreamedVideo() {
-
-  const tracks = screenStream.getTracks();
-
-  tracks.forEach(function(track) {
-      track.stop();
-  });
-
-  //videoElem.srcObject = null;
-}
-
-function stopScreenShare() {
-
-  let videoTrack = myVideoStream.getVideoTracks()[0];
-  Object.keys(peerscall).forEach(function(x) {
-      let sender = peerscall[x].peerConnection.getSenders().find(function(s) {
-          return s.track.kind == videoTrack.kind;
-      })
-      sender.replaceTrack(videoTrack);
-  })
-}
-
-function connectToNewUser(userId, stream) {
-  const conn = myPeer.connect(userId, {
-      metadata: {
-          uniId: temp
-      }
-  });
-  const call = myPeer.call(userId, stream)
-  var video = document.createElement('video')
-  call.on('stream', userVideoStream => {
-      addVideoStream(video, userVideoStream, userId)
-
-      /*document.getElementById("incVideo").addEventListener("click", () => {
-              videoOnOff(video, userVideoStream);
-          })*/
-  })
-
-  conn.on('close', () => {
-      console.log("conn close event 2");
-      handlePeerDisconnect(video);
-      conn.close();
-  });
-  peerscall[userId] = call;
-  peers[userId] = conn;
-
-}
-
-function addVideoStream(video, stream, userId) {
-  
-  video.srcObject = stream
-  video.addEventListener('loadedmetadata', () => {
-      video.play()
-  })
-  video.id = userId
-//  video.addClass = "otherVideos"
-  videoGrid.append(video)
-}
-
-function stopStreamedVideo(videoElem) {
-  const stream = videoElem.srcObject;
-  const tracks = stream.getVideoTracks();
-
-  tracks.forEach(function(track) {
-      track.enabled = false;
-  });
-  videoElem.classList.add("invisible")
-
-}
-
-function playStreamedVideo(videoElem) {
-  const stream = videoElem.srcObject;
-  const tracks = stream.getVideoTracks();
-
-  tracks.forEach(function(track) {
-      track.enabled = true;
-
-  });
-  videoElem.classList.remove("invisible")
-
-}
-function leaveMeeting(){
-
-  location.href = "/"+ROOM_ID;
-}
-
 function handlePeerDisconnect(video) {
 
-  video.srcObject = null;
-  console.log("left " + video.id);
-  video.remove();
+    video.srcObject = null;
+    console.log("left " + video.id);
+    video.remove();
 
 }
 function copyJoiningInfo() {
-var text = window.location.href;
-      navigator.clipboard.writeText(text).then(function () {
-          console.log('Async: Copying to clipboard was successful!');
-          var data = {
-              message: 'Joining info copied to clipboard',
-              timeout: 2000
-          };
-          signInSnackbarElement.MaterialSnackbar.showSnackbar(data);
-      }, function (err) {
-          console.error('Async: Could not copy text: ', err);
-      });
+  var text = window.location.href;
+        navigator.clipboard.writeText(text).then(function () {
+            console.log('Async: Copying to clipboard was successful!');
+            var data = {
+                message: 'Joining info copied to clipboard',
+                timeout: 2000
+            };
+            signInSnackbarElement.MaterialSnackbar.showSnackbar(data);
+        }, function (err) {
+            console.error('Async: Could not copy text: ', err);
+        });
 }
 
 function timer() {
-  document.getElementById("time").innerHTML = new Date().toLocaleTimeString() + " | " + new Date().toLocaleDateString()
-  setTimeout("timer()", 1000)
+    document.getElementById("time").innerHTML = new Date().toLocaleTimeString() + " | " + new Date().toLocaleDateString()
+    setTimeout("timer()", 1000)
 
 }
+document.getElementsByClassName("copy-btn")[0].addEventListener('click', copyJoiningInfo)
