@@ -33,7 +33,7 @@ const peers = {}
 const peerscall = {}
 navigator.mediaDevices.getUserMedia({
     video: true,
-    audio: true
+    audio: false
 }).then(stream => {
     myVideoStream = stream;
   addVideoStream(myVideo, stream, "self")
@@ -453,6 +453,6 @@ function timer() {
 
 }
 document.getElementsByClassName("copy-btn")[0].addEventListener('click', copyJoiningInfo)
-// document.getElementsByClassName("users-btn")[0].addEventListener('click', () => {
-//   socket.emit('participant', myName);
-// })
+ document.getElementsByClassName("users-btn")[0].addEventListener('click', () => {
+   socket.emit('participant', myName);
+ })
