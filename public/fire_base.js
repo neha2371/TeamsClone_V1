@@ -5,6 +5,7 @@ function signIn() {
   // Sign into Firebase using popup auth & Google as the identity provider.
   var provider = new firebase.auth.GoogleAuthProvider();
   firebase.auth().signInWithPopup(provider);
+  
 }
 
 // Signs-out of Friendly Chat.
@@ -36,7 +37,8 @@ function isUserSignedIn() {
 
 // Saves a new message on the Firebase DB.
 // Saves a new message to your Cloud Firestore database.
-function saveMessage(messageText,roomid) {
+function saveMessage(messageText, roomid) {
+  
   // Add a new message entry to the database.
   return firebase.firestore().collection(roomid).add({
     name: getUserName(),

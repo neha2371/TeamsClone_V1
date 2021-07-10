@@ -1,29 +1,37 @@
 const socket = io('/')
 const videoGrid = document.getElementById('video-grid')
 
-// async function sleepUntil(f, timeoutMs) {
-//   return new Promise((resolve, reject) => {
-//       let timeWas = new Date();
-//       let wait = setInterval(function() {
-//           if (f()) {
-//               console.log("resolved after", new Date() - timeWas, "ms");
-//               clearInterval(wait);
-//               resolve();
-//           } else if (new Date() - timeWas > timeoutMs) { // Timeout
-//               console.log("rejected after", new Date() - timeWas, "ms");
-//               clearInterval(wait);
-//               reject();
-//           }
-//       }, 20);
-//   });
-// }
 let myName;
-(!isUserSignedIn())
+if(!isUserSignedIn())
 {
   signIn();
-  
-
 }
+// initialize Firebase
+initFirebaseAuth();
+
+firebase.performance();
+//  $( document ).ready(function() {
+//         console.log( "testing.." );
+//         var user = firebase.auth().currentUser;
+//         console.log(user);
+//     });
+// while(!firebase.auth().currentUser)
+// {
+  
+// }
+// void AuthStateChanged(object sender, System.EventArgs eventArgs) {
+//   if (auth.CurrentUser != user) {
+//     bool signedIn = user != auth.CurrentUser && auth.CurrentUser != null;
+//     if (!signedIn && user != null) {
+//       Debug.Log("Signed out " + user.UserId);
+//     }
+//     user = auth.CurrentUser;
+//     if (signedIn) {
+//       Debug.Log("Signed in " + user.UserId);
+//     }
+//   }
+// })
+//myName = getUserName();
 
 const myPeer = new Peer(undefined, {
 
@@ -47,11 +55,11 @@ navigator.mediaDevices.getUserMedia({
 }).then(stream => {
     myVideoStream = stream;
   addVideoStream(myVideo, stream, "self")
-  if (isUserSignedIn())
-  {
-    myName = getUserName();
-    console.log(myName);
-    }
+  // if (isUserSignedIn())
+  // {
+  //   myName = getUserName();
+  //   console.log(myName);
+  //   }
     myPeer.on('connection', function(conn) {
         var uniId = conn.peer
         peers[uniId] = conn;
@@ -166,10 +174,7 @@ imageButtonElement.addEventListener('click', function(e) {
 });
 mediaCaptureElement.addEventListener('change', onMediaFileSelected);
 
-// initialize Firebase
-initFirebaseAuth();
 
-firebase.performance();
 
 // We load currently existing chat messages and listen to new ones.
 loadMessages(ROOM_ID);
