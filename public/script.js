@@ -169,7 +169,7 @@ mediaCaptureElement.addEventListener('change', onMediaFileSelected);
 // We load currently existing chat messages and listen to new ones.
 loadMessages(ROOM_ID);
 
-socket.on('add-participants-list', participants => {
+socket.on('add-participant-list', participants => {
   for(parName in participants)
   {
     console.log(parName + "is in the meeting")
