@@ -38,7 +38,7 @@ void changeGridSize(peer)
       let width1=(width-padd*len)/len;
       width1=width1.toString();
      width1=width1+"px";
-        for(int i=0;i<len;i++)
+        for(let i=0;i<len;i++)
         {
             document.getElementById(peer[i]).style.width=width1;
         }
