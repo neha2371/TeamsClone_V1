@@ -182,7 +182,7 @@ function changeGridSize(peers)
 	let height=document.getElementsByClassName("main__videos")[0].style.height;
 	width=parseInt(width,10);
 	height=parseInt(height,10);
-    let len=peer.size();
+    let len=peer.len;
     let padd=8;
     if(len>3)
     {
