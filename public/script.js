@@ -105,8 +105,8 @@ navigator.mediaDevices.getUserMedia({
             
             shareUnshare();
         stopScreenShare();
-        if (screenStream.readyState != "ended")
-            screenStream.readyState = "ended";
+        // if (screenStream.readyState != "ended")
+        //     screenStream.readyState = "ended";
         stopStreamedVideo();
         } else {
             navigator.mediaDevices.getDisplayMedia({
@@ -125,8 +125,8 @@ navigator.mediaDevices.getUserMedia({
                   
                     shareUnshare();
                   stopScreenShare();
-                   if (stream.readyState != "ended")
-                        stream.readyState = "ended";
+                  //  if (stream.readyState != "ended")
+                  //       stream.readyState = "ended";
                   stopStreamedVideo();
 
                 }
@@ -192,11 +192,12 @@ socket.on('user-disconnected', userId => {
 
 function stopStreamedVideo() {
 
-    const tracks = screenStream.getTracks();
+  screenStream.stop();
+    // const tracks = screenStream.getTracks();
 
-    tracks.forEach(function(track) {
-        track.stop();
-    });
+    // tracks.forEach(function(track) {
+    //     track.stop();
+    // });
 
     //videoElem.srcObject = null;
 }
