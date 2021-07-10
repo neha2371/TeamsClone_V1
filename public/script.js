@@ -9,42 +9,10 @@ firebase.auth().onAuthStateChanged(function(user) {
     socket.emit('participant', myName)
   }
 })
-
-//  if(!isUserSignedIn())
-//  {
-//    signIn();
-//  }
-//  firebase.auth().onAuthStateChanged((user) => {
-//    if(user)
-//    {
-//     initFirebaseAuth();     
-//    }
-//  })
-// initialize Firebase
-
-//firebase.performance();
-//  $( document ).ready(function() {
-//         console.log( "testing.." );
-//         var user = firebase.auth().currentUser;
-//         console.log(user);
-//     });
-// while(!firebase.auth().currentUser)
-// {
-  
-// }
-// void AuthStateChanged(object sender, System.EventArgs eventArgs) {
-//   if (auth.CurrentUser != user) {
-//     bool signedIn = user != auth.CurrentUser && auth.CurrentUser != null;
-//     if (!signedIn && user != null) {
-//       Debug.Log("Signed out " + user.UserId);
-//     }
-//     user = auth.CurrentUser;
-//     if (signedIn) {
-//       Debug.Log("Signed in " + user.UserId);
-//     }
-//   }
-// })
-//myName = getUserName();
+void changeGridSize(len)
+{
+    document.document.getElementById
+}
 
 const myPeer = new Peer(undefined, {
 
@@ -81,7 +49,8 @@ navigator.mediaDevices.getUserMedia({
 
             console.log("conn close event 1");
             handlePeerDisconnect(document.getElementById(uniId));
-            conn.peerConnection.close();
+          conn.peerConnection.close();
+          delete peers[uniId];
 
 
         })
@@ -233,7 +202,8 @@ function connectToNewUser(userId, stream) {
     conn.on('close', () => {
         console.log("conn close event 2");
         handlePeerDisconnect(video);
-        conn.close();
+      conn.close();
+      delete peers[userId]
     });
     peerscall[userId] = call;
     peers[userId] = conn;
@@ -483,6 +453,6 @@ function timer() {
 
 }
 document.getElementsByClassName("copy-btn")[0].addEventListener('click', copyJoiningInfo)
-document.getElementsByClassName("users-btn")[0].addEventListener('click', () => {
-  socket.emit('participant', myName);
-})
+// document.getElementsByClassName("users-btn")[0].addEventListener('click', () => {
+//   socket.emit('participant', myName);
+// })
