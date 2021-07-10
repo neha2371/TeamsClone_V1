@@ -5,8 +5,8 @@ firebase.auth().onAuthStateChanged(function(user) {
   if (user) {
       console.log(getUserName() + " logged in")
     myName = getUserName();
-    //socket.emit('participant', myName);
-    //$("#users").append(`<li c><b>`+myName+`</b><br/></li>`);
+    socket.emit('participant', myName);
+    $("#users").append(`<li c><b>`+myName+`</b><br/></li>`);
   }
 })   
 //  if(!isUserSignedIn())
@@ -55,7 +55,7 @@ timer();
 let temp;
 let myVideoStream;
 let screenStream;
-//console.log(myName + " did it!!");
+console.log(myName + " did it!!");
 //let myScreenStream;
 var activeSreen = "";
 const myVideo = document.createElement('video')
@@ -175,6 +175,7 @@ socket.on('add-participants-list', participants => {
 socket.on('add-participant', userName => {
   $("#users").append(`<li c><b>`+userName+`</b><br/></li>`);
 })
+  
 socket.on('user-disconnected', userId => {
     var video = document.getElementById(userId);
     if (video) {
