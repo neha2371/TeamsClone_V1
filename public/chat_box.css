@@ -8,10 +8,10 @@ main, #messages-card {
   display: inherit;
 }
 #messages-card-container {
-  height: ;
+  height: 90%;
   padding-bottom: 0;
   display: inline;
-  width:67%;
+  width:90%;
   margin-left:30px;
 }
 #messages-card {
