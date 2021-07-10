@@ -12,7 +12,7 @@ function signIn() {
 function signOut() {
   // Sign out of Firebase.
   firebase.auth().signOut();
-  
+
 }
 
 // Initiate Firebase Auth.
@@ -45,8 +45,9 @@ function saveMessage(messageText, roomid) {
     name: getUserName(),
     text: messageText,
     profilePicUrl: getProfilePicUrl(),
-    timestamp: firebase.firestore.FieldValue.serverTimestamp()
-  }).catch(function(error) {
+    timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+    curtime: new Date().getHours + ":" + new Date().getMinutes
+  }).catch(function (error) {
     console.error('Error writing new message to database', error);
   });
 }
@@ -67,7 +68,7 @@ function loadMessages(roomid) {
       } else {
         var message = change.doc.data();
         displayMessage(change.doc.id, message.timestamp, message.name,
-                       message.text, message.profilePicUrl, message.imageUrl);
+                       message.text, message.profilePicUrl, message.imageUrl, me);
       }
     });
   });
@@ -288,7 +289,7 @@ function createAndInsertMessage(id, timestamp) {
 }
 
 // Displays a Message in the UI.
-function displayMessage(id, timestamp, name, text, picUrl, imageUrl) {
+function displayMessage(id, timestamp, name, text, picUrl, imageUrl, curtime) {
   var div = document.getElementById(id) || createAndInsertMessage(id, timestamp);
 
   // profile picture
@@ -296,7 +297,7 @@ function displayMessage(id, timestamp, name, text, picUrl, imageUrl) {
     div.querySelector('.pic').style.backgroundImage = 'url(' + addSizeToGoogleProfilePic(picUrl) + ')';
   }
 
-  div.querySelector('.name').textContent = name;
+  div.querySelector('.name').textContent = name + "  " + timestamp;
   var messageElement = div.querySelector('.message');
 
   if (text) { // If the message is text.
@@ -308,7 +309,7 @@ function displayMessage(id, timestamp, name, text, picUrl, imageUrl) {
     image.addEventListener('load', function() {
       messageListElement.scrollTop = messageListElement.scrollHeight;
     });
-    image.src = imageUrl + '&' + new Date().getTime();
+    image.src = imageUrl + '&' + curtime;
     messageElement.innerHTML = '';
     messageElement.appendChild(image);
   }

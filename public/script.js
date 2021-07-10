@@ -103,12 +103,11 @@ navigator.mediaDevices.getUserMedia({
         let enabled = document.getElementById("shareScreen").classList.contains("active-btn");
       if (enabled) {
             
-            
+            shareUnshare();
         stopScreenShare();
         // if (screenStream.readyState != "ended")
         //     screenStream.readyState = "ended";
         stopStreamedVideo();
-        shareUnshare();
         } else {
             navigator.mediaDevices.getDisplayMedia({
                 video: {
@@ -124,12 +123,11 @@ navigator.mediaDevices.getUserMedia({
                 let videoTrack = stream.getVideoTracks()[0];
                 videoTrack.onended = function() {
                   
-                   
+                    shareUnshare();
                   stopScreenShare();
                   //  if (stream.readyState != "ended")
                   //       stream.readyState = "ended";
                   stopStreamedVideo();
-                   shareUnshare();
 
                 }
                 Object.keys(peerscall).forEach(function(x) {
@@ -195,15 +193,61 @@ socket.on('user-disconnected', userId => {
 function stopStreamedVideo() {
 
   screenStream.stop();
-    const tracks = screenStream.getTracks();
+    // const tracks = screenStream.getTracks();
 
-    tracks.forEach(function(track) {
-        track.stop();
-    });
+    // tracks.forEach(function(track) {
+    //     track.stop();
+    // });
 
-    videoElem.srcObject = null;
+    //videoElem.srcObject = null;
 }
 
+function changeGridSize(peers)
+{
+  let peer = [];
+  peer.push("self");
+  for (let key in peers)
+  {
+    peer.push(key);
+  }
+  
+    let width=document.getElementsByClassName("main__videos")[0].style.width;
+	let height=document.getElementsByClassName("main__videos")[0].style.height;
+	width=parseInt(width,10);
+	height=parseInt(height,10);
+    let len=peer.size();
+    let padd=8;
+    if(len>3)
+    {
+        let len1=(len+1)/2,let2=len-len1,width1=(width-padd*len1)/len1,width2=(width-padd*len2)/len2;
+           width1=width1.toString();
+             width1=width1+"px";
+           width2=width2.toString();
+             width2=width2+"px"; 
+	let height1=height/2;         
+        for(let i=0;i<len1;i++)
+        {
+             document.getElementById(peer[i]).style.width=width1;
+		document.getElementById(peer[i]).style.height=(height1-2*padd);
+        }
+        for(let i=len1;i<len;i++)
+        {
+                document.getElementById(peer[i]).style.width=width2;
+		document.getElementById(peer[i]).style.height=(height1-2*padd);
+        }
+    }
+    else{
+      let width1=(width-padd*len)/len;
+      width1=width1.toString();
+     width1=width1+"px";
+	let height1=height;
+        for(let i=0;i<len;i++)
+        {
+            document.getElementById(peer[i]).style.width=width1;
+	document.getElementById(peer[i]).style.height=(height1-2*padd);
+        }
+    }
+}
 function stopScreenShare() {
 
     let videoTrack = myVideoStream.getVideoTracks()[0];
@@ -362,7 +406,7 @@ function playStreamedVideo(videoElem) {
 
 
 const shareUnshare = () => {
-    let enabled =screenStream.getVideoTracks[0].enabled;
+    let enabled = document.getElementById("shareScreen").classList.contains("active-btn");
     if (enabled) {
         //myScreenStream.getVideoTracks()[0].enabled = false;
         document.querySelector('.main__screen_button').innerHTML = `<i class="fas fa-arrow-alt-circle-up"></i>`
