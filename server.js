@@ -54,10 +54,7 @@ io.on('connection', socket => {
         socket.broadcast.to(roomId).emit('user-connected', userId);
         socket.on('participant', userName => {
             socket.broadcast.to(roomId).emit('add-participant', userId);
-            for(parName in participants)
-            {
-                socket.emit('add-participant-list', parName);
-            }
+            socket.emit('add-participant-list', participants);
             participants.push(userName);
         })
         // socket.on('message', (message) => {
