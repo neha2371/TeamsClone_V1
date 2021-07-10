@@ -13,11 +13,14 @@ firebase.auth().onAuthStateChanged(function(user) {
     leaveMeeting();
   }
 })
-void changeGridSize(peer)
+function changeGridSize(peers)
 {
+    var peer=peers;
+    peer.push("self");
     let width=document.getElementsByClassName("main__videos")[0].style.width;
     let len=peer.size();
     let padd=8;
+
     if(len>3)
     {
         let len1=(len+1)/2,let2=len-len1,width1=(width-padd*len1)/len1,width2=(width-padd*len2)/len2;
