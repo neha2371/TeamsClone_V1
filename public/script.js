@@ -6,12 +6,9 @@ firebase.auth().onAuthStateChanged(function(user) {
       console.log(getUserName() + " logged in")
     myName = getUserName();
     console.log(myName)
-    $("#users").append(`<li c><b>`+myName+`</b><br/></li>`);
-    document.getElementsByClassName("users-btn")[0].addEventListener('click', () => {
-      socket.emit('participant', myName);
-    })
   }
-})   
+})
+
 //  if(!isUserSignedIn())
 //  {
 //    signIn();
@@ -172,17 +169,12 @@ mediaCaptureElement.addEventListener('change', onMediaFileSelected);
 // We load currently existing chat messages and listen to new ones.
 loadMessages(ROOM_ID);
 
-socket.on('add-participant-list', participants => {
+socket.on('add-participant-list', (participants) => {
   console.log("2 thing done"+ participants.length)
-  for(parName in participants)
-  {
-    console.log(parName + "is in the meeting")
-    $("#users").append(`<li c><b>`+parName+`</b><br/></li>`);
-  }
-})
-socket.on('add-participant', userName => {
-  console.log("3 thing done")
-  $("#users").append(`<li c><b>`+userName+`</b><br/></li>`);
+  Object.keys(participants).forEach(function(x) {
+   // console.log(parName + "is in the meeting")
+    $("#users").append(`<li c><b>`+participants[x]+`</b><br/></li>`);
+  })
 })
   
 socket.on('user-disconnected', userId => {
@@ -489,3 +481,6 @@ function timer() {
 
 }
 document.getElementsByClassName("copy-btn")[0].addEventListener('click', copyJoiningInfo)
+document.getElementsByClassName("users-btn")[0].addEventListener('click', () => {
+  socket.emit('participant', myName);
+})

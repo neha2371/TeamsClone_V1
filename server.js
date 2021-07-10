@@ -45,7 +45,7 @@ app.get('/:room/videocall', (req, res) => {
         roomId
     })
 })
-var participants = [];
+const participants = {};
 io.on('connection', socket => {
 
     socket.on('join-room', (roomId, userId) => {
@@ -54,9 +54,8 @@ io.on('connection', socket => {
         socket.broadcast.to(roomId).emit('user-connected', userId);
         socket.on('participant', (userName) => {
             console.log("1 thing done")
-            socket.broadcast.to(roomId).emit('add-participant', userId);
+            participants[userId] = userName;
             socket.emit('add-participant-list', participants);
-            participants.push(userName);
         })
         // socket.on('message', (message) => {
             
