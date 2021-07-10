@@ -46,7 +46,7 @@ function saveMessage(messageText, roomid) {
     text: messageText,
     profilePicUrl: getProfilePicUrl(),
     timestamp: firebase.firestore.FieldValue.serverTimestamp(),
-    curtime: new Date().getHours + ":" + new Date().getMinutes
+    curtime: new Date().getTime
   }).catch(function (error) {
     console.error('Error writing new message to database', error);
   });
@@ -68,7 +68,7 @@ function loadMessages(roomid) {
       } else {
         var message = change.doc.data();
         displayMessage(change.doc.id, message.timestamp, message.name,
-                       message.text, message.profilePicUrl, message.imageUrl, me);
+                       message.text, message.profilePicUrl, message.imageUrl, message.curtime);
       }
     });
   });
@@ -297,7 +297,7 @@ function displayMessage(id, timestamp, name, text, picUrl, imageUrl, curtime) {
     div.querySelector('.pic').style.backgroundImage = 'url(' + addSizeToGoogleProfilePic(picUrl) + ')';
   }
 
-  div.querySelector('.name').textContent = name + "  " + timestamp;
+  div.querySelector('.name').textContent = name + "  " + curtime;
   var messageElement = div.querySelector('.message');
 
   if (text) { // If the message is text.
