@@ -8,6 +8,10 @@ firebase.auth().onAuthStateChanged(function(user) {
     console.log(myName)
     socket.emit('participant', myName)
   }
+  else
+  {
+    leaveMeeting();
+  }
 })
 // void changeGridSize(len)
 // {
