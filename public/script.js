@@ -5,8 +5,10 @@ firebase.auth().onAuthStateChanged(function(user) {
   if (user) {
       console.log(getUserName() + " logged in")
     myName = getUserName();
-    socket.emit('participant', myName);
+    console.log(myName)
     $("#users").append(`<li c><b>`+myName+`</b><br/></li>`);
+    socket.emit('participant', myName);
+    
   }
 })   
 //  if(!isUserSignedIn())
