@@ -389,3 +389,40 @@ firebase.performance();
 
 // We load currently existing chat messages and listen to new ones.
 loadMessages(ROOM_ID);
+document.getElementById("join").addEventListener('click', () => {
+   
+    if (checkSignedInWithMessage()) { var text = window.location.href;
+    window.location.href = text + "/videocall";
+}
+    
+})
+document.getElementById('copy').addEventListener('click', () => {
+    if (checkSignedInWithMessage()) {
+        var text = window.location.href;
+        navigator.clipboard.writeText(text).then(function () {
+            console.log('Async: Copying to clipboard was successful!');
+            var data = {
+                message: 'Joining info copied to clipboard',
+                timeout: 2000
+            };
+            signInSnackbarElement.MaterialSnackbar.showSnackbar(data);
+        }, function (err) {
+            console.error('Async: Could not copy text: ', err);
+        });
+    }
+   
+
+})
+const myVideo = document.createElement('video')
+myVideo.muted = true;
+navigator.mediaDevices.getUserMedia({
+    video: true,
+    audio: false
+
+}).then(stream => {
+    myVideo.srcObject = stream;
+    myVideo.addEventListener('loadedmetadata', () => {
+        myVideo.play()
+    })
+    document.getElementById('video-grid').append(myVideo)
+})

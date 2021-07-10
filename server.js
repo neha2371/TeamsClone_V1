@@ -38,6 +38,13 @@ app.get('/:homepage', (req, res) => {
         roomId
     })
 })
+app.get('/:room/videocall', (req, res) => {
+    var roomId = req.params.room;
+    console.log(roomId);
+    res.render('room', {
+        roomId
+    })
+})
 
 io.on('connection', socket => {
 

@@ -185,13 +185,13 @@ function connectToNewUser(userId, stream) {
 }
 
 function addVideoStream(video, stream, userId) {
-    console.log("I am ad video Stream");
+    
     video.srcObject = stream
     video.addEventListener('loadedmetadata', () => {
         video.play()
     })
     video.id = userId
-    video.addClass = "otherVideos"
+  //  video.addClass = "otherVideos"
     videoGrid.append(video)
 }
 
