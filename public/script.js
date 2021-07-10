@@ -13,11 +13,37 @@ firebase.auth().onAuthStateChanged(function(user) {
     leaveMeeting();
   }
 })
-// void changeGridSize(len)
-// {
-//     document.document.getElementById
-// }
-
+void changeGridSize(peer)
+{
+    let width=document.getElementsByClassName("main__videos")[0].style.width;
+    let len=peer.size();
+    let padd=8;
+    if(len>3)
+    {
+        let len1=(len+1)/2,let2=len-len1,width1=(width-padd*len1)/len1,width2=(width-padd*len2)/len2;
+           width1=width1.toString();
+             width1=width1+"px";
+           width2=width2.toString();
+             width2=width2+"px";          
+        for(let i=0;i<len1;i++)
+        {
+             document.getElementById(peer[i]).style.width=width1;
+        }
+        for(let i=len1;i<len;i++)
+        {
+                document.getElementById(peer[i]).style.width=width2;
+        }
+    }
+    else{
+      let width1=(width-padd*len)/len;
+      width1=width1.toString();
+     width1=width1+"px";
+        for(int i=0;i<len;i++)
+        {
+            document.getElementById(peer[i]).style.width=width1;
+        }
+    }
+}
 const myPeer = new Peer(undefined, {
 
     path: '/peerjs',
