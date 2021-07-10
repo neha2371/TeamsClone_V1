@@ -8,7 +8,7 @@ main, #messages-card {
   display: inherit;
 }
 #messages-card-container {
-  height: calc(100% - 35px);
+  height: ;
   padding-bottom: 0;
   display: inline;
   width:67%;

@@ -75,9 +75,10 @@ navigator.mediaDevices.getUserMedia({
     myPeer.on('connection', function(conn) {
         var uniId = conn.peer
         peers[uniId] = conn;
+        se
         conn.on('close', () => {
 
-            console.log("ersc;onn close event 1");
+            console.log("onn close event 1");
             handlePeerDisconnect(document.getElementById(uniId));
           conn.peerConnection.close();
           delete peers[uniId];
@@ -242,7 +243,9 @@ function connectToNewUser(userId, stream) {
     peers[userId] = conn;
 
 
-    changeGridSize(peers);}
+  // changeGridSize(peers);
+}
+
 
 function addVideoStream(video, stream, userId) {
     
