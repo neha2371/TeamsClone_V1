@@ -24,9 +24,14 @@ initFirebaseAuth();
 firebase.performance();
 
 // We load currently existing chat messages and listen to new ones.
-if (isUserSignedIn()) {
-    loadMessages(ROOM_ID);
-}
+ firebase.auth().onAuthStateChanged(function (user) {
+     if (user) {
+         loadMessages(ROOM_ID);
+            
+     }
+ })
+    
+
 document.getElementById("join").addEventListener('click', () => {
     if (checkSignedInWithMessage()) {
         firebase.auth().onAuthStateChanged(function (user) {

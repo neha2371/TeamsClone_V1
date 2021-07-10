@@ -12,6 +12,7 @@ function signIn() {
 function signOut() {
   // Sign out of Firebase.
   firebase.auth().signOut();
+  
 }
 
 // Initiate Firebase Auth.
