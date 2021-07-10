@@ -1,15 +1,23 @@
 const socket = io('/')
 const videoGrid = document.getElementById('video-grid')
-
-let myName;
-if(!isUserSignedIn())
-{
-  signIn();
-}
+let myName
+firebase.auth().onAuthStateChanged(function(user) {
+  if (user) {
+      console.log(getUserName() + " logged in")
+      myName = getUserName();  
+//  if(!isUserSignedIn())
+//  {
+//    signIn();
+//  }
+//  firebase.auth().onAuthStateChanged((user) => {
+//    if(user)
+//    {
+//     initFirebaseAuth();     
+//    }
+//  })
 // initialize Firebase
-initFirebaseAuth();
 
-firebase.performance();
+//firebase.performance();
 //  $( document ).ready(function() {
 //         console.log( "testing.." );
 //         var user = firebase.auth().currentUser;
@@ -43,6 +51,7 @@ timer();
 let temp;
 let myVideoStream;
 let screenStream;
+console.log(myName + " did it!!");
 //let myScreenStream;
 var activeSreen = "";
 const myVideo = document.createElement('video')
@@ -90,13 +99,8 @@ navigator.mediaDevices.getUserMedia({
 
     document.getElementById("shareScreen").addEventListener('click', (e) => {
         let enabled = document.getElementById("shareScreen").classList.contains("active-btn");
-        if (enabled) {
-            //         var tracks = screenStream.getTracks();
-            // for( var i = 0 ; i < tracks.length ; i++ ) tracks[i].stop();
-            //    
-            if (screenStream.readyState != "ended")
-                screenStream.readyState = "ended";
-
+      if (enabled) {
+          
             shareUnshare();
             stopStreamedVideo()
             stopScreenShare();
@@ -114,9 +118,7 @@ navigator.mediaDevices.getUserMedia({
                 shareUnshare();
                 let videoTrack = stream.getVideoTracks()[0];
                 videoTrack.onended = function() {
-                    //    var tracks = stream.getTracks();
-                    //     for( var i = 0 ; i < tracks.length ; i++ ) tracks[i].stop();
-                    if (stream.readyState != "ended")
+                       if (stream.readyState != "ended")
                         stream.readyState = "ended";
 
                     shareUnshare();
@@ -146,20 +148,7 @@ navigator.mediaDevices.getUserMedia({
     })
 
 
-    // let text = $("input");
-
-    // $('html').keydown(function(e) {
-    //     if (e.which == 13 && text.val().length !== 0) {
-    //         $(".messages").append(`<li class="message user_message"><b>Me</b><br/>${text.val()}</li>`);
-    //         scrollToBottom()
-    //         socket.emit('message', text.val());
-    //         text.val('')
-    //     }
-    // });
-    // socket.on("createMessage", message => {
-    //     $(".messages").append(`<li class="message"><b>Anonymous</b><br/>${message}</li>`);
-    //     scrollToBottom()
-    // })
+   
 })
 messageFormElement.addEventListener('submit', onMessageFormSubmit);
 
@@ -178,6 +167,9 @@ mediaCaptureElement.addEventListener('change', onMediaFileSelected);
 
 // We load currently existing chat messages and listen to new ones.
 loadMessages(ROOM_ID);
+
+
+
 socket.on('user-disconnected', userId => {
     var video = document.getElementById(userId);
     if (video) {
@@ -186,72 +178,10 @@ socket.on('user-disconnected', userId => {
 
 })
 
-function stopStreamedVideo() {
-
-    const tracks = screenStream.getTracks();
-
-    tracks.forEach(function(track) {
-        track.stop();
-    });
-
-    //videoElem.srcObject = null;
-}
-
-function stopScreenShare() {
-
-    let videoTrack = myVideoStream.getVideoTracks()[0];
-    Object.keys(peerscall).forEach(function(x) {
-        let sender = peerscall[x].peerConnection.getSenders().find(function(s) {
-            return s.track.kind == videoTrack.kind;
-        })
-        sender.replaceTrack(videoTrack);
-    })
-}
-
 myPeer.on('open', id => {
     temp = id;
     socket.emit('join-room', ROOM_ID, id)
 })
-
-function connectToNewUser(userId, stream) {
-    const conn = myPeer.connect(userId, {
-        metadata: {
-            uniId: temp
-        }
-    });
-    const call = myPeer.call(userId, stream)
-    var video = document.createElement('video')
-    call.on('stream', userVideoStream => {
-        addVideoStream(video, userVideoStream, userId)
-
-        /*document.getElementById("incVideo").addEventListener("click", () => {
-                videoOnOff(video, userVideoStream);
-            })*/
-    })
-
-    conn.on('close', () => {
-        console.log("conn close event 2");
-        handlePeerDisconnect(video);
-        conn.close();
-    });
-    peerscall[userId] = call;
-    peers[userId] = conn;
-
-}
-
-function addVideoStream(video, stream, userId) {
-    
-    video.srcObject = stream
-    video.addEventListener('loadedmetadata', () => {
-        video.play()
-    })
-    video.id = userId
-  //  video.addClass = "otherVideos"
-    videoGrid.append(video)
-}
-
-
-
 
 const scrollToBottom = () => {
     var d = $('.main__chat_window');
@@ -326,30 +256,6 @@ document.getElementById("incVideo").addEventListener('click', function() {
     }
 })
 
-function stopStreamedVideo(videoElem) {
-    const stream = videoElem.srcObject;
-    const tracks = stream.getVideoTracks();
-
-    tracks.forEach(function(track) {
-        track.enabled = false;
-    });
-    videoElem.classList.add("invisible")
-
-}
-
-function playStreamedVideo(videoElem) {
-    const stream = videoElem.srcObject;
-    const tracks = stream.getVideoTracks();
-
-    tracks.forEach(function(track) {
-        track.enabled = true;
-
-    });
-    videoElem.classList.remove("invisible")
-
-}
-
-
 const shareUnshare = () => {
     let enabled = document.getElementById("shareScreen").classList.contains("active-btn");
     if (enabled) {
@@ -393,11 +299,6 @@ const playStop = () => {
         myVideoStream.getVideoTracks()[0].enabled = true;
         document.querySelector('.main__video_button').setAttribute("title", "Stop Video");
     }
-}
-
-const leaveMeeting = () => {
-
-    location.href = "/"+ROOM_ID;
 }
 
 const isHidden = (screen) => screen.classList.contains("screen-hide");
@@ -455,25 +356,121 @@ const handleActive = (buttonClass) => {
     else button.classList.add("active-btn");
 };
 
+
+document.getElementsByClassName("copy-btn")[0].addEventListener('click', copyJoiningInfo)
+
+}
+}) 
+
+function stopStreamedVideo() {
+
+  const tracks = screenStream.getTracks();
+
+  tracks.forEach(function(track) {
+      track.stop();
+  });
+
+  //videoElem.srcObject = null;
+}
+
+function stopScreenShare() {
+
+  let videoTrack = myVideoStream.getVideoTracks()[0];
+  Object.keys(peerscall).forEach(function(x) {
+      let sender = peerscall[x].peerConnection.getSenders().find(function(s) {
+          return s.track.kind == videoTrack.kind;
+      })
+      sender.replaceTrack(videoTrack);
+  })
+}
+
+function connectToNewUser(userId, stream) {
+  const conn = myPeer.connect(userId, {
+      metadata: {
+          uniId: temp
+      }
+  });
+  const call = myPeer.call(userId, stream)
+  var video = document.createElement('video')
+  call.on('stream', userVideoStream => {
+      addVideoStream(video, userVideoStream, userId)
+
+      /*document.getElementById("incVideo").addEventListener("click", () => {
+              videoOnOff(video, userVideoStream);
+          })*/
+  })
+
+  conn.on('close', () => {
+      console.log("conn close event 2");
+      handlePeerDisconnect(video);
+      conn.close();
+  });
+  peerscall[userId] = call;
+  peers[userId] = conn;
+
+}
+
+function addVideoStream(video, stream, userId) {
+  
+  video.srcObject = stream
+  video.addEventListener('loadedmetadata', () => {
+      video.play()
+  })
+  video.id = userId
+//  video.addClass = "otherVideos"
+  videoGrid.append(video)
+}
+
+function stopStreamedVideo(videoElem) {
+  const stream = videoElem.srcObject;
+  const tracks = stream.getVideoTracks();
+
+  tracks.forEach(function(track) {
+      track.enabled = false;
+  });
+  videoElem.classList.add("invisible")
+
+}
+
+function playStreamedVideo(videoElem) {
+  const stream = videoElem.srcObject;
+  const tracks = stream.getVideoTracks();
+
+  tracks.forEach(function(track) {
+      track.enabled = true;
+
+  });
+  videoElem.classList.remove("invisible")
+
+}
+function leaveMeeting(){
+
+  location.href = "/"+ROOM_ID;
+}
+
 function handlePeerDisconnect(video) {
 
-    video.srcObject = null;
-    console.log("left " + video.id);
-    video.remove();
+  video.srcObject = null;
+  console.log("left " + video.id);
+  video.remove();
 
+}
+function copyJoiningInfo() {
+var text = window.location.href;
+      navigator.clipboard.writeText(text).then(function () {
+          console.log('Async: Copying to clipboard was successful!');
+          var data = {
+              message: 'Joining info copied to clipboard',
+              timeout: 2000
+          };
+          signInSnackbarElement.MaterialSnackbar.showSnackbar(data);
+      }, function (err) {
+          console.error('Async: Could not copy text: ', err);
+      });
 }
 
 function timer() {
-    document.getElementById("time").innerHTML = new Date().toLocaleTimeString() + " | " + new Date().toLocaleDateString()
-    setTimeout("timer()", 1000)
+  document.getElementById("time").innerHTML = new Date().toLocaleTimeString() + " | " + new Date().toLocaleDateString()
+  setTimeout("timer()", 1000)
 
 }
-document.getElementsByClassName("copy-btn")[0].addEventListener('click', (e) => {
-    var text = window.location.href;
-    navigator.clipboard.writeText(text).then(function() {
-        console.log('Async: Copying to clipboard was successful!');
-      
-    }, function (err) {
-        console.error('Async: Could not copy text: ', err);
-    });
-})

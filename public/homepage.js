@@ -26,11 +26,12 @@ firebase.performance();
 // We load currently existing chat messages and listen to new ones.
 loadMessages(ROOM_ID);
 document.getElementById("join").addEventListener('click', () => {
-   
-    if (checkSignedInWithMessage()) { var text = window.location.href;
-    window.location.href = text + "/videocall";
-}
-    
+    firebase.auth().onAuthStateChanged(function(user) {
+        if (user) {
+            console.log(getUserName() + " logged in")
+         window.location = ROOM_ID + "/videocall";
+        }
+      })    
 })
 document.getElementById('copy').addEventListener('click', () => {
     if (checkSignedInWithMessage()) {
