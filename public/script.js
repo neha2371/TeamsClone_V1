@@ -1,5 +1,10 @@
+
 const socket = io('/')
 const videoGrid = document.getElementById('video-grid')
+(!isUserSignedIn())
+{
+  signIn();
+}
 const myPeer = new Peer(undefined, {
 
     path: '/peerjs',
@@ -10,6 +15,8 @@ timer();
 let temp;
 let myVideoStream;
 let screenStream;
+let myName = getUserName();
+
 //let myScreenStream;
 var activeSreen = "";
 const myVideo = document.createElement('video')
@@ -20,11 +27,16 @@ navigator.mediaDevices.getUserMedia({
     video: true,
     audio: true
 }).then(stream => {
-    myVideoStream = stream;
-    addVideoStream(myVideo, stream, "self")
-    myPeer.on('connection', function(conn) {
+  myVideoStream = stream;
+  $("#users").append(`<li class="message "><b>`+myName+`</b><br/></li>`);
+ 
+  addVideoStream(myVideo, stream, "self")
+     myPeer.on('connection', function(conn) {
         var uniId = conn.peer
-        peers[uniId] = conn;
+       peers[uniId] = conn;
+       var userName = conn.metadata.userName;
+       $("#users").append(`<li class="message "><b>`+userName+`</b><br/></li>`);
+ 
         conn.on('close', () => {
 
             console.log("conn close event 1");
@@ -103,26 +115,49 @@ navigator.mediaDevices.getUserMedia({
         shareUnshare();
         stopScreenShare();
     })
-    socket.on('user-connected', userId => {
-        connectToNewUser(userId, stream)
+    socket.on('user-connected', userId,userName => {
+      connectToNewUser(userId, stream)
+      $("#users").append(`<li class="message "><b>`+userName+`</b><br/></li>`);
+ 
     })
 
+    
+    // let text = $("input");
 
-    let text = $("input");
-
-    $('html').keydown(function(e) {
-        if (e.which == 13 && text.val().length !== 0) {
-            $(".messages").append(`<li class="message user_message"><b>Me</b><br/>${text.val()}</li>`);
-            scrollToBottom()
-            socket.emit('message', text.val());
-            text.val('')
-        }
-    });
-    socket.on("createMessage", message => {
-        $(".messages").append(`<li class="message"><b>Anonymous</b><br/>${message}</li>`);
-        scrollToBottom()
-    })
+    // $('html').keydown(function(e) {
+    //     if (e.which == 13 && text.val().length !== 0) {
+    //         $(".messages").append(`<li class="message user_message"><b>Me</b><br/>${text.val()}</li>`);
+    //         scrollToBottom()
+    //         socket.emit('message', text.val());
+    //         text.val('')
+    //     }
+    // });
+    // socket.on("createMessage", message => {
+    //     $(".messages").append(`<li class="message"><b>Anonymous</b><br/>${message}</li>`);
+    //     scrollToBottom()
+    // })
 })
+
+messageFormElement.addEventListener('submit', onMessageFormSubmit);
+
+// Toggle for the button.
+messageInputElement.addEventListener('keyup', toggleButton);
+messageInputElement.addEventListener('change', toggleButton);
+
+// Events for image upload.
+imageButtonElement.addEventListener('click', function(e) {
+  e.preventDefault();
+  mediaCaptureElement.click();
+});
+mediaCaptureElement.addEventListener('change', onMediaFileSelected);
+
+// initialize Firebase
+initFirebaseAuth();
+
+firebase.performance();
+
+// We load currently existing chat messages and listen to new ones.
+loadMessages(ROOM_ID);
 socket.on('user-disconnected', userId => {
     var video = document.getElementById(userId);
     if (video) {
@@ -155,13 +190,13 @@ function stopScreenShare() {
 
 myPeer.on('open', id => {
     temp = id;
-    socket.emit('join-room', ROOM_ID, id)
+    socket.emit('join-room', ROOM_ID, id,myName)
 })
 
 function connectToNewUser(userId, stream) {
     const conn = myPeer.connect(userId, {
         metadata: {
-            uniId: temp
+            userName: myName
         }
     });
     const call = myPeer.call(userId, stream)
@@ -417,7 +452,8 @@ document.getElementsByClassName("copy-btn")[0].addEventListener('click', (e) => 
     var text = window.location.href;
     navigator.clipboard.writeText(text).then(function() {
         console.log('Async: Copying to clipboard was successful!');
-    }, function(err) {
+      
+    }, function (err) {
         console.error('Async: Could not copy text: ', err);
     });
 })

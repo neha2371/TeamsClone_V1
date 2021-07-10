@@ -48,15 +48,15 @@ app.get('/:room/videocall', (req, res) => {
 
 io.on('connection', socket => {
 
-    socket.on('join-room', (roomId, userId) => {
+    socket.on('join-room', (roomId, userId,myName) => {
 
         socket.join(roomId)
-        socket.broadcast.to(roomId).emit('user-connected', userId);
+        socket.broadcast.to(roomId).emit('user-connected', userId,myName);
        
-        socket.on('message', (message) => {
+        // socket.on('message', (message) => {
             
-            socket.broadcast.to(roomId).emit('createMessage', message)
-        });
+        //     socket.broadcast.to(roomId).emit('createMessage', message)
+        // });
 
         socket.on('disconnect', () => {
             socket.to(roomId).emit('user-disconnected', userId)
