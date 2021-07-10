@@ -52,15 +52,14 @@ io.on('connection', socket => {
 
         socket.join(roomId)
         socket.broadcast.to(roomId).emit('user-connected', userId);
-        socket.on('participant', userName)
-        {
+        socket.on('participant', userName => {
             socket.broadcast.to(roomId).emit('add-participant', userId);
             for(parName in participants)
             {
                 socket.emit('add-participant-list', parName);
             }
             participants.push(userName);
-        }
+        })
         // socket.on('message', (message) => {
             
         //     socket.broadcast.to(roomId).emit('createMessage', message)
