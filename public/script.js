@@ -516,6 +516,6 @@ document.getElementsByClassName("copy-btn")[0].addEventListener('click', copyJoi
     const max_width = 1600;
     for (let i = 0; i < myElements.length; i++) {
 	    myElements[i].style.height = Math.floor(max_height/s).toString() + "px";
-        myElements[i].style.width = Math.floor(max_width/s).toString + "px";
+        myElements[i].style.width = Math.floor(max_width/s).toString() + "px";
     }
  }
