@@ -9,9 +9,8 @@ firebase.auth().onAuthStateChanged(function(user) {
     socket.emit('participant', myName)
   }
   else
-  {
-    leaveMeeting();
-  }
+  leaveMeeting();
+  
 })
 
 const myPeer = new Peer(undefined, {
@@ -25,7 +24,7 @@ let temp;
 let myVideoStream;
 let screenStream;
 console.log(myName + " did it!!");
-//let myScreenStream;
+let myScreenStream;
 var activeSreen = "";
 const myVideo = document.createElement('video')
 myVideo.muted = true;
@@ -92,8 +91,6 @@ navigator.mediaDevices.getUserMedia({
                   
                     shareUnshare();
                   stopScreenShare();
-                  //  if (stream.readyState != "ended")
-                  //       stream.readyState = "ended";
                   stopStreamedVideo();
 
                 }
@@ -175,6 +172,7 @@ function changeGridSize(peers)
   peer.push("self");
   for (let key in peers)
   {
+      console.log(key);
     peer.push(key);
   }
   
@@ -487,7 +485,8 @@ function handlePeerDisconnect(video) {
 
 }
 function copyJoiningInfo() {
-  var text = window.location.href;
+    if (checkSignedInWithMessage()) {
+        var text = window.location.href;
         navigator.clipboard.writeText(text).then(function () {
             console.log('Async: Copying to clipboard was successful!');
             var data = {
@@ -498,6 +497,7 @@ function copyJoiningInfo() {
         }, function (err) {
             console.error('Async: Could not copy text: ', err);
         });
+    }
 }
 
 function timer() {
