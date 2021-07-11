@@ -138,6 +138,7 @@ mediaCaptureElement.addEventListener('change', onMediaFileSelected);
 loadMessages(ROOM_ID);
 
 socket.on('add-participant-list', (participants) => {
+    resize(participants.length)
   console.log("2 thing done"+ participants.length)
   $("#users").empty()
   Object.keys(participants).forEach(function(x) {
@@ -239,7 +240,6 @@ function connectToNewUser(userId, stream) {
     var video = document.createElement('video')
     call.on('stream', userVideoStream => {
         addVideoStream(video, userVideoStream, userId)
-      changeGridSize(peers)
 
         /*document.getElementById("incVideo").addEventListener("click", () => {
                 videoOnOff(video, userVideoStream);
@@ -485,7 +485,7 @@ function handlePeerDisconnect(video) {
 
 }
 function copyJoiningInfo() {
-    if (checkSignedInWithMessage()) {
+    
         var text = window.location.href;
         navigator.clipboard.writeText(text).then(function () {
             console.log('Async: Copying to clipboard was successful!');
@@ -497,7 +497,6 @@ function copyJoiningInfo() {
         }, function (err) {
             console.error('Async: Could not copy text: ', err);
         });
-    }
 }
 
 function timer() {
@@ -509,3 +508,14 @@ document.getElementsByClassName("copy-btn")[0].addEventListener('click', copyJoi
  document.getElementsByClassName("users-btn")[0].addEventListener('click', () => {
    socket.emit('participant', myName);
  })
+
+ function resize(num){
+    let s = Math.ceil(Math.sqrt(num));
+    var myElements = document.querySelector("video");
+    const max_height = 800;
+    const max_width = 1600;
+    for (let i = 0; i < myElements.length; i++) {
+	    myElements[i].style.height = Math.floor(max_height/s).toString() + "px";
+        myElements[i].style.width = Math.floor(max_width/s).toString + "px";
+    }
+ }
