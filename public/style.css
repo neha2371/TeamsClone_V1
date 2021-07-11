@@ -119,6 +119,10 @@
     width: 90%;
     margin-left:30px;
   }
+#messages{
+    height:740px;
+    width: 250px;
+}
 input {
     flex-grow: 1;
     background-color: white;
