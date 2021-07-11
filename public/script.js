@@ -512,12 +512,12 @@ document.getElementsByClassName("copy-btn")[0].addEventListener('click', copyJoi
  function resize(num){
     let s = Math.ceil(Math.sqrt(num));
     var myElements = document.getElementsByTagName("video");
-    console.log(myElements[0].width + "   I am in resize");
+    console.log(myElements[0].width + "   I am in resize    - " + myElements.length);
     const max_height = 800;
     const max_width = 1600;
     for (let i = 0; i < myElements.length; i++) {
-	    myElements[i].height = Math.floor(max_height/s).toString() + "px";
-        myElements[i].width = Math.floor(max_width/s).toString() + "px";
+	    myElements[i].setAttribute('height', Math.floor(max_height/s).toString() + "px");
+        myElements[i].setAttribute('width', Math.floor(max_width/s).toString() + "px");
     }
-    console.log(myElements[0].width + "   I am in resize again");
+    console.log(myElements[0].width + "   I am in resize again ");
  }
