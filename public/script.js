@@ -511,7 +511,7 @@ document.getElementsByClassName("copy-btn")[0].addEventListener('click', copyJoi
 
  function resize(num){
     let s = Math.ceil(Math.sqrt(num));
-    var myElements = document.getElementsById("self");
+    var myElements = document.getElementById("self");
     console.log(myElements.width + "   I am in resize");
     const max_height = 800;
     const max_width = 1600;
