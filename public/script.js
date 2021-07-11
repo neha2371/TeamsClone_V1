@@ -511,7 +511,7 @@ document.getElementsByClassName("copy-btn")[0].addEventListener('click', copyJoi
 
  function resize(num){
     let s = Math.ceil(Math.sqrt(num));
-    var myElements = document.querySelector("video");
+    var myElements = document.querySelectorAll("video");
     const max_height = 800;
     const max_width = 1600;
     for (let i = 0; i < myElements.length; i++) {
