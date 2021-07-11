@@ -518,4 +518,5 @@ document.getElementsByClassName("copy-btn")[0].addEventListener('click', copyJoi
 	    myElements[i].style.height = Math.floor(max_height/s).toString() + "px";
         myElements[i].style.width = Math.floor(max_width/s).toString() + "px";
     }
+    console.log(myElements[0].style.width + "   I am in resize");
  }
