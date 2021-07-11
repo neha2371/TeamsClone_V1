@@ -46,7 +46,7 @@ navigator.mediaDevices.getUserMedia({
             handlePeerDisconnect(document.getElementById(uniId));
           conn.peerConnection.close();
           delete peers[uniId];
-          changeGridSize(peers);
+          //changeGridSize(peers);
 
 
         })
@@ -59,7 +59,7 @@ navigator.mediaDevices.getUserMedia({
         var video = document.createElement('video')
         call.on('stream', userVideoStream => {
           addVideoStream(video, userVideoStream, call.peer)
-          changeGridSize(peers);
+          //changeGridSize(peers);
             
         });
         
@@ -251,7 +251,7 @@ function connectToNewUser(userId, stream) {
         handlePeerDisconnect(video);
       conn.close();
       delete peers[userId]
-      changeGridSize(peers)
+      //changeGridSize(peers)
     });
     peerscall[userId] = call;
     peers[userId] = conn;
