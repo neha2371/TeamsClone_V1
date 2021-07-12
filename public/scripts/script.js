@@ -64,75 +64,20 @@ function connectToNewUser(userId, stream) {
     
 }
 
-//  function resize(num){
-//     let s = Math.ceil(Math.sqrt(num));
-//     var myElements = document.getElementById("self");
-//     console.log(myElements.width + "   I am in resize");
-//     const max_height = 800;
-//     const max_width = 1600;
-//     //for (let i = 0; i < myElements.length; i++) {
-// 	    myElements.height = Math.floor(max_height/s).toString() + "px";
-//         myElements.width = Math.floor(max_width/s).toString() + "px";
-//     console.log(myElements.style.width + "   I am in resize again ");
-//  }
+
 function changeGridSize(peerscall)
 {
-  let peer = [];
-  peer.push("self");
-  for (let key in peerscall)
-  {
-      console.log(key);
-        peer.push(key);
-  }
-
-    // let width=document.getElementsByClassName("main__videos")[0].style.maxWidth;
-	// let height=document.getElementsByClassName("main__videos")[0].style.maxHeight;
-    let width= "1200px";
-    let height="500px";
-    // console.log(document.getElementsByClassName("main__videos")[0]);
-    console.log("width is : " + width);
-	width= 0.80*window.innerWidth//parseInt(width,10);
-	height= 0.85*window.innerHeight//parseInt(height,10);
-    console.log("main video width :"+ width);
-    let len=peer.length;
-    console.log("len of peers : " + len);
-    /*let padd=8;
-    if(len>3)
+    let peer = [];
+    peer.push("self");
+    for (let key in peerscall)
     {
-        let len1=(len+1)/2,len2=len-len1,width1=(width-padd*len1)/len1,width2=(width-padd*len2)/len2;
-           width1=width1.toString();
-             width1=width1+"px";
-           width2=width2.toString();
-             width2=width2+"px"; 
-	let height1=height/2;    
-    height1=height1.toString();
-    height1=height1+"px";     
-        for(let i=0;i<len1;i++)
-        {
-             document.getElementById(peer[i]).style.width=width1;
-		    document.getElementById(peer[i]).style.height=height1;
-        }
-        for(let i=len1;i<len;i++)
-        {
-                document.getElementById(peer[i]).style.width=width2;
-		document.getElementById(peer[i]).style.height=height1;
-        }
+        console.log(key);
+            peer.push(key);
     }
-    else{
-      let width1=(width-padd*len)/len;
-      width1=width1.toString();
-     width1=width1+"px";
-	let height1=height;
-    height1=height1.toString();
-    height1=height1+"px";  
-        for(let i=0;i<len;i++)
-        {
-            document.getElementById(peer[i]).style.width=width1;
-	        document.getElementById(peer[i]).style.height=height1;
-        }
-    }*/
+	let width= 0.80*window.innerWidth
+	let height= 0.85*window.innerHeight
+    let len=peer.length;
     let s = Math.ceil(Math.sqrt(len));
-    console.log("s = "+s);
     let width1=Math.floor(width/s);
         width1=width1.toString();
         width1=width1+"px";
@@ -423,7 +368,7 @@ navigator.mediaDevices.getUserMedia({//get user media
             handlePeerDisconnect(document.getElementById(uniId));
             //conn.peerConnection.close();
             delete peers[uniId];
-            delete peerscall[userId];
+            delete peerscall[uniId];
             changeGridSize(peerscall)
 
         })
@@ -516,7 +461,6 @@ document.getElementsByClassName("copy-btn")[0].addEventListener('click', copyJoi
 socket.on('add-participant-list', (participants) => {
 
     //update participant list on client side
-    //resize(participants.length)
     console.log("2 thing done" + participants.length)
     $("#users").empty()
     Object.keys(participants).forEach(function(x) {
