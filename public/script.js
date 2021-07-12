@@ -1,10 +1,12 @@
+//This is the client side of the videoCall Room
+
 const socket = io('/')
 const videoGrid = document.getElementById('video-grid')
-var myName, myVideoStream, screenStream, activeSreen = ""//, temp
+var myName, myVideoStream, screenStream, activeSreen = "";
 const myVideo = document.createElement('video')
 myVideo.muted = true;
-const peers = {}
-const peerscall = {}
+const peers = {}//Save all peer connections
+const peerscall = {}//Save all peer Calls
 //detects if the user is authenticated
 firebase.auth().onAuthStateChanged(function(user) {
     if (user) {
@@ -33,26 +35,23 @@ function addVideoStream(video, stream, userId) {
 }
 //call a peer with their userId
 function connectToNewUser(userId, stream) {
-    const conn = myPeer.connect(userId, {
-        // metadata: {
-        //     uniId: temp
-        // }
-    });
-    const call = myPeer.call(userId, stream)
+
+    const conn = myPeer.connect(userId);//establish a peer connection with the other user
+    const call = myPeer.call(userId, stream)//establish a call connection with other user
     var video = document.createElement('video')
     call.on('stream', userVideoStream => {
-        addVideoStream(video, userVideoStream, userId)
+        addVideoStream(video, userVideoStream, userId)// add other user's video on your page
 
     })
-
+    peerscall[userId] = call;
+    peers[userId] = conn;
+    //Triggered when other user is disconnected
     conn.on('close', () => {
-        console.log("conn close event 2");
         handlePeerDisconnect(video);
         conn.close();
         delete peers[userId]
     });
-    peerscall[userId] = call;
-    peers[userId] = conn;
+    
 
 }
 
@@ -151,7 +150,7 @@ function playStop() {
         document.querySelector('.main__video_button').setAttribute("title", "Stop Video");
     }
 }
-
+//changes only the html and css of shareScreen button
 function shareUnshare() {
     let enabled = document.getElementById("shareScreen").classList.contains("active-btn");
     if (enabled) {
@@ -168,19 +167,7 @@ function shareUnshare() {
         document.getElementById("shareScreen").classList.add("active-btn");
     }
 }
-
-function stopStreamedVideo() {
-
-    screenStream.stop();
-    // const tracks = screenStream.getTracks();
-
-    // tracks.forEach(function(track) {
-    //     track.stop();
-    // });
-
-    //videoElem.srcObject = null;
-}
-
+//Replaces Screen stream with user video stream
 function stopScreenShare() {
 
     let videoTrack = myVideoStream.getVideoTracks()[0];
@@ -191,6 +178,19 @@ function stopScreenShare() {
         sender.replaceTrack(videoTrack);
     })
 }
+//Stops screen stream
+function stopStreamedVideo() {
+
+    screenStream.stop();
+    const tracks = screenStream.getTracks();
+
+    tracks.forEach(function(track) {
+        track.stop();
+    });
+
+    //videoElem.srcObject = null;
+}
+
 
 function incomingAudio() {
     let enabled = document.getElementById("incAudio").classList.contains("active-btn")

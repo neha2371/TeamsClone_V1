@@ -1,4 +1,3 @@
-
 'use strict';
 
 function signIn() {
@@ -8,9 +7,9 @@ function signIn() {
   
 }
 
-// Signs-out of Friendly Chat.
+// Signs-out.
 function signOut() {
-  // Sign out of Firebase.
+  // Sign out
   firebase.auth().signOut();
 
 }
@@ -36,7 +35,6 @@ function isUserSignedIn() {
   return !!firebase.auth().currentUser;
 }
 
-// Saves a new message on the Firebase DB.
 // Saves a new message to your Cloud Firestore database.
 function saveMessage(messageText, roomid) {
   
@@ -97,7 +95,6 @@ function loadMessages(roomid) {
   });
 }
 
-// Saves a new message containing an image in Firebase.
 // This first saves the image in Firebase storage.
 function saveImageMessage(file,roomId) {
   // 1 - We add a message with a loading icon that will get updated with the shared image.
@@ -105,7 +102,8 @@ function saveImageMessage(file,roomId) {
     name: getUserName(),
     imageUrl: LOADING_IMAGE_URL,
     profilePicUrl: getProfilePicUrl(),
-    timestamp: firebase.firestore.FieldValue.serverTimestamp()
+    timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+    curTime: time()
   }).then(function(messageRef) {
     // 2 - Upload the image to Cloud Storage.
     var filePath = firebase.auth().currentUser.uid + '/' + messageRef.id + '/' + file.name;
@@ -278,7 +276,6 @@ function createAndInsertMessage(id, timestamp) {
   div.setAttribute('id', id);
 
   // If timestamp is null, assume we've gotten a brand new message.
-  // https://stackoverflow.com/a/47781432/4816918
   timestamp = timestamp ? timestamp.toMillis() : Date.now();
   div.setAttribute('timestamp', timestamp);
 
