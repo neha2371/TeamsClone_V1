@@ -91,8 +91,8 @@ function changeGridSize(peerscall)
     let height="500px";
     // console.log(document.getElementsByClassName("main__videos")[0]);
     console.log("width is : " + width);
-	width=parseInt(width,10);
-	height=parseInt(height,10);
+	width= 0.85*window.innerWidth//parseInt(width,10);
+	height= 0.85*window.innerHeight//parseInt(height,10);
     console.log("main video width :"+ width);
     let len=peer.length;
     console.log("len of peers : " + len);
@@ -110,7 +110,7 @@ function changeGridSize(peerscall)
         for(let i=0;i<len1;i++)
         {
              document.getElementById(peer[i]).style.width=width1;
-		document.getElementById(peer[i]).style.height=height1;
+		    document.getElementById(peer[i]).style.height=height1;
         }
         for(let i=len1;i<len;i++)
         {
