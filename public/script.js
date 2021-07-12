@@ -442,8 +442,6 @@ navigator.mediaDevices.getUserMedia({//get user media
 
                     shareUnshare();
                     stopScreenShare();
-                    stopStreamedVideo();
-
                 }
                 //replace user video stream with user screen stream
                 Object.keys(peerscall).forEach(function(x) {
@@ -463,7 +461,6 @@ navigator.mediaDevices.getUserMedia({//get user media
     document.getElementById("altStop").addEventListener('click', (e) => {
         shareUnshare();
         stopScreenShare();
-        stopStreamedVideo()
     })
     
     //when a new user is connected to room
