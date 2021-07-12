@@ -1,18 +1,17 @@
 const socket = io('/')
 const videoGrid = document.getElementById('video-grid')
-var myName, myVideoStream, temp, screenStream, activeSreen = "";
+var myName, myVideoStream, screenStream, activeSreen = ""//, temp
 const myVideo = document.createElement('video')
 myVideo.muted = true;
 const peers = {}
 const peerscall = {}
+//detects if the user is authenticated
 firebase.auth().onAuthStateChanged(function(user) {
     if (user) {
-        console.log(getUserName() + " logged in")
         myName = getUserName();
-        console.log(myName)
         socket.emit('participant', myName)
     } else
-        location.href = "/" + ROOM_ID;
+        location.href = "/" + ROOM_ID;//redirects unauthenticated users to the chat-room 
 
 })
 
@@ -22,7 +21,7 @@ const myPeer = new Peer(undefined, {
     host: '/',
     port: '443'
 })
-
+//adds new video element to your page
 function addVideoStream(video, stream, userId) {
 
     video.srcObject = stream
@@ -32,12 +31,12 @@ function addVideoStream(video, stream, userId) {
     video.id = userId
     videoGrid.append(video)
 }
-
+//call a peer with their userId
 function connectToNewUser(userId, stream) {
     const conn = myPeer.connect(userId, {
-        metadata: {
-            uniId: temp
-        }
+        // metadata: {
+        //     uniId: temp
+        // }
     });
     const call = myPeer.call(userId, stream)
     var video = document.createElement('video')
@@ -448,7 +447,7 @@ navigator.mediaDevices.getUserMedia({
 // We load currently existing chat messages and listen to new ones.
 loadMessages(ROOM_ID);
 myPeer.on('open', id => {
-    temp = id;
+   //
     socket.emit('join-room', ROOM_ID, id)
 })
 

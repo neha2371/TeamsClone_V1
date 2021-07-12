@@ -33,7 +33,7 @@ firebase.performance();
  firebase.auth().onAuthStateChanged(function (user) {
      if (user) {
          loadMessages(ROOM_ID);
-            
+         myUserName = getUserName();
      }
  })
     
