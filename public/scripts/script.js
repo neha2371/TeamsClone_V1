@@ -136,7 +136,7 @@ function changeGridSize(peerscall)
     let width1=Math.floor(width/s);
         width1=width1.toString();
         width1=width1+"px";
-	let height1=Math.floor(height/s);
+	let height1=Math.ceil(len/s);
         height1=height1.toString();
         height1=height1+"px";  
     for(let i=0;i<len;i++)
@@ -317,7 +317,7 @@ function handlePeerDisconnect(video) {
 // redirect you to homepage after leaving videoCall room
 function leaveMeeting() {
 
-    location.href = "/" + ROOM_ID;
+    location.href = "/" ;
 }
 
 //copies the room link to clipboard
