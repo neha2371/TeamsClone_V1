@@ -87,6 +87,8 @@ function changeGridSize(peerscall)
 
     let width=document.getElementsByClassName("main__videos")[0].style.width;
 	let height=document.getElementsByClassName("main__videos")[0].style.height;
+    console.log(document.getElementsByClassName("main__videos")[0]);
+    console.log("width is : " + width);
 	width=parseInt(width,10);
 	height=parseInt(height,10);
     console.log("main video width :"+ width);
@@ -394,6 +396,7 @@ navigator.mediaDevices.getUserMedia({//get user media
 }).then(stream => {
     myVideoStream = stream;
     addVideoStream(myVideo, stream, "self")//add user's local video stream on page
+    changeGridSize(peerscall);
     socket.emit('participant', myName);
     //answer to peer connection established by another users 
     myPeer.on('connection', function(conn) {
