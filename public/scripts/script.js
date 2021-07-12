@@ -59,7 +59,6 @@ function connectToNewUser(userId, stream) {
         conn.close();
         delete peers[userId]
         delete peerscall[userId]
-        changeGridSize(peerscall)
     });
     
 }
@@ -91,7 +90,7 @@ function changeGridSize(peerscall)
     let height="500px";
     // console.log(document.getElementsByClassName("main__videos")[0]);
     console.log("width is : " + width);
-	width= 0.85*window.innerWidth//parseInt(width,10);
+	width= 0.80*window.innerWidth//parseInt(width,10);
 	height= 0.85*window.innerHeight//parseInt(height,10);
     console.log("main video width :"+ width);
     let len=peer.length;
@@ -136,7 +135,7 @@ function changeGridSize(peerscall)
     let width1=Math.floor(width/s);
         width1=width1.toString();
         width1=width1+"px";
-	let height1=Math.floor(height/((len-1)/s + 1));
+	let height1=Math.ceil(height/(Math.floor(((len-1)/s + 1))));
         height1=height1.toString();
         height1=height1+"px";  
     for(let i=0;i<len;i++)
@@ -311,7 +310,7 @@ function handlePeerDisconnect(video) {
     video.srcObject = null;
     console.log("left " + video.id);
     video.remove();
-
+    changeGridSize(peerscall);
 }
 
 // redirect you to homepage after leaving videoCall room
