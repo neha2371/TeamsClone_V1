@@ -32,9 +32,9 @@ app.get('/', (req, res) => {
 
 })
 
-app.get('/:homepage', (req, res) => {
-    var roomId = req.params.homepage;
-    res.render('homepage', {
+app.get('/:chatRoom', (req, res) => {
+    var roomId = req.params.chatRoom;
+    res.render('chatRoom', {
         roomId
     })
 })
