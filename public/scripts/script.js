@@ -44,17 +44,21 @@ function connectToNewUser(userId, stream) {
     const conn = myPeer.connect(userId);//establish a peer connection with the other user
     const call = myPeer.call(userId, stream)//establish a call connection with other user
     var video = document.createElement('video')
-    call.on('stream', userVideoStream => {
-        addVideoStream(video, userVideoStream, userId)// add other user's video on your page
-
-    })
     peerscall[userId] = call;
     peers[userId] = conn;
+    call.on('stream', userVideoStream => {
+        addVideoStream(video, userVideoStream, userId)// add other user's video on your page
+        changeGridSize(peerscall)
+
+    })
+    
     //Triggered when other user is disconnected
     conn.on('close', () => {
         handlePeerDisconnect(video);
         conn.close();
         delete peers[userId]
+        delete peerscall[userId]
+        changeGridSize(peerscall)
     });
     
 }
@@ -70,53 +74,59 @@ function connectToNewUser(userId, stream) {
 //         myElements.width = Math.floor(max_width/s).toString() + "px";
 //     console.log(myElements.style.width + "   I am in resize again ");
 //  }
-// function changeGridSize(peers)
-// {
-//   let peer = [];
-//   peer.push("self");
-//   for (let key in peers)
-//   {
-//       console.log(key);
-//     peer.push(key);
-//   }
+function changeGridSize(peerscall)
+{
+  let peer = [];
+  peer.push("self");
+  for (let key in peerscall)
+  {
+      console.log(key);
+        peer.push(key);
+  }
 
-//     let width=document.getElementsByClassName("main__videos")[0].style.width;
-// 	let height=document.getElementsByClassName("main__videos")[0].style.height;
-// 	width=parseInt(width,10);
-// 	height=parseInt(height,10);
-//     let len=peer.len;
-//     let padd=8;
-//     if(len>3)
-//     {
-//         let len1=(len+1)/2,let2=len-len1,width1=(width-padd*len1)/len1,width2=(width-padd*len2)/len2;
-//            width1=width1.toString();
-//              width1=width1+"px";
-//            width2=width2.toString();
-//              width2=width2+"px"; 
-// 	let height1=height/2;         
-//         for(let i=0;i<len1;i++)
-//         {
-//              document.getElementById(peer[i]).style.width=width1;
-// 		document.getElementById(peer[i]).style.height=(height1-2*padd);
-//         }
-//         for(let i=len1;i<len;i++)
-//         {
-//                 document.getElementById(peer[i]).style.width=width2;
-// 		document.getElementById(peer[i]).style.height=(height1-2*padd);
-//         }
-//     }
-//     else{
-//       let width1=(width-padd*len)/len;
-//       width1=width1.toString();
-//      width1=width1+"px";
-// 	let height1=height;
-//         for(let i=0;i<len;i++)
-//         {
-//             document.getElementById(peer[i]).style.width=width1;
-// 	document.getElementById(peer[i]).style.height=(height1-2*padd);
-//         }
-//     }
-// }
+    let width=document.getElementsByClassName("main__videos")[0].style.width;
+	let height=document.getElementsByClassName("main__videos")[0].style.height;
+	width=parseInt(width,10);
+	height=parseInt(height,10);
+    console.log("main video width :"+ width);
+    let len=peer.len;
+    console.log("len of peers : " + len);
+    let padd=8;
+    if(len>3)
+    {
+        let len1=(len+1)/2,len2=len-len1,width1=(width-padd*len1)/len1,width2=(width-padd*len2)/len2;
+           width1=width1.toString();
+             width1=width1+"px";
+           width2=width2.toString();
+             width2=width2+"px"; 
+	let height1=height/2;    
+    height1=height1.toString();
+    height1=height1+"px";     
+        for(let i=0;i<len1;i++)
+        {
+             document.getElementById(peer[i]).style.width=width1;
+		document.getElementById(peer[i]).style.height=height1;
+        }
+        for(let i=len1;i<len;i++)
+        {
+                document.getElementById(peer[i]).style.width=width2;
+		document.getElementById(peer[i]).style.height=height1;
+        }
+    }
+    else{
+      let width1=(width-padd*len)/len;
+      width1=width1.toString();
+     width1=width1+"px";
+	let height1=height;
+    height1=height1.toString();
+    height1=height1+"px";  
+        for(let i=0;i<len;i++)
+        {
+            document.getElementById(peer[i]).style.width=width1;
+	        document.getElementById(peer[i]).style.height=height1;
+        }
+    }
+}
 
 
 function timer() {
@@ -305,7 +315,8 @@ function copyJoiningInfo() {
             message: 'Joining info copied to clipboard',
             timeout: 2000
         };
-        signInSnackbarElement.MaterialSnackbar.showSnackbar(data);
+        var copySnackbarElement = document.getElementById("copy-snackbar") 
+        copySnackbarElement.MaterialSnackbar.showSnackbar(data);
     }, function(err) {
         console.error('Async: Could not copy text: ', err);
     });
@@ -392,6 +403,8 @@ navigator.mediaDevices.getUserMedia({//get user media
             handlePeerDisconnect(document.getElementById(uniId));
             conn.peerConnection.close();
             delete peers[uniId];
+            delete peerscall[userId];
+            changeGridSize(peerscall)
 
         })
 
@@ -405,6 +418,7 @@ navigator.mediaDevices.getUserMedia({//get user media
         call.on('stream', userVideoStream => {
             //add other user's video, in user's own page
             addVideoStream(video, userVideoStream, call.peer)
+            changeGridSize(peerscall)
 
         });
 
