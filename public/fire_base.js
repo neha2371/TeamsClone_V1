@@ -46,11 +46,35 @@ function saveMessage(messageText, roomid) {
     text: messageText,
     profilePicUrl: getProfilePicUrl(),
     timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+    curTime: time(),
   }).catch(function (error) {
     console.error('Error writing new message to database', error);
   });
 }
+  function time()
+  {
+    var timestamp = new Date();
+    var hour = timestamp.getHours().toString();
+    var minute = timestamp.getMinutes().toString();
+    var afternoon = (hour>=12)?"PM":"AM"
+    
+    if(hour >= 12)
+      hour -= 12;
+    if(hour == 0)
+      hour = "12";
+    else if(hour<10)
+      hour = "0" + hour.toString();
+    else
+      hour = toString();
 
+    if(minute<10)
+      minute = "0" + minute.toString();
+    else
+      minute = minute.toString();
+
+    var stamp = hour + ":" + minute + " " + afternoon;
+    return stamp;
+  }
 // Loads chat messages history and listens for upcoming ones.
 function loadMessages(roomid) {
   // Create the query to load the last 12 messages and listen for new ones.
@@ -67,7 +91,7 @@ function loadMessages(roomid) {
       } else {
         var message = change.doc.data();
         displayMessage(change.doc.id, message.timestamp, message.name,
-                       message.text, message.profilePicUrl, message.imageUrl);
+                       message.text, message.profilePicUrl, message.imageUrl, message.curTime);
       }
     });
   });
@@ -75,9 +99,9 @@ function loadMessages(roomid) {
 
 // Saves a new message containing an image in Firebase.
 // This first saves the image in Firebase storage.
-function saveImageMessage(file) {
+function saveImageMessage(file,roomId) {
   // 1 - We add a message with a loading icon that will get updated with the shared image.
-  firebase.firestore().collection('messages').add({
+  firebase.firestore().collection(roomId).add({
     name: getUserName(),
     imageUrl: LOADING_IMAGE_URL,
     profilePicUrl: getProfilePicUrl(),
@@ -148,7 +172,7 @@ function onMediaFileSelected(event) {
   }
   // Check if the user is signed-in
   if (checkSignedInWithMessage()) {
-    saveImageMessage(file);
+    saveImageMessage(file,ROOM_ID);
   }
 }
 
@@ -288,7 +312,7 @@ function createAndInsertMessage(id, timestamp) {
 }
 
 // Displays a Message in the UI.
-function displayMessage(id, timestamp, name, text, picUrl, imageUrl) {
+function displayMessage(id, timestamp, name, text, picUrl, imageUrl, curTime) {
   var div = document.getElementById(id) || createAndInsertMessage(id, timestamp);
 
   // profile picture
@@ -296,7 +320,7 @@ function displayMessage(id, timestamp, name, text, picUrl, imageUrl) {
     div.querySelector('.pic').style.backgroundImage = 'url(' + addSizeToGoogleProfilePic(picUrl) + ')';
   }
 
-  div.querySelector('.name').textContent = name;
+  div.querySelector('.name').textContent = name + " " + curTime;
   var messageElement = div.querySelector('.message');
 
   if (text) { // If the message is text.
@@ -308,7 +332,7 @@ function displayMessage(id, timestamp, name, text, picUrl, imageUrl) {
     image.addEventListener('load', function() {
       messageListElement.scrollTop = messageListElement.scrollHeight;
     });
-    image.src = imageUrl + '&' + curtime;
+    image.src = imageUrl + '&' + new Date();
     messageElement.innerHTML = '';
     messageElement.appendChild(image);
   }

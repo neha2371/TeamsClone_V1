@@ -41,7 +41,7 @@ app.get('/:homepage', (req, res) => {
 app.get('/:room/videocall', (req, res) => {
     var roomId = req.params.room;
     console.log(roomId);
-    res.render('room', {
+    res.render('videoCallRoom', {
         roomId
     })
 })

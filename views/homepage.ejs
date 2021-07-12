@@ -2,7 +2,11 @@
     <head>
         <meta charset="utf-8">
         <base href="/">
-  <title>Teams Clone</title>
+          
+        <title>Teams Clone</title>
+        
+<link rel="icon" href="favicon.ico">
+
 
 
   <!-- Material Design Lite -->
@@ -20,6 +24,7 @@
    <script>
       const ROOM_ID = "<%= roomId %>"
    </script>
+    <script src="https://smtpjs.com/v3/smtp.js"></script>
     </head>
 
     <body>
@@ -84,7 +89,15 @@
         <button id = "join" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">Join Video Call</button>
 
         <button id = "copy" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">Copy Joining Info</button>
-        
+        <form id="invite-form" action="#">
+          <div class="mdl-textfield mdl-js-textfield">
+            <input class="mdl-textfield__input" type="text" id="invite" autocomplete="off">
+            <label class="mdl-textfield__label" for="message">email id...</label>
+          </div>
+          <button id="submit-invite" disabled type="submit" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">
+            Invite
+          </button>
+        </form>
         
     </div>
 
