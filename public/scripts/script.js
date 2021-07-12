@@ -87,8 +87,8 @@ function changeGridSize(peerscall)
 
     // let width=document.getElementsByClassName("main__videos")[0].style.maxWidth;
 	// let height=document.getElementsByClassName("main__videos")[0].style.maxHeight;
-    let width= "1300px";
-    let height="581px";
+    let width= "1200px";
+    let height="500px";
     // console.log(document.getElementsByClassName("main__videos")[0]);
     console.log("width is : " + width);
 	width=parseInt(width,10);
