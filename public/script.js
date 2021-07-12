@@ -195,7 +195,7 @@ function stopScreenShare() {
 //Stops screen stream
 function stopStreamedVideo() {
 
-    screenStream.stop();
+    //screenStream.stop();
     const tracks = screenStream.getTracks();
 
     tracks.forEach(function(track) {
