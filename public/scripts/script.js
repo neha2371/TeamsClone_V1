@@ -49,7 +49,8 @@ function connectToNewUser(userId, stream) {
     call.on('stream', userVideoStream => {
         addVideoStream(video, userVideoStream, userId)// add other user's video on your page
         socket.emit('participant', myName);
-        changeGridSize(peerscall)
+        //resize(peerscall.length + 1)
+        //changeGridSize(peerscall)
 
     })
     
@@ -59,28 +60,30 @@ function connectToNewUser(userId, stream) {
         conn.close();
         delete peers[userId]
         delete peerscall[userId]
-        changeGridSize(peerscall)
+        //changeGridSize(peerscall)
+        resize(peerscall.length + 1)
     });
     
 }
 
-//  function resize(num){
-//     let s = Math.ceil(Math.sqrt(num));
-//     var myElements = document.getElementById("self");
-//     console.log(myElements.width + "   I am in resize");
-//     const max_height = 800;
-//     const max_width = 1600;
-//     //for (let i = 0; i < myElements.length; i++) {
-// 	    myElements.height = Math.floor(max_height/s).toString() + "px";
-//         myElements.width = Math.floor(max_width/s).toString() + "px";
-//     console.log(myElements.style.width + "   I am in resize again ");
-//  }
+  function resize(num){
+     let s = Math.ceil(Math.sqrt(num));
+     const max_height = 0.85*window.innerHeight;
+     const max_width = 0.85*window.innerWidth;
+     var videoElements = videoGrid.children;
+     for (myElements in videoElements) {
+ 	    myElements.style.height = Math.floor(max_height/s).toString() + "px";
+         myElementsstyle.width = Math.floor(max_width/s).toString() + "px";
+     console.log(myElements.style.width + "   I am in resize again ");
+  }
+}
 function changeGridSize(peerscall)
 {
   let peer = [];
   peer.push("self");
   for (let key in peerscall)
   {
+      
       console.log(key);
         peer.push(key);
   }
@@ -398,7 +401,8 @@ navigator.mediaDevices.getUserMedia({//get user media
 }).then(stream => {
     myVideoStream = stream;
     addVideoStream(myVideo, stream, "self")//add user's local video stream on page
-    changeGridSize(peerscall);
+    //changeGridSize(peerscall);
+    //resize(peerscall.length + 1)
     socket.emit('participant', myName);
     //answer to peer connection established by another users 
     myPeer.on('connection', function(conn) {
@@ -411,7 +415,8 @@ navigator.mediaDevices.getUserMedia({//get user media
             conn.peerConnection.close();
             delete peers[uniId];
             delete peerscall[userId];
-            changeGridSize(peerscall)
+            //resize(peerscall.length + 1)
+            //changeGridSize(peerscall)
 
         })
 
@@ -426,7 +431,8 @@ navigator.mediaDevices.getUserMedia({//get user media
             //add other user's video, in user's own page
             addVideoStream(video, userVideoStream, call.peer)
             socket.emit('participant', myName);
-            changeGridSize(peerscall)
+            //resize(peerscall.length + 1)
+            //changeGridSize(peerscall)
 
         });
 
@@ -510,7 +516,7 @@ socket.on('add-participant-list', (participants) => {
       
         $("#users").append(`<li c><b>` + participants[x] + `</b><br/></li>`);
     })
-
+    resize(participants.length);
 })
 
 // When user sends a  message in chat
