@@ -59,6 +59,7 @@ function connectToNewUser(userId, stream) {
         conn.close();
         delete peers[userId]
         delete peerscall[userId]
+        changeGridSize(peerscall);
     });
     
 }
@@ -310,7 +311,7 @@ function handlePeerDisconnect(video) {
     video.srcObject = null;
     console.log("left " + video.id);
     video.remove();
-    changeGridSize(peerscall);
+    //changeGridSize(peerscall);
 }
 
 // redirect you to homepage after leaving videoCall room
@@ -547,6 +548,8 @@ socket.on('user-disconnected', userId => {
     var video = document.getElementById(userId);
     if (video) {
         handlePeerDisconnect(video);
+        delete peers[userId];
+        delete peerscall[userId]
     }
-
+    changeGridSize(peerscall);
 })
