@@ -35,7 +35,7 @@ function addVideoStream(video, stream, userId) {
     })
     video.id = userId
     videoGrid.append(video)
-
+    resize(peerscall.length + 1);
 }
 
 //call a peer with their userId
@@ -61,7 +61,7 @@ function connectToNewUser(userId, stream) {
         delete peers[userId]
         delete peerscall[userId]
         //changeGridSize(peerscall)
-        resize(peerscall.length + 1)
+        //resize(peerscall.length + 1)
     });
     
 }
@@ -301,7 +301,7 @@ function handlePeerDisconnect(video) {
     video.srcObject = null;
     console.log("left " + video.id);
     video.remove();
-
+    resize(peerscall.length + 1);
 }
 
 // redirect you to homepage after leaving videoCall room
@@ -516,7 +516,7 @@ socket.on('add-participant-list', (participants) => {
       
         $("#users").append(`<li c><b>` + participants[x] + `</b><br/></li>`);
     })
-    resize(participants.length);
+    //resize(participants.length);
 })
 
 // When user sends a  message in chat
