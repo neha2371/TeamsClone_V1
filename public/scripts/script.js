@@ -48,6 +48,7 @@ function connectToNewUser(userId, stream) {
     peers[userId] = conn;
     call.on('stream', userVideoStream => {
         addVideoStream(video, userVideoStream, userId)// add other user's video on your page
+        socket.emit('participant', myName);
         changeGridSize(peerscall)
 
     })
@@ -89,7 +90,7 @@ function changeGridSize(peerscall)
 	width=parseInt(width,10);
 	height=parseInt(height,10);
     console.log("main video width :"+ width);
-    let len=peer.len;
+    let len=peer.length;
     console.log("len of peers : " + len);
     let padd=8;
     if(len>3)
@@ -393,6 +394,7 @@ navigator.mediaDevices.getUserMedia({//get user media
 }).then(stream => {
     myVideoStream = stream;
     addVideoStream(myVideo, stream, "self")//add user's local video stream on page
+    socket.emit('participant', myName);
     //answer to peer connection established by another users 
     myPeer.on('connection', function(conn) {
         var uniId = conn.peer
@@ -418,6 +420,7 @@ navigator.mediaDevices.getUserMedia({//get user media
         call.on('stream', userVideoStream => {
             //add other user's video, in user's own page
             addVideoStream(video, userVideoStream, call.peer)
+            socket.emit('participant', myName);
             changeGridSize(peerscall)
 
         });
@@ -487,9 +490,9 @@ myPeer.on('open', id => {
 document.getElementById("incAudio").addEventListener('click', incomingAudio)
 document.getElementById("incVideo").addEventListener('click', incomingVideo)
 document.getElementsByClassName("copy-btn")[0].addEventListener('click', copyJoiningInfo)
-document.getElementsByClassName("users-btn")[0].addEventListener('click', () => {
+/*document.getElementsByClassName("users-btn")[0].addEventListener('click', () => {
     socket.emit('participant', myName);
-})
+})*/
 
 //listen to update on participant list on server side 
 socket.on('add-participant-list', (participants) => {
