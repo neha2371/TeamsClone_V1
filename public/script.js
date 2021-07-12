@@ -481,7 +481,7 @@ document.getElementsByClassName("users-btn")[0].addEventListener('click', () => 
 socket.on('add-participant-list', (participants) => {
 
     //update participant list on client side
-    resize(participants.length)
+    //resize(participants.length)
     console.log("2 thing done" + participants.length)
     $("#users").empty()
     Object.keys(participants).forEach(function(x) {
