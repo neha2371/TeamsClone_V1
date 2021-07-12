@@ -182,6 +182,10 @@ function shareUnshare() {
 //Replaces Screen stream with user video stream
 function stopScreenShare() {
 
+    var tracks = screenStream.getTracks();
+    tracks.forEach(function(track) {
+        track.stop();
+    });
     let videoTrack = myVideoStream.getVideoTracks()[0];
     Object.keys(peerscall).forEach(function(x) {
         let sender = peerscall[x].peerConnection.getSenders().find(function(s) {
@@ -192,17 +196,6 @@ function stopScreenShare() {
 
 }
 
-//Stops screen stream
-function stopStreamedVideo() {
-
-    //screenStream.stop();
-    const tracks = screenStream.getTracks();
-
-    tracks.forEach(function(track) {
-        track.stop();
-    });
-
-}
 //disable all audio on page
 function incomingAudio() {
 
@@ -423,7 +416,6 @@ navigator.mediaDevices.getUserMedia({//get user media
 
             shareUnshare();
             stopScreenShare();
-            stopStreamedVideo();
         } else {
             navigator.mediaDevices.getDisplayMedia({
                 video: {
