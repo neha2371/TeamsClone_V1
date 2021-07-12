@@ -421,7 +421,7 @@ navigator.mediaDevices.getUserMedia({//get user media
         conn.on('close', () => {
 
             handlePeerDisconnect(document.getElementById(uniId));
-            conn.peerConnection.close();
+            //conn.peerConnection.close();
             delete peers[uniId];
             delete peerscall[userId];
             changeGridSize(peerscall)
