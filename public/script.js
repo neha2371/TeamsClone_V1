@@ -1,5 +1,4 @@
 //This is the client side of the videoCall Room
-
 const socket = io('/')
 const videoGrid = document.getElementById('video-grid')
 var myName, myVideoStream, screenStream, activeSreen = "";
@@ -7,8 +6,10 @@ const myVideo = document.createElement('video')
 myVideo.muted = true;
 const peers = {}//Save all peer connections
 const peerscall = {}//Save all peer Calls
+
 //detects if the user is authenticated
-firebase.auth().onAuthStateChanged(function(user) {
+firebase.auth().onAuthStateChanged(function (user) {
+    
     if (user) {
         myName = getUserName();
         socket.emit('participant', myName)
@@ -22,7 +23,9 @@ const myPeer = new Peer(undefined, {
     path: '/peerjs',
     host: '/',
     port: '443'
+
 })
+
 //adds new video element to your page
 function addVideoStream(video, stream, userId) {
 
@@ -32,7 +35,9 @@ function addVideoStream(video, stream, userId) {
     })
     video.id = userId
     videoGrid.append(video)
+
 }
+
 //call a peer with their userId
 function connectToNewUser(userId, stream) {
 
@@ -52,7 +57,6 @@ function connectToNewUser(userId, stream) {
         delete peers[userId]
     });
     
-
 }
 
 //  function resize(num){
@@ -115,15 +119,16 @@ function connectToNewUser(userId, stream) {
 // }
 
 
-
-
 function timer() {
+
     document.getElementById("time").innerHTML = new Date().toLocaleTimeString() + " | " + new Date().toLocaleDateString()
     setTimeout("timer()", 1000)
 
 }
 
+//disable or enable sending user's audio to other users
 function muteUnmute() {
+
     let enabled = myVideoStream.getAudioTracks()[0].enabled;
     if (enabled) {
         myVideoStream.getAudioTracks()[0].enabled = false;
@@ -135,8 +140,10 @@ function muteUnmute() {
         document.querySelector('.main__mute_button').setAttribute("title", "Mute");
         myVideoStream.getAudioTracks()[0].enabled = true;
     }
+
 }
 
+//disable or enable sending user's video to other users
 function playStop() {
 
     let enabled = myVideoStream.getVideoTracks()[0].enabled;
@@ -149,9 +156,12 @@ function playStop() {
         myVideoStream.getVideoTracks()[0].enabled = true;
         document.querySelector('.main__video_button').setAttribute("title", "Stop Video");
     }
+
 }
+
 //changes only the html and css of shareScreen button
 function shareUnshare() {
+
     let enabled = document.getElementById("shareScreen").classList.contains("active-btn");
     if (enabled) {
 
@@ -166,7 +176,9 @@ function shareUnshare() {
         document.querySelector('.main__screen_button').setAttribute("title", "Stop Presenting");
         document.getElementById("shareScreen").classList.add("active-btn");
     }
+
 }
+
 //Replaces Screen stream with user video stream
 function stopScreenShare() {
 
@@ -177,7 +189,9 @@ function stopScreenShare() {
         })
         sender.replaceTrack(videoTrack);
     })
+
 }
+
 //Stops screen stream
 function stopStreamedVideo() {
 
@@ -188,11 +202,10 @@ function stopStreamedVideo() {
         track.stop();
     });
 
-    //videoElem.srcObject = null;
 }
-
-
+//disable all audio on page
 function incomingAudio() {
+
     let enabled = document.getElementById("incAudio").classList.contains("active-btn")
     if (enabled) {
         document.getElementById("incAudio").classList.remove("active-btn")
@@ -212,9 +225,12 @@ function incomingAudio() {
             elem.muted = true;
         });
     }
+
 }
 
+//stops incoming stream of a particular video
 function stopStreamedVideo(videoElem) {
+
     const stream = videoElem.srcObject;
     const tracks = stream.getVideoTracks();
 
@@ -225,7 +241,9 @@ function stopStreamedVideo(videoElem) {
 
 }
 
+//resumes incoming stream of a particular video
 function playStreamedVideo(videoElem) {
+
     const stream = videoElem.srcObject;
     const tracks = stream.getVideoTracks();
 
@@ -237,7 +255,9 @@ function playStreamedVideo(videoElem) {
 
 }
 
+// stop or resume incoming video from every user
 function incomingVideo() {
+
     let enabled = document.getElementById("incVideo").classList.contains("active-btn");
     if (enabled) {
         document.getElementById("incVideo").classList.remove("active-btn");
@@ -261,9 +281,10 @@ function incomingVideo() {
             }
         });
     }
+
 }
 
-
+// when another user disconnects, remove their video
 function handlePeerDisconnect(video) {
 
     video.srcObject = null;
@@ -272,22 +293,13 @@ function handlePeerDisconnect(video) {
 
 }
 
+// redirect you to homepage after leaving videoCall room
 function leaveMeeting() {
 
     location.href = "/" + ROOM_ID;
 }
-const scrollToBottom = () => {
-    var d = $('.main__chat_window');
-    d.scrollTop(d.prop("scrollHeight"));
-}
 
-
-
-
-
-
-
-
+//copies the room link to clipboard
 function copyJoiningInfo() {
 
     var text = window.location.href;
@@ -304,19 +316,25 @@ function copyJoiningInfo() {
     }, function(err) {
         console.error('Async: Could not copy text: ', err);
     });
+
 }
 
 const isHidden = (screen) => screen.classList.contains("screen-hide");
 
+//change css of button class
 function handleActive(buttonClass) {
+
     const button = document.querySelector(`.${buttonClass}`);
     const active = button.classList.contains("active-btn");
 
     if (active) button.classList.remove("active-btn");
     else button.classList.add("active-btn");
+
 };
 
+//hide or show chatScreen/Participants list
 function handleScreen(screen) {
+
     const left_container = document.querySelector(".main__left");
     const right_container = document.querySelector(".main__right");
     const chatScreen = document.getElementById("chat-screen");
@@ -359,35 +377,40 @@ function handleScreen(screen) {
         right_container.classList.add("screen-hide");
         left_container.classList.add("screen-full");
     }
-};
 
+};
+//display current date and time
 timer();
 
-navigator.mediaDevices.getUserMedia({
+//connnecting to other  existing users in videoCall room
+navigator.mediaDevices.getUserMedia({//get user media
     video: true,
     audio: true
 }).then(stream => {
     myVideoStream = stream;
-    addVideoStream(myVideo, stream, "self")
+    addVideoStream(myVideo, stream, "self")//add user's local video stream on page
+    //answer to peer connection established by another users 
     myPeer.on('connection', function(conn) {
         var uniId = conn.peer
         peers[uniId] = conn;
-
+        //if any other user leaves the videoCall Room
         conn.on('close', () => {
 
-            console.log("onn close event 1");
             handlePeerDisconnect(document.getElementById(uniId));
             conn.peerConnection.close();
             delete peers[uniId];
+
         })
 
     });
-
+    
     myPeer.on('call', call => {
         peerscall[call.peer] = call;
+        //answer to peer call established by another users with user's local video stream
         call.answer(stream)
         var video = document.createElement('video')
         call.on('stream', userVideoStream => {
+            //add other user's video, in user's own page
             addVideoStream(video, userVideoStream, call.peer)
 
         });
@@ -414,6 +437,7 @@ navigator.mediaDevices.getUserMedia({
                 screenStream = stream;
                 shareUnshare();
                 let videoTrack = stream.getVideoTracks()[0];
+                //executed when screen is stopped by closing the window/ tab directly etc
                 videoTrack.onended = function() {
 
                     shareUnshare();
@@ -421,6 +445,7 @@ navigator.mediaDevices.getUserMedia({
                     stopStreamedVideo();
 
                 }
+                //replace user video stream with user screen stream
                 Object.keys(peerscall).forEach(function(x) {
                     let sender = peerscall[x].peerConnection.getSenders().find(function(s) {
                         return s.track.kind == videoTrack.kind;
@@ -434,44 +459,50 @@ navigator.mediaDevices.getUserMedia({
         }
 
     });
+
     document.getElementById("altStop").addEventListener('click', (e) => {
         shareUnshare();
         stopScreenShare();
         stopStreamedVideo()
     })
+    
+    //when a new user is connected to room
     socket.on('user-connected', userId => {
         connectToNewUser(userId, stream)
     })
+
 })
 
 // We load currently existing chat messages and listen to new ones.
 loadMessages(ROOM_ID);
 myPeer.on('open', id => {
-   //
+    // on joining room, user sends its peer id to server to connect with other users
     socket.emit('join-room', ROOM_ID, id)
 })
 
 
 document.getElementById("incAudio").addEventListener('click', incomingAudio)
 document.getElementById("incVideo").addEventListener('click', incomingVideo)
-
-
 document.getElementsByClassName("copy-btn")[0].addEventListener('click', copyJoiningInfo)
-
 document.getElementsByClassName("users-btn")[0].addEventListener('click', () => {
     socket.emit('participant', myName);
 })
 
+//listen to update on participant list on server side 
 socket.on('add-participant-list', (participants) => {
+
+    //update participant list on client side
     resize(participants.length)
     console.log("2 thing done" + participants.length)
     $("#users").empty()
     Object.keys(participants).forEach(function(x) {
-        // console.log(parName + "is in the meeting")
+      
         $("#users").append(`<li c><b>` + participants[x] + `</b><br/></li>`);
     })
+
 })
 
+// When user sends a  message in chat
 messageFormElement.addEventListener('submit', onMessageFormSubmit);
 
 // Toggle for the button.
@@ -479,14 +510,17 @@ messageInputElement.addEventListener('keyup', toggleButton);
 messageInputElement.addEventListener('change', toggleButton);
 
 // Events for image upload.
-imageButtonElement.addEventListener('click', function(e) {
+imageButtonElement.addEventListener('click', function (e) {
+    
     e.preventDefault();
     mediaCaptureElement.click();
+
 });
 mediaCaptureElement.addEventListener('change', onMediaFileSelected);
 
-
+//listen to server in case any other user in room gets disconnected
 socket.on('user-disconnected', userId => {
+
     var video = document.getElementById(userId);
     if (video) {
         handlePeerDisconnect(video);
