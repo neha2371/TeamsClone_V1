@@ -1,4 +1,3 @@
-
 // var admin = require('firebase-admin');
 // admin.initializeApp({
 //     credential: admin.credential.applicationDefault(),
@@ -9,8 +8,9 @@
 // console.log(defaultApp.name);
 
 const express = require('express')
+var favicon = require('serve-favicon');
 const app = express()
-
+app.use(favicon(__dirname + '/public/favicon.ico'));
 const server = require('http').Server(app)
 const io = require('socket.io')(server)
 const {
@@ -19,30 +19,23 @@ const {
 const peerServer = ExpressPeerServer(server, {
     debug: true
 });
-const {
-    v4: uuidV4
-} = require('uuid')
 
 app.use('/peerjs', peerServer);
 app.set('view engine', 'ejs')
 app.use(express.static('public'))
 
 app.get('/', (req, res) => {
-    res.redirect(`/${uuidV4()}`)
-
+    res.render('home')
 })
 
 app.get('/:chatRoom', (req, res) => {
-    var roomId = req.params.chatRoom;
     res.render('chatRoom', {
-        roomId
+        roomId: req.params.chatRoom
     })
 })
 app.get('/:room/videocall', (req, res) => {
-    var roomId = req.params.room;
-    console.log(roomId);
     res.render('videoCallRoom', {
-        roomId
+        roomId: req.params.room
     })
 })
 const participants = {};
@@ -58,7 +51,7 @@ io.on('connection', socket => {
             io.emit('add-participant-list', participants);
         })
         // socket.on('message', (message) => {
-            
+
         //     socket.broadcast.to(roomId).emit('createMessage', message)
         // });
 

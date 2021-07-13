@@ -1,14 +1,9 @@
 <html>
-    <head>
-        <meta charset="utf-8">
-        <base href="/">
-          
-        <title>Teams Clone</title>
+  <head>
+    <meta charset="utf-8">
+    <base href="/">        
+    <title>Teams Clone</title>
         
-<link rel="icon" href="favicon.ico">
-
-
-
   <!-- Material Design Lite -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
   <link rel="stylesheet" href="https://code.getmdl.io/1.1.3/material.orange-indigo.min.css">
@@ -18,8 +13,8 @@
   <script src="https://kit.fontawesome.com/c939d0e917.js"></script>
 
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:regular,bold,italic,thin,light,bolditalic,black,medium&amp;lang=en">
-  <link rel="stylesheet" href="chat_box.css">
-  <link rel="stylesheet" href="chatRoom.css">
+  <link rel="stylesheet" href="styles/chat_box.css">
+  <link rel="stylesheet" href="styles/chatRoom.css">
 
    <script>
       const ROOM_ID = "<%= roomId %>"
@@ -98,18 +93,16 @@
             Invite
           </button>
         </form>
-        
     </div>
-
   </main>
 </div>
          <!-- The core Firebase JS SDK is always required and must be listed first -->
     <script src="https://www.gstatic.com/firebasejs/8.6.7/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.6.7/firebase-auth.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.6.7/firebase-firestore.js"></script>
-   <script src="https://www.gstatic.com/firebasejs/8.6.7/firebase-performance.js"></script>
-   <script src="https://www.gstatic.com/firebasejs/8.6.7/firebase-storage.js"></script>
-<script src="https://www.gstatic.com/firebasejs/8.6.7/firebase-messaging.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.6.7/firebase-performance.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.6.7/firebase-storage.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.6.7/firebase-messaging.js"></script>
 
 
     <script>
@@ -126,8 +119,8 @@
     firebase.initializeApp(firebaseConfig);
     const auth = firebase.auth();
     </script>
-    <script src="fire_base.js"></script>
-    <script src="chatRoom.js"></script>
+    <script src="scripts/fire_base.js"></script>
+    <script src="scripts/chatRoom.js"></script>
     </body>
 
    

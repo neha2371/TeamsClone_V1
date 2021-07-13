@@ -4,17 +4,18 @@ const videoGrid = document.getElementById('video-grid')
 var myName, myVideoStream, screenStream, activeSreen = "";
 const myVideo = document.createElement('video')
 myVideo.muted = true;
-const peers = {}//Save all peer connections
-const peerscall = {}//Save all peer Calls
+const peers = {} //Save all peer connections
+const peerscall = {} //Save all peer Calls
 
 //detects if the user is authenticated
-firebase.auth().onAuthStateChanged(function (user) {
-    
+firebase.auth().onAuthStateChanged(function(user) {
+
     if (user) {
         myName = getUserName();
+        $("#users").append(`<li c><b>` + myName + `</b><br/></li>`);
         socket.emit('participant', myName)
     } else
-        location.href = "/" + ROOM_ID;//redirects unauthenticated users to the chat-room 
+        location.href = "/" + ROOM_ID; //redirects unauthenticated users to the chat-room 
 
 })
 
@@ -41,82 +42,53 @@ function addVideoStream(video, stream, userId) {
 //call a peer with their userId
 function connectToNewUser(userId, stream) {
 
-    const conn = myPeer.connect(userId);//establish a peer connection with the other user
-    const call = myPeer.call(userId, stream)//establish a call connection with other user
+    const conn = myPeer.connect(userId); //establish a peer connection with the other user
+    const call = myPeer.call(userId, stream) //establish a call connection with other user
     var video = document.createElement('video')
-    call.on('stream', userVideoStream => {
-        addVideoStream(video, userVideoStream, userId)// add other user's video on your page
-
-    })
     peerscall[userId] = call;
     peers[userId] = conn;
+    call.on('stream', userVideoStream => {
+        addVideoStream(video, userVideoStream, userId) // add other user's video on your page
+        socket.emit('participant', myName);
+        changeGridSize(peerscall)
+
+    })
+
     //Triggered when other user is disconnected
     conn.on('close', () => {
         handlePeerDisconnect(video);
         conn.close();
         delete peers[userId]
+        delete peerscall[userId]
+        changeGridSize(peerscall);
     });
-    
+
 }
 
-//  function resize(num){
-//     let s = Math.ceil(Math.sqrt(num));
-//     var myElements = document.getElementById("self");
-//     console.log(myElements.width + "   I am in resize");
-//     const max_height = 800;
-//     const max_width = 1600;
-//     //for (let i = 0; i < myElements.length; i++) {
-// 	    myElements.height = Math.floor(max_height/s).toString() + "px";
-//         myElements.width = Math.floor(max_width/s).toString() + "px";
-//     console.log(myElements.style.width + "   I am in resize again ");
-//  }
-// function changeGridSize(peers)
-// {
-//   let peer = [];
-//   peer.push("self");
-//   for (let key in peers)
-//   {
-//       console.log(key);
-//     peer.push(key);
-//   }
 
-//     let width=document.getElementsByClassName("main__videos")[0].style.width;
-// 	let height=document.getElementsByClassName("main__videos")[0].style.height;
-// 	width=parseInt(width,10);
-// 	height=parseInt(height,10);
-//     let len=peer.len;
-//     let padd=8;
-//     if(len>3)
-//     {
-//         let len1=(len+1)/2,let2=len-len1,width1=(width-padd*len1)/len1,width2=(width-padd*len2)/len2;
-//            width1=width1.toString();
-//              width1=width1+"px";
-//            width2=width2.toString();
-//              width2=width2+"px"; 
-// 	let height1=height/2;         
-//         for(let i=0;i<len1;i++)
-//         {
-//              document.getElementById(peer[i]).style.width=width1;
-// 		document.getElementById(peer[i]).style.height=(height1-2*padd);
-//         }
-//         for(let i=len1;i<len;i++)
-//         {
-//                 document.getElementById(peer[i]).style.width=width2;
-// 		document.getElementById(peer[i]).style.height=(height1-2*padd);
-//         }
-//     }
-//     else{
-//       let width1=(width-padd*len)/len;
-//       width1=width1.toString();
-//      width1=width1+"px";
-// 	let height1=height;
-//         for(let i=0;i<len;i++)
-//         {
-//             document.getElementById(peer[i]).style.width=width1;
-// 	document.getElementById(peer[i]).style.height=(height1-2*padd);
-//         }
-//     }
-// }
+function changeGridSize(peerscall) {
+    let peer = [];
+    peer.push("self");
+    for (let key in peerscall) {
+        console.log(key);
+        peer.push(key);
+    }
+    var frac = (document.querySelector(".main__left").classList.contains("screen-full")?0.8:0.6);
+    let width = frac * window.innerWidth
+    let height = 0.85 * window.innerHeight
+    let len = peer.length;
+    let s = Math.ceil(Math.sqrt(len));
+    let width1 = Math.floor(width / s);
+    width1 = width1.toString();
+    width1 = width1 + "px";
+    let height1 = Math.ceil(height / (Math.floor(((len - 1) / s + 1))));
+    height1 = height1.toString();
+    height1 = height1 + "px";
+    for (let i = 0; i < len; i++) {
+        document.getElementById(peer[i]).style.width = width1;
+        document.getElementById(peer[i]).style.height = height1;
+    }
+}
 
 
 function timer() {
@@ -283,13 +255,13 @@ function handlePeerDisconnect(video) {
     video.srcObject = null;
     console.log("left " + video.id);
     video.remove();
-
+    //changeGridSize(peerscall);
 }
 
 // redirect you to homepage after leaving videoCall room
 function leaveMeeting() {
 
-    location.href = "/" + ROOM_ID;
+    location.href = "/";
 }
 
 //copies the room link to clipboard
@@ -297,7 +269,7 @@ function copyJoiningInfo() {
 
     var text = window.location.href;
     let len = text.length;
-    text = text.substr(0, len - 9);
+    text = text.substr(0, len - 10);
     text
     navigator.clipboard.writeText(text).then(function() {
         console.log('Async: Copying to clipboard was successful!');
@@ -305,7 +277,8 @@ function copyJoiningInfo() {
             message: 'Joining info copied to clipboard',
             timeout: 2000
         };
-        signInSnackbarElement.MaterialSnackbar.showSnackbar(data);
+        var copySnackbarElement = document.getElementById("copy-snackbar")
+        copySnackbarElement.MaterialSnackbar.showSnackbar(data);
     }, function(err) {
         console.error('Async: Could not copy text: ', err);
     });
@@ -370,18 +343,20 @@ function handleScreen(screen) {
         right_container.classList.add("screen-hide");
         left_container.classList.add("screen-full");
     }
-
+    changeGridSize(peerscall);
 };
 //display current date and time
 timer();
 
 //connnecting to other  existing users in videoCall room
-navigator.mediaDevices.getUserMedia({//get user media
+navigator.mediaDevices.getUserMedia({ //get user media
     video: true,
     audio: true
 }).then(stream => {
     myVideoStream = stream;
-    addVideoStream(myVideo, stream, "self")//add user's local video stream on page
+    addVideoStream(myVideo, stream, "self") //add user's local video stream on page
+    changeGridSize(peerscall);
+    socket.emit('participant', myName);
     //answer to peer connection established by another users 
     myPeer.on('connection', function(conn) {
         var uniId = conn.peer
@@ -390,13 +365,14 @@ navigator.mediaDevices.getUserMedia({//get user media
         conn.on('close', () => {
 
             handlePeerDisconnect(document.getElementById(uniId));
-            conn.peerConnection.close();
             delete peers[uniId];
+            delete peerscall[uniId];
+            changeGridSize(peerscall)
 
         })
 
     });
-    
+
     myPeer.on('call', call => {
         peerscall[call.peer] = call;
         //answer to peer call established by another users with user's local video stream
@@ -405,6 +381,8 @@ navigator.mediaDevices.getUserMedia({//get user media
         call.on('stream', userVideoStream => {
             //add other user's video, in user's own page
             addVideoStream(video, userVideoStream, call.peer)
+            socket.emit('participant', myName);
+            changeGridSize(peerscall)
 
         });
 
@@ -454,7 +432,7 @@ navigator.mediaDevices.getUserMedia({//get user media
         shareUnshare();
         stopScreenShare();
     })
-    
+
     //when a new user is connected to room
     socket.on('user-connected', userId => {
         connectToNewUser(userId, stream)
@@ -473,19 +451,15 @@ myPeer.on('open', id => {
 document.getElementById("incAudio").addEventListener('click', incomingAudio)
 document.getElementById("incVideo").addEventListener('click', incomingVideo)
 document.getElementsByClassName("copy-btn")[0].addEventListener('click', copyJoiningInfo)
-document.getElementsByClassName("users-btn")[0].addEventListener('click', () => {
-    socket.emit('participant', myName);
-})
 
 //listen to update on participant list on server side 
 socket.on('add-participant-list', (participants) => {
 
     //update participant list on client side
-    //resize(participants.length)
     console.log("2 thing done" + participants.length)
     $("#users").empty()
     Object.keys(participants).forEach(function(x) {
-      
+
         $("#users").append(`<li c><b>` + participants[x] + `</b><br/></li>`);
     })
 
@@ -499,8 +473,8 @@ messageInputElement.addEventListener('keyup', toggleButton);
 messageInputElement.addEventListener('change', toggleButton);
 
 // Events for image upload.
-imageButtonElement.addEventListener('click', function (e) {
-    
+imageButtonElement.addEventListener('click', function(e) {
+
     e.preventDefault();
     mediaCaptureElement.click();
 
@@ -513,6 +487,8 @@ socket.on('user-disconnected', userId => {
     var video = document.getElementById(userId);
     if (video) {
         handlePeerDisconnect(video);
+        delete peers[userId];
+        delete peerscall[userId]
     }
-
+    changeGridSize(peerscall);
 })

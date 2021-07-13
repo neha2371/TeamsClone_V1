@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html style="font-size: 16px;">
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.slim.min.js" integrity="sha256-u7e5khyithlIdTpu22PHhENmPcRdFiHRjhAuHcs05RI=" crossorigin="anonymous"></script>
+    <base href="/">
+    <title>Teams Clone</title>
+    <link rel="stylesheet" href="styles/nicepage.css" media="screen">
+    <link rel="stylesheet" href="styles/home.css" media="screen">
+    <link id="u-theme-google-font" rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i|PT+Sans:400,400i,700,700i">
+    <link id="u-page-google-font" rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i|Open+Sans:300,300i,400,400i,600,600i,700,700i,800,800i">
+    </head>
+  <body >
+    <section class="u-clearfix u-image u-section-1">
+      <div class="u-clearfix u-sheet u-sheet-1">
+        <h2 class="u-custom-font u-font-montserrat u-text u-text-grey-70 u-text-1">Teams​ Clo​ne</h2>
+        <p class="u-text u-text-grey-70 u-text-2">Connect with people around the world.</p>
+        <button id = "create" class="  u-active-custom-color-1 u-border-2 u-border-active-custom-color-1 u-border-grey-5 u-border-hover-custom-color-1 u-btn u-btn-round u-button-style u-grey-15 u-hover-custom-color-1 u-radius-12 u-text-active-white u-text-grey-70 u-text-hover-white u-btn-1">&nbsp;Create Room<br>
+          <br>
+        </button>
+        <button id ="join"class=" u-active-custom-color-1 u-border-2 u-border-active-custom-color-1 u-border-grey-5 u-border-hover-custom-color-1 u-btn u-btn-round u-button-style u-grey-15 u-hover-custom-color-1 u-radius-12 u-text-active-white u-text-grey-70 u-text-hover-white u-btn-3" data-toggle="modal" data-target="#myModal">&nbsp;JOIN ROOM<br>
+          <br>
+        </button>
+        <div class="modal fade" id="myModal" role="dialog">
+          <div class="modal-dialog">
+          
+            <!-- Modal content-->
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Enter the Room-Id</h4>
+              </div>
+              <div class="modal-body">
+              <input type="text" id="roomIdInput" placeholder="Room-Id">
+              </div>
+              <div class="modal-footer">
+                <button id = "enter"type="button" class="btn btn-default" data-dismiss="modal">Enter</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+              </div>
+            </div>
+            
+          </div>
+        </div>
+      </div>
+    </section>
+    
+    
+    <div class="u-align-center u-clearfix u-grey-80" id="sec-5608"><div class="u-align-left-lg u-align-left-md u-align-left-sm u-align-left-xs u-clearfix u-sheet u-sheet-1">
+        <p class="u-small-text u-text u-text-variant u-text-1">
+          <a class="u-active-none u-border-none u-btn u-button-link u-button-style u-hover-none u-none u-text-white u-btn-1" href="https://github.com/neha2371/TeamsClone_V1">Learn more</a>
+        </p>
+        <p class="u-small-text u-text u-text-variant u-text-2">
+          <a class="u-active-none u-border-none u-btn u-button-link u-button-style u-hover-none u-none u-text-white u-btn-2" href="mailto:teams.clone.manager@gmail.com">Contact for Support</a>
+        </p>
+      </div></div>
+      <script src="scripts/home.js"></script>
+  </body>
+</html>

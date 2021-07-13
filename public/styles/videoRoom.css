@@ -183,3 +183,8 @@ video{
     padding: 8px;
     border-radius: 25px;
 }
+
+#sendForm{
+    position: fixed;
+    bottom: 5px;
+}
