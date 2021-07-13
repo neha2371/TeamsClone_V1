@@ -269,7 +269,7 @@ function copyJoiningInfo() {
 
     var text = window.location.href;
     let len = text.length;
-    text = text.substr(0, len - 9);
+    text = text.substr(0, len - 10);
     text
     navigator.clipboard.writeText(text).then(function() {
         console.log('Async: Copying to clipboard was successful!');
