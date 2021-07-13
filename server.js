@@ -8,8 +8,9 @@
 // console.log(defaultApp.name);
 
 const express = require('express')
+var favicon = require('serve-favicon');
 const app = express()
-
+app.use(favicon(__dirname + '/public/favicon.ico'));
 const server = require('http').Server(app)
 const io = require('socket.io')(server)
 const {
