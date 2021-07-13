@@ -1,26 +1,25 @@
-
 #copy, #join{
-    align-items: center;
-    margin: 20px;
-    left: 50;
+  align-items: center;
+  margin: 20px;
+  left: 50;
 }
 #video-grid{
-         display: inline-flex;
-         justify-content: center;
-         flex-wrap: wrap;
-         height: 430px;
-         width: 400px;
-         margin: 10%;
-      }
+  display: inline-flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  height: 430px;
+  width: 400px;
+  margin: 10%;
+}
 video{
-         height:360px;
-         width: 390px;
-         object-fit: cover;
-         padding: 8px;
-         border-radius: 25px;
-          -webkit-transform: scaleX(-1);
-        transform: scaleX(-1);
-      }
+  height:360px;
+  width: 390px;
+  object-fit: cover;
+  padding: 8px;
+  border-radius: 25px;
+  -webkit-transform: scaleX(-1);
+  transform: scaleX(-1);
+}
 header{
   position:fixed;
 }

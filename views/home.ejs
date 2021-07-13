@@ -3,62 +3,60 @@
   <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta charset="utf-8">
-    <meta name="keywords" content="SEO Services, Our management consulting services focus on our clients' most critical issues, Development Services, How we create brand power, Our Team, Frequently Asked Questions">
-    <meta name="description" content="">
-    <meta name="page_type" content="np-template-header-footer-from-plugin">
-    <base href="/">
-    <title>Home</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.slim.min.js" integrity="sha256-u7e5khyithlIdTpu22PHhENmPcRdFiHRjhAuHcs05RI=" crossorigin="anonymous"></script>
-  
+    <base href="/">
+    <title>Teams Clone</title>
     <link rel="stylesheet" href="styles/nicepage.css" media="screen">
-<link rel="stylesheet" href="styles/home.css" media="screen">
-    <script class="u-script" type="text/javascript" src="scripts/jquery.js" defer=""></script>
-    <script class="u-script" type="text/javascript" src="scripts/nicepage.js" defer=""></script>
-    <meta name="generator" content="Nicepage 3.19.4, nicepage.com">
+    <link rel="stylesheet" href="styles/home.css" media="screen">
     <link id="u-theme-google-font" rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i|PT+Sans:400,400i,700,700i">
     <link id="u-page-google-font" rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i|Open+Sans:300,300i,400,400i,600,600i,700,700i,800,800i">
-    <script src="scripts/home.js"></script>
-    <script>
-      const ROOM_ID = "<%= roomId %>"
-    <script type="application/ld+json">{
-		"@context": "http://schema.org",
-		"@type":
-		"name": ""
-}</script>
-    <meta name="theme-color" content="#3a65ed">
-    <meta property="og:title" content="Home">
-    <meta property="og:type" content="website">
-  </head>
-  <body class="u-body u-overlap">
-}</script>
-    <meta name="theme-color" content="#3a65ed">
-    <meta property="og:title" content="Home">
-    <meta property="og:type" content="website">
-  </head>
-  <body class="u-body u-overlap">
-    <section class="u-clearfix u-image u-section-1" id="sec-de7f" data-image-width="5472" data-image-height="3648">
+    </head>
+  <body >
+    <section class="u-clearfix u-image u-section-1">
       <div class="u-clearfix u-sheet u-sheet-1">
         <h2 class="u-custom-font u-font-montserrat u-text u-text-grey-70 u-text-1">Teams​ Clo​ne</h2>
         <p class="u-text u-text-grey-70 u-text-2">Connect with people around the world.</p>
-        <a href="https://nicepage.com/c/text-on-image-html-templates" class="u-active-custom-color-1 u-border-2 u-border-active-custom-color-1 u-border-grey-5 u-border-hover-custom-color-1 u-btn u-btn-round u-button-style u-grey-15 u-hover-custom-color-1 u-radius-12 u-text-active-white u-text-grey-70 u-text-hover-white u-btn-1">&nbsp;Create Room<br>
+        <button id = "create" class="  u-active-custom-color-1 u-border-2 u-border-active-custom-color-1 u-border-grey-5 u-border-hover-custom-color-1 u-btn u-btn-round u-button-style u-grey-15 u-hover-custom-color-1 u-radius-12 u-text-active-white u-text-grey-70 u-text-hover-white u-btn-1">&nbsp;Create Room<br>
           <br>
-        </a>
-        <a href="https://nicepage.com/c/text-on-image-html-templates" class="u-active-custom-color-1 u-border-2 u-border-active-custom-color-1 u-border-grey-5 u-border-hover-custom-color-1 u-btn u-btn-round u-button-style u-grey-15 u-hover-custom-color-1 u-radius-12 u-text-active-white u-text-grey-70 u-text-hover-white u-btn-2">&nbsp;Create Room<br>fOR lATER
-        </a>
-        <a href="https://nicepage.com/c/text-on-image-html-templates" class="u-active-custom-color-1 u-border-2 u-border-active-custom-color-1 u-border-grey-5 u-border-hover-custom-color-1 u-btn u-btn-round u-button-style u-grey-15 u-hover-custom-color-1 u-radius-12 u-text-active-white u-text-grey-70 u-text-hover-white u-btn-3">&nbsp;JOIN ROOM<br>
+        </button>
+        <button id ="join"class=" u-active-custom-color-1 u-border-2 u-border-active-custom-color-1 u-border-grey-5 u-border-hover-custom-color-1 u-btn u-btn-round u-button-style u-grey-15 u-hover-custom-color-1 u-radius-12 u-text-active-white u-text-grey-70 u-text-hover-white u-btn-3" data-toggle="modal" data-target="#myModal">&nbsp;JOIN ROOM<br>
           <br>
-        </a>
+        </button>
+        <div class="modal fade" id="myModal" role="dialog">
+          <div class="modal-dialog">
+          
+            <!-- Modal content-->
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Enter the Room-Id</h4>
+              </div>
+              <div class="modal-body">
+              <input type="text" id="roomIdInput" placeholder="Room-Id">
+              </div>
+              <div class="modal-footer">
+                <button id = "enter"type="button" class="btn btn-default" data-dismiss="modal">Enter</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+              </div>
+            </div>
+            
+          </div>
+        </div>
       </div>
     </section>
     
     
-    <footer class="u-align-center u-clearfix u-footer u-grey-80 u-footer" id="sec-5608"><div class="u-align-left-lg u-align-left-md u-align-left-sm u-align-left-xs u-clearfix u-sheet u-sheet-1">
+    <div class="u-align-center u-clearfix u-grey-80" id="sec-5608"><div class="u-align-left-lg u-align-left-md u-align-left-sm u-align-left-xs u-clearfix u-sheet u-sheet-1">
         <p class="u-small-text u-text u-text-variant u-text-1">
           <a class="u-active-none u-border-none u-btn u-button-link u-button-style u-hover-none u-none u-text-white u-btn-1" href="https://iitracin-my.sharepoint.com/:w:/g/personal/neha_g_ee_iitr_ac_in/EZwlr7lB8wNEn-uvoJpklOwBH8pxvtSoQ6zHmYgPirlXkQ?e=HAmC30">Learn more</a>
         </p>
         <p class="u-small-text u-text u-text-variant u-text-2">
           <a class="u-active-none u-border-none u-btn u-button-link u-button-style u-hover-none u-none u-text-white u-btn-2" href="mailto:teams.clone.manager@gmail.com">Contact for Support</a>
         </p>
-      </div></footer>
+      </div></div>
+      <script src="scripts/home.js"></script>
   </body>
 </html>

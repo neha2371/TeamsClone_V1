@@ -1,9 +1,12 @@
 .u-section-1 {
   background-image: url("https://images.unsplash.com/photo-1523240795612-9a054b0db644?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=750&q=80");
+  background-attachment: fixed;
+  min-height: 100%;
+  min-width: 100%;
 }
 
 .u-section-1 .u-sheet-1 {
-  min-height: 627px;
+  min-height: 800px;
 }
 
 .u-section-1 .u-text-1 {
@@ -113,3 +116,17 @@
     margin-right: 0;
   }
 }
+  .u-footer{
+    bottom:0px;
+    background-attachment: fixed;
+  }
+input[type=text], select {
+  width: 100%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+

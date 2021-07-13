@@ -4,17 +4,17 @@ const videoGrid = document.getElementById('video-grid')
 var myName, myVideoStream, screenStream, activeSreen = "";
 const myVideo = document.createElement('video')
 myVideo.muted = true;
-const peers = {}//Save all peer connections
-const peerscall = {}//Save all peer Calls
+const peers = {} //Save all peer connections
+const peerscall = {} //Save all peer Calls
 
 //detects if the user is authenticated
-firebase.auth().onAuthStateChanged(function (user) {
-    
+firebase.auth().onAuthStateChanged(function(user) {
+
     if (user) {
         myName = getUserName();
         socket.emit('participant', myName)
     } else
-        location.href = "/" + ROOM_ID;//redirects unauthenticated users to the chat-room 
+        location.href = "/" + ROOM_ID; //redirects unauthenticated users to the chat-room 
 
 })
 
@@ -41,18 +41,18 @@ function addVideoStream(video, stream, userId) {
 //call a peer with their userId
 function connectToNewUser(userId, stream) {
 
-    const conn = myPeer.connect(userId);//establish a peer connection with the other user
-    const call = myPeer.call(userId, stream)//establish a call connection with other user
+    const conn = myPeer.connect(userId); //establish a peer connection with the other user
+    const call = myPeer.call(userId, stream) //establish a call connection with other user
     var video = document.createElement('video')
     peerscall[userId] = call;
     peers[userId] = conn;
     call.on('stream', userVideoStream => {
-        addVideoStream(video, userVideoStream, userId)// add other user's video on your page
+        addVideoStream(video, userVideoStream, userId) // add other user's video on your page
         socket.emit('participant', myName);
         changeGridSize(peerscall)
 
     })
-    
+
     //Triggered when other user is disconnected
     conn.on('close', () => {
         handlePeerDisconnect(video);
@@ -61,33 +61,30 @@ function connectToNewUser(userId, stream) {
         delete peerscall[userId]
         changeGridSize(peerscall);
     });
-    
+
 }
 
 
-function changeGridSize(peerscall)
-{
+function changeGridSize(peerscall) {
     let peer = [];
     peer.push("self");
-    for (let key in peerscall)
-    {
+    for (let key in peerscall) {
         console.log(key);
-            peer.push(key);
+        peer.push(key);
     }
-	let width= 0.80*window.innerWidth
-	let height= 0.85*window.innerHeight
-    let len=peer.length;
+    let width = 0.80 * window.innerWidth
+    let height = 0.85 * window.innerHeight
+    let len = peer.length;
     let s = Math.ceil(Math.sqrt(len));
-    let width1=Math.floor(width/s);
-        width1=width1.toString();
-        width1=width1+"px";
-	let height1=Math.ceil(height/(Math.floor(((len-1)/s + 1))));
-        height1=height1.toString();
-        height1=height1+"px";  
-    for(let i=0;i<len;i++)
-    {
-        document.getElementById(peer[i]).style.width=width1;
-	    document.getElementById(peer[i]).style.height=height1;
+    let width1 = Math.floor(width / s);
+    width1 = width1.toString();
+    width1 = width1 + "px";
+    let height1 = Math.ceil(height / (Math.floor(((len - 1) / s + 1))));
+    height1 = height1.toString();
+    height1 = height1 + "px";
+    for (let i = 0; i < len; i++) {
+        document.getElementById(peer[i]).style.width = width1;
+        document.getElementById(peer[i]).style.height = height1;
     }
 }
 
@@ -262,7 +259,7 @@ function handlePeerDisconnect(video) {
 // redirect you to homepage after leaving videoCall room
 function leaveMeeting() {
 
-    location.href = "/" ;
+    location.href = "/";
 }
 
 //copies the room link to clipboard
@@ -278,7 +275,7 @@ function copyJoiningInfo() {
             message: 'Joining info copied to clipboard',
             timeout: 2000
         };
-        var copySnackbarElement = document.getElementById("copy-snackbar") 
+        var copySnackbarElement = document.getElementById("copy-snackbar")
         copySnackbarElement.MaterialSnackbar.showSnackbar(data);
     }, function(err) {
         console.error('Async: Could not copy text: ', err);
@@ -350,12 +347,12 @@ function handleScreen(screen) {
 timer();
 
 //connnecting to other  existing users in videoCall room
-navigator.mediaDevices.getUserMedia({//get user media
+navigator.mediaDevices.getUserMedia({ //get user media
     video: true,
     audio: true
 }).then(stream => {
     myVideoStream = stream;
-    addVideoStream(myVideo, stream, "self")//add user's local video stream on page
+    addVideoStream(myVideo, stream, "self") //add user's local video stream on page
     changeGridSize(peerscall);
     socket.emit('participant', myName);
     //answer to peer connection established by another users 
@@ -373,7 +370,7 @@ navigator.mediaDevices.getUserMedia({//get user media
         })
 
     });
-    
+
     myPeer.on('call', call => {
         peerscall[call.peer] = call;
         //answer to peer call established by another users with user's local video stream
@@ -433,7 +430,7 @@ navigator.mediaDevices.getUserMedia({//get user media
         shareUnshare();
         stopScreenShare();
     })
-    
+
     //when a new user is connected to room
     socket.on('user-connected', userId => {
         connectToNewUser(userId, stream)
@@ -463,7 +460,7 @@ socket.on('add-participant-list', (participants) => {
     console.log("2 thing done" + participants.length)
     $("#users").empty()
     Object.keys(participants).forEach(function(x) {
-      
+
         $("#users").append(`<li c><b>` + participants[x] + `</b><br/></li>`);
     })
 
@@ -477,8 +474,8 @@ messageInputElement.addEventListener('keyup', toggleButton);
 messageInputElement.addEventListener('change', toggleButton);
 
 // Events for image upload.
-imageButtonElement.addEventListener('click', function (e) {
-    
+imageButtonElement.addEventListener('click', function(e) {
+
     e.preventDefault();
     mediaCaptureElement.click();
 
@@ -496,3 +493,10 @@ socket.on('user-disconnected', userId => {
     }
     changeGridSize(peerscall);
 })
+
+function pin(pinId) {
+    if (document.getElementById(pinId).classList.contains("pin"))
+        document.getElementById(pinId).classList.remove("pin");
+    else
+        document.getElementById(pinId).classList.remove("pin");
+}

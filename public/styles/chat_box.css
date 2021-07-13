@@ -1,5 +1,4 @@
-
- html, body {
+html, body {
   font-family: 'Roboto', 'Helvetica', sans-serif;
 }
 main, #messages-card {
@@ -67,7 +66,6 @@ main, #messages-card {
   opacity: 1;
 }
 .message-container .pic {
-  background-image: url('/images/profile_placeholder.png');
   background-repeat: no-repeat;
   width: 30px;
   height: 30px;

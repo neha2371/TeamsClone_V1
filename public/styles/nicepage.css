@@ -161,8 +161,7 @@
     .fr-view img.fr-dib {
       margin: 10px auto;
       display: block;
-      float: none;
-      vertical-align: top; }
+      float: none; }
       .fr-view img.fr-dib.fr-fil {
         margin-left: 0;
         text-align: left; }
@@ -360,7 +359,6 @@ span.fr-img-caption.fr-view {
       float: right;
       margin: 5px 0 5px 5px;
       max-width: calc(100% - 5px); }
-/*end-commonstyles library*//*begin-commonstyles library*/@charset "UTF-8";
 
 /*!
  * animate.css -https://daneden.github.io/animate.css/
