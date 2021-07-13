@@ -269,7 +269,7 @@ function copyJoiningInfo() {
 
     var text = window.location.href;
     let len = text.length;
-    text = text.substr(0, len - 11);
+    text = text.substr(0, len - 10);
     text
     navigator.clipboard.writeText(text).then(function() {
         console.log('Async: Copying to clipboard was successful!');
@@ -451,9 +451,6 @@ myPeer.on('open', id => {
 document.getElementById("incAudio").addEventListener('click', incomingAudio)
 document.getElementById("incVideo").addEventListener('click', incomingVideo)
 document.getElementsByClassName("copy-btn")[0].addEventListener('click', copyJoiningInfo)
-/*document.getElementsByClassName("users-btn")[0].addEventListener('click', () => {
-    socket.emit('participant', myName);
-})*/
 
 //listen to update on participant list on server side 
 socket.on('add-participant-list', (participants) => {
