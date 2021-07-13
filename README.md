@@ -20,7 +20,9 @@ NOTE – both these division exist in the same room and therefore have the same 
 
 # Basic Workflow
 
-![Workflow](/images/Workflow.png)
+<p align="center">
+  <img width="600" height="400" src="/images/WorkFlow.png">
+</p>
 
 # Software Architecture
 ## Getting started: Accessing the Home Page
@@ -35,7 +37,9 @@ Even after accessing the chat Room, the user cannot use any of the functionaliti
 This ensures no unauthorized user can read the messages.
 Authentication is done using Google ID and the implementation is done using FirebaseUI.
 
-![Authorization](/images/Authorization.png)
+!<p align="center">
+  <img width="600" height="400" src="/images/Authentication.png">
+</p>
 
 
 ## Chat
@@ -63,7 +67,9 @@ Authentication is done using Google ID and the implementation is done using Fire
  * Participants List: A user can anytime find out the name of all the people who are connected in videocall by simply clicking on this feature.
  * Get redirected to the Home Page on leaving the room.
 
-![connection](/images/connection.png)
+<p align="center">
+  <img width="600" height="400" src="/images/connection.png">
+</p>
 
 
 # Agile Methodology Implementation
