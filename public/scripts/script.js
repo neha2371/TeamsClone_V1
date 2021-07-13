@@ -12,6 +12,7 @@ firebase.auth().onAuthStateChanged(function(user) {
 
     if (user) {
         myName = getUserName();
+        $("#users").append(`<li c><b>` + myName + `</b><br/></li>`);
         socket.emit('participant', myName)
     } else
         location.href = "/" + ROOM_ID; //redirects unauthenticated users to the chat-room 
@@ -72,7 +73,8 @@ function changeGridSize(peerscall) {
         console.log(key);
         peer.push(key);
     }
-    let width = 0.80 * window.innerWidth
+    var frac = (document.querySelector(".main__left").classList.contains("screen-full")?0.8:0.6);
+    let width = frac * window.innerWidth
     let height = 0.85 * window.innerHeight
     let len = peer.length;
     let s = Math.ceil(Math.sqrt(len));
@@ -341,7 +343,7 @@ function handleScreen(screen) {
         right_container.classList.add("screen-hide");
         left_container.classList.add("screen-full");
     }
-
+    changeGridSize(peerscall);
 };
 //display current date and time
 timer();
@@ -493,10 +495,3 @@ socket.on('user-disconnected', userId => {
     }
     changeGridSize(peerscall);
 })
-
-function pin(pinId) {
-    if (document.getElementById(pinId).classList.contains("pin"))
-        document.getElementById(pinId).classList.remove("pin");
-    else
-        document.getElementById(pinId).classList.remove("pin");
-}
